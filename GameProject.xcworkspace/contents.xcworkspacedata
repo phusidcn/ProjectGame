@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:DemoObjectDetection/DemoObjectDetection.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:ObjectDetectionKit/ObjectsDetectionKit.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:CodingAwbie/CodingAwbie.xcodeproj">
+   </FileRef>
+</Workspace>
