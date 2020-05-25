@@ -9,7 +9,7 @@ enum GameObjecState {
 
 class GameObject : SCNNode {
     private static var count: Int = 0
-    static var level: GameLevel?
+//    static var level: GameLevel?
     
     private var _internalID: Int = 0
     private var _tag = 0
@@ -50,7 +50,7 @@ class GameObject : SCNNode {
             return _state
         }
         set(value) {
-            rbDebug("State of \(self) changed from \(_state) to \(value)")
+//            rbDebugCharacter("State of \(self) changed from \(_state) to \(value)")
             _state = value
         }
     }
@@ -84,12 +84,12 @@ class GameObject : SCNNode {
     // -------------------------------------------------------------------------
     // MARK: - Game loop
     
-    func update(atTime time: TimeInterval, level: GameLevel) {}
+//    func update(atTime time: TimeInterval, level: GameLevel) {}
 
     // -------------------------------------------------------------------------
     // MARK: - Collision handling
     
-    func collision(with object: GameObject, level: GameLevel) {}
+//    func collision(with object: GameObject, level: GameLevel) {}
     
     // -------------------------------------------------------------------------
     // MARK: - Helper methods
