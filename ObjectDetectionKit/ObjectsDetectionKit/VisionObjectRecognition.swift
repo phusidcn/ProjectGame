@@ -33,7 +33,7 @@ public enum PlayerMode {
 
 public class VisionObjectRecognition: UIViewController {
     //MARK: - Public Properties
-    public var playMode: PlayerMode?
+    public var playMode: PlayerMode? = .onePlayer
     public var delegate: ObjectsRecognitionDelegate?
     
     //MARK: - Private Properties
@@ -185,7 +185,7 @@ extension VisionObjectRecognition {
         if self.playMode == .onePlayer {
             sortObjectOnTopDownOrderWithOnePlayerMode(with: rawResults)
         } else {
-            sortObjectOnTopDownOrderWithTwoPlayerMode(woth: rawResults)
+            sortObjectOnTopDownOrderWithTwoPlayerMode(with: rawResults)
         }
     }
     
@@ -361,12 +361,19 @@ extension VisionObjectRecognition {
         }
     }
     
-    private func sortObjectOnTopDownOrderWithTwoPlayerMode(woth objects: [objectDetection]) {
+    private func centerOfRect(_ rect: CGRect) -> CGPoint {
+        let midX = rect.origin.x + (rect.width / 2)
+        let midY = rect.origin.y + (rect.height / 2)
+        return CGPoint(x: midX, y: midY)
+    }
+    
+    private func sortObjectOnTopDownOrderWithTwoPlayerMode(with objects: [objectDetection]) {
         var actions: [objectDetection] = []
         var numbers: [objectDetection] = []
         var danger: objectDetection? = nil
         var stars: objectDetection? = nil
         var userGesture: objectDetection? = nil
+        let centerX = self.previewLayer.bounds.width / 2
         for object in objects {
             if object.name == "Walk_Up" || object.name == "Walk_Down" || object.name == "Walk_Left" || object.name == "Walk_Right" || object.name == "Jump_Up" || object.name == "Jump_Down" || object.name == "Jump_Left" || object.name == "Jump_Right" || object.name == "Hand_Up" || object.name == "Hand_Down" || object.name == "Hand_Left" || object.name == "Hand_Right" || object.name == "Repeat" {
                 actions.append(object)
@@ -383,11 +390,7 @@ extension VisionObjectRecognition {
                 userGesture = object
             }
         }
-        
-        actions.sort(by: {(object1: objectDetection, object2: objectDetection) -> Bool in
-            return object2.bound.origin.y > object1.bound.origin.y
-        })
-        guard let firstLeftBlock = actions.first else { return }
+
         
         
     }

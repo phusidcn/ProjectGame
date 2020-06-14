@@ -9,6 +9,7 @@
 import GameController
 import GameplayKit
 import SceneKit
+import ObjectsDetectionKit
 
 // Collision bit masks
 struct Bitmask: OptionSet {
@@ -52,6 +53,7 @@ class GameController: NSObject, ExtraProtocols {
 
     private var scene: SCNScene?
     private weak var sceneRenderer: SCNSceneRenderer?
+    private var objectRecognition: VisionObjectRecognition?
 
     // Overlays
     private var overlay: Overlay?
@@ -118,6 +120,7 @@ class GameController: NSObject, ExtraProtocols {
             return
         }
         registerGameController(controller)
+        
     }
 
     func setupCharacter() {
@@ -501,6 +504,15 @@ class GameController: NSObject, ExtraProtocols {
     init(scnView: SCNView) {
         super.init()
         
+        objectRecognition = VisionObjectRecognition()
+        objectRecognition?.delegate = self
+        objectRecognition?.setupAVCapture()
+        do {
+            try objectRecognition?.setupVision()
+        } catch let error {
+            print(error)
+        }
+        
         sceneRenderer = scnView
         sceneRenderer!.delegate = self
         
@@ -561,6 +573,7 @@ class GameController: NSObject, ExtraProtocols {
 
         //register ourself as the physics contact delegate to receive contact notifications
         sceneRenderer!.scene!.physicsWorld.contactDelegate = self
+        objectRecognition?.startCaptureSession()
     }
 
     func resetPlayerPosition() {
@@ -1114,3 +1127,64 @@ class GameController: NSObject, ExtraProtocols {
     }
 #endif
 }
+
+    extension GameController: ObjectsRecognitionDelegate {
+        
+        func convert(action: UserStep) -> float2 {
+            switch action.action {
+            case .Hand_Down:
+                return float2(x: 0, y: 0)
+            case .Hand_Up:
+                return float2(x: 0, y: 0)
+            case .Hand_Left:
+                return float2(x: 0, y: 0)
+            case .Hand_Right:
+                return float2(x: 0, y: 0)
+            case .Jump_Down:
+                return float2(x: 0, y: 0)
+            case .Jump_Up:
+                return float2(x: 0, y: 0)
+            case .Jump_Left:
+                return float2(x: 0, y: 0)
+            case .Jump_Right:
+                return float2(x: 0, y: 0)
+            case .Walk_Up:
+                return float2(x: 0, y: 5)
+            case .Walk_Down:
+                return float2(x: 0, y: -5)
+            case .Walk_Left:
+                return float2(x: -5, y: 0)
+            case .Walk_Right:
+                return float2(x: 5, y: 0)
+            default:
+                return float2(x: 0, y: 0)
+            }
+        }
+        
+        func repeatNumberOf(action: UserStep) -> Int {
+            switch action.number {
+            case .one:
+                return 1
+            case .two:
+                return 2
+            case .three:
+                return 3
+            case .four:
+                return 4
+            case .five:
+                return 5
+            default:
+                return 1
+            }
+        }
+        
+        func actionSequenceDidChange(actions: [UserStep]) {
+            actions.forEach({userStep in
+                let repeatTime = repeatNumberOf(action: userStep)
+                for _ in 0 ..< repeatTime {
+                    let navigation = convert(action: userStep)
+                    characterDirection = navigation
+                }
+            })
+        }
+    }
