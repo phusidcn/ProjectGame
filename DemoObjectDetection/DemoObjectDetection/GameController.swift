@@ -11,6 +11,8 @@ import GameplayKit
 import SceneKit
 import ObjectsDetectionKit
 
+    public let velocity: Float = 5
+    
 // Collision bit masks
 struct Bitmask: OptionSet {
     let rawValue: Int
@@ -1149,13 +1151,13 @@ class GameController: NSObject, ExtraProtocols {
             case .Jump_Right:
                 return float2(x: 0, y: 0)
             case .Walk_Up:
-                return float2(x: 0, y: 5)
+                return float2(x: 0, y: velocity)
             case .Walk_Down:
-                return float2(x: 0, y: -5)
+                return float2(x: 0, y: -velocity)
             case .Walk_Left:
-                return float2(x: -5, y: 0)
+                return float2(x: -velocity, y: 0)
             case .Walk_Right:
-                return float2(x: 5, y: 0)
+                return float2(x: velocity, y: 0)
             default:
                 return float2(x: 0, y: 0)
             }
@@ -1181,10 +1183,16 @@ class GameController: NSObject, ExtraProtocols {
         func actionSequenceDidChange(actions: [UserStep]) {
             actions.forEach({userStep in
                 let repeatTime = repeatNumberOf(action: userStep)
+                print("\(userStep.action) \(userStep.number)")
                 for _ in 0 ..< repeatTime {
                     let navigation = convert(action: userStep)
+//                    characterDirection = [0,0]
                     characterDirection = navigation
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime(uptimeNanoseconds: 500000000), execute: {
+                        self.characterDirection = [0,0]
+                    })
                 }
             })
+            print("==================================================")
         }
     }

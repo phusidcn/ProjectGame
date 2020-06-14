@@ -355,7 +355,6 @@ extension VisionObjectRecognition {
             return step1.position.origin.y > step2.position.origin.y
         })
         if !isPreviousObjectsSame(currentObjects: results) {
-            print(results)
             previousObjects = results
             self.delegate?.actionSequenceDidChange(actions: results)
         }
