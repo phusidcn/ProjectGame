@@ -26,10 +26,18 @@ extension objectDetection: Equatable {
     }
 }
 
+public enum PlayerMode {
+    case onePlayer
+    case twoPlayer
+}
+
 public class VisionObjectRecognition: UIViewController {
+    //MARK: - Public Properties
+    public var playMode: PlayerMode?
     public var delegate: ObjectsRecognitionDelegate?
-    var previousObjects: [UserStep] = []
     
+    //MARK: - Private Properties
+    private var previousObjects: [UserStep] = []
     var bufferSize: CGSize = .zero
     var rootLayer: CALayer! = nil
     private let session = AVCaptureSession()
@@ -119,6 +127,7 @@ public class VisionObjectRecognition: UIViewController {
     }
 }
 
+//MARK: - AVCamera Capture
 extension VisionObjectRecognition: AVCaptureVideoDataOutputSampleBufferDelegate {
     open func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
@@ -144,9 +153,6 @@ extension VisionObjectRecognition: AVCaptureVideoDataOutputSampleBufferDelegate 
 
 extension VisionObjectRecognition {
     public func setupVision() throws {
-//        guard let modelURL = Bundle.main.url(forResource: "BlockRecognition", withExtension: "mlmodel") else {
-//            return
-//        }
         let modelURL = BlockRecognition.urlOfModelInThisBundle
         do {
             let visionModel = try VNCoreMLModel(for: MLModel(contentsOf: modelURL))
@@ -176,7 +182,11 @@ extension VisionObjectRecognition {
             let rawObject = objectDetection(name: topLabelObservationName, bound: objectBounds)
             rawResults.append(rawObject)
         }
-        sortObjectOnTopDownOrder(with: rawResults)
+        if self.playMode == .onePlayer {
+            sortObjectOnTopDownOrderWithOnePlayerMode(with: rawResults)
+        } else {
+            sortObjectOnTopDownOrderWithTwoPlayerMode(woth: rawResults)
+        }
     }
     
     private func findNearest(position: CGRect, in objects: [objectDetection]) -> objectDetection {
@@ -207,7 +217,7 @@ extension VisionObjectRecognition {
         return true
     }
     
-    private func sortObjectOnTopDownOrder(with objects:[objectDetection]) {
+    private func sortObjectOnTopDownOrderWithOnePlayerMode(with objects:[objectDetection]) {
         var actions: [objectDetection] = []
         var numbers: [objectDetection] = []
         var danger: objectDetection? = nil
@@ -349,5 +359,36 @@ extension VisionObjectRecognition {
             previousObjects = results
             self.delegate?.actionSequenceDidChange(actions: results)
         }
+    }
+    
+    private func sortObjectOnTopDownOrderWithTwoPlayerMode(woth objects: [objectDetection]) {
+        var actions: [objectDetection] = []
+        var numbers: [objectDetection] = []
+        var danger: objectDetection? = nil
+        var stars: objectDetection? = nil
+        var userGesture: objectDetection? = nil
+        for object in objects {
+            if object.name == "Walk_Up" || object.name == "Walk_Down" || object.name == "Walk_Left" || object.name == "Walk_Right" || object.name == "Jump_Up" || object.name == "Jump_Down" || object.name == "Jump_Left" || object.name == "Jump_Right" || object.name == "Hand_Up" || object.name == "Hand_Down" || object.name == "Hand_Left" || object.name == "Hand_Right" || object.name == "Repeat" {
+                actions.append(object)
+                continue
+            }
+            if object.name == "Number_1" || object.name == "Number_2" || object.name == "Number_3" || object.name == "Number_4" || object.name == "Number_5" {
+                numbers.append(object)
+                continue
+            }
+            if object.name == "Stars" {
+                stars = object
+                continue
+            } else {
+                userGesture = object
+            }
+        }
+        
+        actions.sort(by: {(object1: objectDetection, object2: objectDetection) -> Bool in
+            return object2.bound.origin.y > object1.bound.origin.y
+        })
+        guard let firstLeftBlock = actions.first else { return }
+        
+        
     }
 }
