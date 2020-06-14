@@ -59,7 +59,7 @@ class GameController: NSObject, ExtraProtocols {
 
     // Overlays
     private var overlay: Overlay?
-
+    private let controllerQueue: DispatchQueue = DispatchQueue(label: "com.controller.sync")
     // Character
     private var character: Character?
 
@@ -1186,10 +1186,11 @@ class GameController: NSObject, ExtraProtocols {
                 print("\(userStep.action) \(userStep.number)")
                 for _ in 0 ..< repeatTime {
                     let navigation = convert(action: userStep)
-//                    characterDirection = [0,0]
-                    characterDirection = navigation
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime(uptimeNanoseconds: 500000000), execute: {
-                        self.characterDirection = [0,0]
+                    controllerQueue.async {
+                        self.characterDirection = navigation
+                    }
+                    controllerQueue.asyncAfter(deadline: .now() + 0.5, execute: {
+                        self.characterDirection = float2(x: 0, y: 0)
                     })
                 }
             })
