@@ -11,7 +11,7 @@ import GameplayKit
 import SceneKit
 import ObjectsDetectionKit
 
-    public let velocity: Float = 5
+    public let velocity: Float = 0.5
     
 // Collision bit masks
 struct Bitmask: OptionSet {
@@ -1151,9 +1151,9 @@ class GameController: NSObject, ExtraProtocols {
             case .Jump_Right:
                 return float2(x: 0, y: 0)
             case .Walk_Up:
-                return float2(x: 0, y: velocity)
-            case .Walk_Down:
                 return float2(x: 0, y: -velocity)
+            case .Walk_Down:
+                return float2(x: 0, y: velocity)
             case .Walk_Left:
                 return float2(x: -velocity, y: 0)
             case .Walk_Right:
@@ -1181,19 +1181,24 @@ class GameController: NSObject, ExtraProtocols {
         }
         
         func actionSequenceDidChange(actions: [UserStep]) {
-            actions.forEach({userStep in
-                let repeatTime = repeatNumberOf(action: userStep)
-                print("\(userStep.action) \(userStep.number)")
-                for _ in 0 ..< repeatTime {
-                    let navigation = convert(action: userStep)
-                    controllerQueue.async {
-                        self.characterDirection = navigation
-                    }
-                    controllerQueue.asyncAfter(deadline: .now() + 0.5, execute: {
-                        self.characterDirection = float2(x: 0, y: 0)
-                    })
-                }
+            let needToExecute: Bool = actions.contains(where: {userstep in
+                return userstep.action == .Pressed
             })
+            if needToExecute {
+                actions.forEach({userStep in
+                    let repeatTime = repeatNumberOf(action: userStep)
+                    print("\(userStep.action) \(userStep.number)")
+                    for _ in 0 ..< repeatTime {
+                        let navigation = convert(action: userStep)
+                        controllerQueue.async {
+                            self.characterDirection = navigation
+                        }
+                        controllerQueue.asyncAfter(deadline: .now() + 0.5, execute: {
+                            self.characterDirection = float2(x: 0, y: 0)
+                        })
+                    }
+                })
+            }
             print("==================================================")
         }
     }
