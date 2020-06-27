@@ -781,6 +781,7 @@ class GameController: NSObject, ExtraProtocols {
         }
         set {
             var direction = newValue
+            print(newValue)
             let l = simd_length(direction)
             if l > 1.0 {
                 direction *= 1 / l
@@ -1184,20 +1185,21 @@ class GameController: NSObject, ExtraProtocols {
             let needToExecute: Bool = actions.contains(where: {userstep in
                 return userstep.action == .Pressed
             })
+            
             if needToExecute {
-                actions.forEach({userStep in
-                    let repeatTime = repeatNumberOf(action: userStep)
-                    print("\(userStep.action) \(userStep.number)")
-                    for _ in 0 ..< repeatTime {
-                        let navigation = convert(action: userStep)
-                        controllerQueue.async {
-                            self.characterDirection = navigation
-                        }
-                        controllerQueue.asyncAfter(deadline: .now() + 0.5, execute: {
-                            self.characterDirection = float2(x: 0, y: 0)
-                        })
-                    }
-                })
+                let semaphore: DispatchSemaphore = DispatchSemaphore(value: 0)
+                            
+                            actions.forEach({userStep in
+                                let repeatTime = repeatNumberOf(action: userStep)
+                                print("\(userStep.action) \(userStep.number)")
+                                for _ in 0 ..< repeatTime {
+                                    let navigation = convert(action: userStep)
+                                    self.characterDirection = navigation
+                                    semaphore.wait(timeout: .now() + .milliseconds(500))
+                                    self.characterDirection = float2(x: 0, y: 0)
+                                    semaphore.wait(timeout: .now() + .seconds(1))
+                                }
+                            })
             }
             print("==================================================")
         }
