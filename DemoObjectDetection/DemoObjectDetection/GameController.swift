@@ -1144,13 +1144,13 @@ class GameController: NSObject, ExtraProtocols {
             case .Hand_Right:
                 return float2(x: 0, y: 0)
             case .Jump_Down:
-                return float2(x: 0, y: 0)
+                return float2(x: 0, y: velocity)
             case .Jump_Up:
-                return float2(x: 0, y: 0)
+                return float2(x: 0, y: -velocity)
             case .Jump_Left:
-                return float2(x: 0, y: 0)
+                return float2(x: -velocity, y: 0)
             case .Jump_Right:
-                return float2(x: 0, y: 0)
+                return float2(x: velocity, y: 0)
             case .Walk_Up:
                 return float2(x: 0, y: -velocity)
             case .Walk_Down:
@@ -1181,25 +1181,45 @@ class GameController: NSObject, ExtraProtocols {
             }
         }
         
+        func walkAction(userStep: UserStep) {
+            let semaphore: DispatchSemaphore = DispatchSemaphore(value: 0)
+            let navigation = convert(action: userStep)
+            self.characterDirection = navigation
+            semaphore.wait(timeout: .now() + .milliseconds(500))
+            self.characterDirection = float2(x: 0, y: 0)
+            semaphore.wait(timeout: .now() + .milliseconds(500))
+        }
+        
+        func jumpAction(userStep: UserStep) {
+            let semaphore: DispatchSemaphore = DispatchSemaphore(value: 0)
+            let navigation = convert(action: userStep)
+            character?.isJump = true
+            self.characterDirection = navigation
+            semaphore.wait(timeout: .now() + .milliseconds(700))
+            character?.isJump = false
+            self.characterDirection = float2(x: 0, y: 0)
+            semaphore.wait(timeout: .now() + .milliseconds(500))
+        }
+        
         func actionSequenceDidChange(actions: [UserStep]) {
             let needToExecute: Bool = actions.contains(where: {userstep in
                 return userstep.action == .Pressed
             })
-            
             if needToExecute {
-                let semaphore: DispatchSemaphore = DispatchSemaphore(value: 0)
-                            
-                            actions.forEach({userStep in
-                                let repeatTime = repeatNumberOf(action: userStep)
-                                print("\(userStep.action) \(userStep.number)")
-                                for _ in 0 ..< repeatTime {
-                                    let navigation = convert(action: userStep)
-                                    self.characterDirection = navigation
-                                    semaphore.wait(timeout: .now() + .milliseconds(500))
-                                    self.characterDirection = float2(x: 0, y: 0)
-                                    semaphore.wait(timeout: .now() + .seconds(1))
-                                }
-                            })
+                actions.forEach({userStep in
+                    let repeatTime = repeatNumberOf(action: userStep)
+                    print("\(userStep.action) \(userStep.number)")
+                    for _ in 0 ..< repeatTime {
+                        switch userStep.action {
+                        case .Walk_Up, .Walk_Down, .Walk_Left, .Walk_Right:
+                            walkAction(userStep: userStep)
+                        case .Jump_Up, .Jump_Down, .Jump_Left, .Jump_Right:
+                            jumpAction(userStep: userStep)
+                        default:
+                            break
+                        }
+                    }
+                })
             }
             print("==================================================")
         }
