@@ -15,6 +15,8 @@ class ViewController: UIViewController {
         return view as! SCNView
     }
     
+    
+    
     var gameController: GameController?
 
     override func viewDidLoad() {
