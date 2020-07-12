@@ -39,6 +39,8 @@ class ViewController: UIViewController {
             return .allButUpsideDown
         } else {
             return .all
+            
+            
         }
     }
 
