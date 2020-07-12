@@ -153,7 +153,8 @@ extension VisionObjectRecognition: AVCaptureVideoDataOutputSampleBufferDelegate 
 
 extension VisionObjectRecognition {
     public func setupVision() throws {
-        let modelURL = BlockRecognition.urlOfModelInThisBundle
+        //let modelURL = BlockRecognition.urlOfModelInThisBundle
+        let modelURL = BlockRecognitionTouchRemove.urlOfModelInThisBundle
         do {
             let visionModel = try VNCoreMLModel(for: MLModel(contentsOf: modelURL))
             let objectRecognition = VNCoreMLRequest(model: visionModel, completionHandler: {(request, error) in

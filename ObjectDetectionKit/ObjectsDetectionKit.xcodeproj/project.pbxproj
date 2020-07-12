@@ -13,6 +13,7 @@
 		535A7FB4243F10560090854D /* ObjectsRecognitionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 535A7FB3243F10560090854D /* ObjectsRecognitionProtocol.swift */; };
 		5398E23E244BEAA90059E48B /* VisionObjectRecognition.swift in Headers */ = {isa = PBXBuildFile; fileRef = 535A7FB1243EB6F50090854D /* VisionObjectRecognition.swift */; settings = {ATTRIBUTES = (Public, ); }; };
 		5398E23F244BEAAD0059E48B /* ObjectsRecognitionProtocol.swift in Headers */ = {isa = PBXBuildFile; fileRef = 535A7FB3243F10560090854D /* ObjectsRecognitionProtocol.swift */; settings = {ATTRIBUTES = (Public, ); }; };
+		53E7CDFE24B2138100B89751 /* BlockRecognitionTouchRemove.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 53E7CDFD24B2138100B89751 /* BlockRecognitionTouchRemove.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		535A7FAA243EADCC0090854D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		535A7FB1243EB6F50090854D /* VisionObjectRecognition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionObjectRecognition.swift; sourceTree = "<group>"; };
 		535A7FB3243F10560090854D /* ObjectsRecognitionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectsRecognitionProtocol.swift; sourceTree = "<group>"; };
+		53E7CDFD24B2138100B89751 /* BlockRecognitionTouchRemove.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = BlockRecognitionTouchRemove.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 		535A7FA8243EADCC0090854D /* ObjectsDetectionKit */ = {
 			isa = PBXGroup;
 			children = (
+				53E7CDFD24B2138100B89751 /* BlockRecognitionTouchRemove.mlmodel */,
 				53115AAB244D4ADC0044C7ED /* BlockRecognition.mlmodel */,
 				535A7FA9243EADCC0090854D /* ObjectsDetectionKit.h */,
 				535A7FAA243EADCC0090854D /* Info.plist */,
@@ -147,6 +150,7 @@
 			files = (
 				53115AAC244D4ADC0044C7ED /* BlockRecognition.mlmodel in Sources */,
 				535A7FB4243F10560090854D /* ObjectsRecognitionProtocol.swift in Sources */,
+				53E7CDFE24B2138100B89751 /* BlockRecognitionTouchRemove.mlmodel in Sources */,
 				535A7FB2243EB6F50090854D /* VisionObjectRecognition.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
