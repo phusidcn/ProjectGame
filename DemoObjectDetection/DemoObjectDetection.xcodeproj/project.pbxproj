@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3632230024C41DB4004E2C1A /* Ultils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363222FF24C41DB4004E2C1A /* Ultils.swift */; };
+		3646618824C422F200B7D68D /* Charecter+Behavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3646618724C422F200B7D68D /* Charecter+Behavior.swift */; };
+		36FA601A24C426B500478133 /* Overlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FA601924C426B500478133 /* Overlay.swift */; };
+		36FA601D24C427D000478133 /* HandlerBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FA601C24C427D000478133 /* HandlerBlock.swift */; };
+		36FA601F24C428BF00478133 /* GameController+HandEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FA601E24C428BF00478133 /* GameController+HandEffect.swift */; };
 		5304DCF7245912860075BC9C /* ObjectsDetectionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5304DCF6245912860075BC9C /* ObjectsDetectionKit.framework */; };
 		5304DCF8245912860075BC9C /* ObjectsDetectionKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5304DCF6245912860075BC9C /* ObjectsDetectionKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5398E228244BE50A0059E48B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5398E227244BE50A0059E48B /* AppDelegate.swift */; };
@@ -17,15 +22,12 @@
 		5398E234244BE50C0059E48B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5398E233244BE50C0059E48B /* Assets.xcassets */; };
 		5398E237244BE50C0059E48B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5398E235244BE50C0059E48B /* LaunchScreen.storyboard */; };
 		BF38625624739DF600DC1A03 /* SimdExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF38625524739DF600DC1A03 /* SimdExtensions.swift */; };
-		BF38625C2473A0BA00DC1A03 /* Overlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3862572473A0B800DC1A03 /* Overlay.swift */; };
 		BF38625D2473A0BA00DC1A03 /* PlayerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3862582473A0B800DC1A03 /* PlayerComponent.swift */; };
 		BF38625E2473A0BA00DC1A03 /* BaseComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3862592473A0B900DC1A03 /* BaseComponent.swift */; };
-		BF38625F2473A0BA00DC1A03 /* ChaserComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF38625A2473A0B900DC1A03 /* ChaserComponent.swift */; };
+		BF38625F2473A0BA00DC1A03 /* BehaviorComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF38625A2473A0B900DC1A03 /* BehaviorComponent.swift */; };
 		BF3862602473A0BA00DC1A03 /* ScaredComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF38625B2473A0BA00DC1A03 /* ScaredComponent.swift */; };
 		BF3862622473A11300DC1A03 /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3862612473A11300DC1A03 /* GameController.swift */; };
-		BF3862642473A12D00DC1A03 /* ControlOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3862632473A12D00DC1A03 /* ControlOverlay.swift */; };
 		BF3862662473A13300DC1A03 /* ButtonOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3862652473A13300DC1A03 /* ButtonOverlay.swift */; };
-		BF3862682473A13900DC1A03 /* PadOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3862672473A13900DC1A03 /* PadOverlay.swift */; };
 		BF38626D2473A19300DC1A03 /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF38626A2473A19300DC1A03 /* Slider.swift */; };
 		BF38626E2473A19300DC1A03 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF38626B2473A19300DC1A03 /* Menu.swift */; };
 		BF38626F2473A19300DC1A03 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF38626C2473A19300DC1A03 /* Button.swift */; };
@@ -51,6 +53,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		363222FF24C41DB4004E2C1A /* Ultils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ultils.swift; sourceTree = "<group>"; };
+		3646618724C422F200B7D68D /* Charecter+Behavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Charecter+Behavior.swift"; sourceTree = "<group>"; };
+		36FA601924C426B500478133 /* Overlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Overlay.swift; sourceTree = "<group>"; };
+		36FA601C24C427D000478133 /* HandlerBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerBlock.swift; sourceTree = "<group>"; };
+		36FA601E24C428BF00478133 /* GameController+HandEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameController+HandEffect.swift"; sourceTree = "<group>"; };
 		5304DCF6245912860075BC9C /* ObjectsDetectionKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ObjectsDetectionKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5398E224244BE50A0059E48B /* DemoObjectDetection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoObjectDetection.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5398E227244BE50A0059E48B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -62,15 +69,12 @@
 		5398E236244BE50C0059E48B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5398E238244BE50C0059E48B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BF38625524739DF600DC1A03 /* SimdExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimdExtensions.swift; sourceTree = "<group>"; };
-		BF3862572473A0B800DC1A03 /* Overlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Overlay.swift; sourceTree = "<group>"; };
 		BF3862582473A0B800DC1A03 /* PlayerComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerComponent.swift; sourceTree = "<group>"; };
 		BF3862592473A0B900DC1A03 /* BaseComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseComponent.swift; sourceTree = "<group>"; };
-		BF38625A2473A0B900DC1A03 /* ChaserComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChaserComponent.swift; sourceTree = "<group>"; };
+		BF38625A2473A0B900DC1A03 /* BehaviorComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BehaviorComponent.swift; sourceTree = "<group>"; };
 		BF38625B2473A0BA00DC1A03 /* ScaredComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScaredComponent.swift; sourceTree = "<group>"; };
 		BF3862612473A11300DC1A03 /* GameController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
-		BF3862632473A12D00DC1A03 /* ControlOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlOverlay.swift; sourceTree = "<group>"; };
 		BF3862652473A13300DC1A03 /* ButtonOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonOverlay.swift; sourceTree = "<group>"; };
-		BF3862672473A13900DC1A03 /* PadOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PadOverlay.swift; sourceTree = "<group>"; };
 		BF38626A2473A19300DC1A03 /* Slider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Slider.swift; sourceTree = "<group>"; };
 		BF38626B2473A19300DC1A03 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		BF38626C2473A19300DC1A03 /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
@@ -93,6 +97,45 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		36FA601624C4268300478133 /* Charecter */ = {
+			isa = PBXGroup;
+			children = (
+				3646618724C422F200B7D68D /* Charecter+Behavior.swift */,
+				BF63633A2463C94000E9BBC5 /* Character.swift */,
+			);
+			path = Charecter;
+			sourceTree = "<group>";
+		};
+		36FA601724C4268F00478133 /* GameController */ = {
+			isa = PBXGroup;
+			children = (
+				BF3862612473A11300DC1A03 /* GameController.swift */,
+				36FA601C24C427D000478133 /* HandlerBlock.swift */,
+				36FA601E24C428BF00478133 /* GameController+HandEffect.swift */,
+			);
+			path = GameController;
+			sourceTree = "<group>";
+		};
+		36FA601824C4269F00478133 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				BF38625B2473A0BA00DC1A03 /* ScaredComponent.swift */,
+				BF3862592473A0B900DC1A03 /* BaseComponent.swift */,
+				BF3862582473A0B800DC1A03 /* PlayerComponent.swift */,
+				BF38625A2473A0B900DC1A03 /* BehaviorComponent.swift */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
+		36FA601B24C426E100478133 /* Ultils */ = {
+			isa = PBXGroup;
+			children = (
+				BF6363312463AAD800E9BBC5 /* GameObject.swift */,
+				363222FF24C41DB4004E2C1A /* Ultils.swift */,
+			);
+			path = Ultils;
+			sourceTree = "<group>";
+		};
 		5304DCF5245912860075BC9C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +183,8 @@
 		BF3862692473A19300DC1A03 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				BF3862652473A13300DC1A03 /* ButtonOverlay.swift */,
+				36FA601924C426B500478133 /* Overlay.swift */,
 				BF38626A2473A19300DC1A03 /* Slider.swift */,
 				BF38626B2473A19300DC1A03 /* Menu.swift */,
 				BF38626C2473A19300DC1A03 /* Button.swift */,
@@ -150,19 +195,12 @@
 		BF6363302463AAB100E9BBC5 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				36FA601B24C426E100478133 /* Ultils */,
+				36FA601824C4269F00478133 /* Component */,
+				36FA601724C4268F00478133 /* GameController */,
+				36FA601624C4268300478133 /* Charecter */,
 				BF3862692473A19300DC1A03 /* UI */,
-				BF3862592473A0B900DC1A03 /* BaseComponent.swift */,
-				BF38625A2473A0B900DC1A03 /* ChaserComponent.swift */,
-				BF3862572473A0B800DC1A03 /* Overlay.swift */,
-				BF3862612473A11300DC1A03 /* GameController.swift */,
-				BF3862672473A13900DC1A03 /* PadOverlay.swift */,
-				BF3862582473A0B800DC1A03 /* PlayerComponent.swift */,
-				BF38625B2473A0BA00DC1A03 /* ScaredComponent.swift */,
-				BF3862632473A12D00DC1A03 /* ControlOverlay.swift */,
-				BF3862652473A13300DC1A03 /* ButtonOverlay.swift */,
 				BF38625524739DF600DC1A03 /* SimdExtensions.swift */,
-				BF6363312463AAD800E9BBC5 /* GameObject.swift */,
-				BF63633A2463C94000E9BBC5 /* Character.swift */,
 			);
 			name = Game;
 			sourceTree = "<group>";
@@ -240,16 +278,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36FA601D24C427D000478133 /* HandlerBlock.swift in Sources */,
 				BF38625E2473A0BA00DC1A03 /* BaseComponent.swift in Sources */,
 				BF3862622473A11300DC1A03 /* GameController.swift in Sources */,
-				BF3862682473A13900DC1A03 /* PadOverlay.swift in Sources */,
-				BF3862642473A12D00DC1A03 /* ControlOverlay.swift in Sources */,
+				3646618824C422F200B7D68D /* Charecter+Behavior.swift in Sources */,
 				5398E22C244BE50A0059E48B /* ViewController.swift in Sources */,
 				BF3862662473A13300DC1A03 /* ButtonOverlay.swift in Sources */,
 				BF6363342463AE5400E9BBC5 /* art.swift in Sources */,
 				BF38626F2473A19300DC1A03 /* Button.swift in Sources */,
-				BF38625C2473A0BA00DC1A03 /* Overlay.swift in Sources */,
 				5398E228244BE50A0059E48B /* AppDelegate.swift in Sources */,
+				36FA601F24C428BF00478133 /* GameController+HandEffect.swift in Sources */,
+				3632230024C41DB4004E2C1A /* Ultils.swift in Sources */,
 				BF38626D2473A19300DC1A03 /* Slider.swift in Sources */,
 				BF38625D2473A0BA00DC1A03 /* PlayerComponent.swift in Sources */,
 				BF63633B2463C94000E9BBC5 /* Character.swift in Sources */,
@@ -258,7 +297,8 @@
 				BF38626E2473A19300DC1A03 /* Menu.swift in Sources */,
 				BF3862602473A0BA00DC1A03 /* ScaredComponent.swift in Sources */,
 				BF38625624739DF600DC1A03 /* SimdExtensions.swift in Sources */,
-				BF38625F2473A0BA00DC1A03 /* ChaserComponent.swift in Sources */,
+				36FA601A24C426B500478133 /* Overlay.swift in Sources */,
+				BF38625F2473A0BA00DC1A03 /* BehaviorComponent.swift in Sources */,
 				BF6363322463AAD800E9BBC5 /* GameObject.swift in Sources */,
 				BF6363392463B98300E9BBC5 /* Game1.swift in Sources */,
 			);

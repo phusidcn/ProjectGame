@@ -14,10 +14,8 @@ import ObjectsDetectionKit
 // Collision bit masks
 struct Bitmask: OptionSet {
     let rawValue: Int
-    static let character = Bitmask(rawValue: 1 << 0) // the main character
+    static let character = Bitmask(rawValue: 1 << 0)
     static let collision = Bitmask(rawValue: 1 << 1) // the ground and walls
-    static let enemy = Bitmask(rawValue: 1 << 2) // the enemies
-    static let trigger = Bitmask(rawValue: 1 << 3) // the box that triggers camera changes and other actions
     static let collectable = Bitmask(rawValue: 1 << 4) // the collectables (gems and key)
 }
 
@@ -43,7 +41,7 @@ class GameController: NSObject, ExtraProtocols {
     static let NumberOfFiends = 100
     static let CameraOrientationSensitivity: Float = 0.05
 
-    private var scene: SCNScene?
+    public var scene: SCNScene?
     private weak var sceneRenderer: SCNSceneRenderer?
     private var objectRecognition: VisionObjectRecognition?
 
@@ -51,7 +49,7 @@ class GameController: NSObject, ExtraProtocols {
     private var overlay: Overlay?
     private let controllerQueue: DispatchQueue = DispatchQueue(label: "com.controller.sync")
     // Character
-    private var character: Character?
+    public var character: Character?
 
 
     //triggers
@@ -241,12 +239,10 @@ class GameController: NSObject, ExtraProtocols {
     // MARK: - cinematic
 
     func startCinematic() {
-//        playingCinematic = true
-//        character!.node!.isPaused = true
+
     }
 
     func stopCinematic() {
-//        playingCinematic = false
         character!.node!.isPaused = false
     }
 
@@ -367,11 +363,6 @@ class GameController: NSObject, ExtraProtocols {
         self.overlay?.showEndScreen()
     }
 
-  
-
-    
-
-
  
 }
 
@@ -384,156 +375,7 @@ class GameController: NSObject, ExtraProtocols {
 
 
 
-extension GameController: ObjectsRecognitionDelegate {
-        
-        func convert(action: UserStep) -> float2 {
-            switch action.action {
-            case .Hand_Down:
-                return float2(x: 0, y: 0)
-            case .Hand_Up:
-                return float2(x: 0, y: 0)
-            case .Hand_Left:
-                return float2(x: 0, y: 0)
-            case .Hand_Right:
-                return float2(x: 0, y: 0)
-            case .Jump_Down:
-                return float2(x: 0, y: velocity)
-            case .Jump_Up:
-                return float2(x: 0, y: -velocity)
-            case .Jump_Left:
-                return float2(x: -velocity, y: 0)
-            case .Jump_Right:
-                return float2(x: velocity, y: 0)
-            case .Walk_Up:
-                return float2(x: 0, y: -velocity)
-            case .Walk_Down:
-                return float2(x: 0, y: velocity)
-            case .Walk_Left:
-                return float2(x: -velocity, y: 0)
-            case .Walk_Right:
-                return float2(x: velocity, y: 0)
-            default:
-                return float2(x: 0, y: 0)
-            }
-        }
-        
-        func repeatNumberOf(action: UserStep) -> Int {
-            switch action.number {
-            case .one:
-                return 1
-            case .two:
-                return 2
-            case .three:
-                return 3
-            case .four:
-                return 4
-            case .five:
-                return 5
-            default:
-                return 1
-            }
-        }
-        
-        func walkAction(userStep: UserStep) {
-            let semaphore: DispatchSemaphore = DispatchSemaphore(value: 0)
-            let navigation = convert(action: userStep)
-            self.characterDirection = navigation
-            semaphore.wait(timeout: .now() + .milliseconds(500))
-            self.characterDirection = float2(x: 0, y: 0)
-            semaphore.wait(timeout: .now() + .milliseconds(500))
-        }
-        
-        func jumpAction(userStep: UserStep) {
-            let semaphore: DispatchSemaphore = DispatchSemaphore(value: 0)
-            let navigation = convert(action: userStep)
-            character?.isJump = true
-            self.characterDirection = navigation
-            semaphore.wait(timeout: .now() + .milliseconds(700))
-            character?.isJump = false
-            self.characterDirection = float2(x: 0, y: 0)
-            semaphore.wait(timeout: .now() + .milliseconds(500))
-        }
-        
-        func actionSequenceDidChange(actions: [UserStep]) {
-            let needToExecute: Bool = actions.contains(where: {userstep in
-                return userstep.action == .Pressed
-            })
-            if needToExecute {
-                actions.forEach({userStep in
-                    let repeatTime = repeatNumberOf(action: userStep)
-                    print("\(userStep.action) \(userStep.number)")
-                    for _ in 0 ..< repeatTime {
-                        switch userStep.action {
-                        case .Walk_Up, .Walk_Down, .Walk_Left, .Walk_Right:
-                            walkAction(userStep: userStep)
-                        case .Jump_Up, .Jump_Down, .Jump_Left, .Jump_Right:
-                            jumpAction(userStep: userStep)
-                        default:
-                            break
-                        }
-                    }
-                })
-            }
-            print("==================================================")
-        }
-    }
+
     
-    extension GameController {
-        // MARK: - Configure rendering quality
-
-          func turnOffEXRForMAterialProperty(property: SCNMaterialProperty) {
-              if var propertyPath = property.contents as? NSString {
-                  if propertyPath.pathExtension == "exr" {
-                      propertyPath = ((propertyPath.deletingPathExtension as NSString).appendingPathExtension("png")! as NSString)
-                      property.contents = propertyPath
-                  }
-              }
-          }
-
-          func turnOffEXR() {
-              self.turnOffEXRForMAterialProperty(property: scene!.background)
-              self.turnOffEXRForMAterialProperty(property: scene!.lightingEnvironment)
-
-              scene?.rootNode.enumerateChildNodes { (child: SCNNode, _: UnsafeMutablePointer<ObjCBool>) in
-                  if let materials = child.geometry?.materials {
-                      for material in materials {
-                          self.turnOffEXRForMAterialProperty(property: material.selfIllumination)
-                      }
-                  }
-              }
-          }
-
-          func turnOffNormalMaps() {
-              scene?.rootNode.enumerateChildNodes({ (child: SCNNode, _: UnsafeMutablePointer<ObjCBool>) in
-                  if let materials = child.geometry?.materials {
-                      for material in materials {
-                          material.normal.contents = SKColor.black
-                      }
-                  }
-              })
-          }
-
-         
-
-          func turnOffOverlay() {
-              sceneRenderer?.overlaySKScene = nil
-          }
-
-          func turnOffVertexShaderModifiers() {
-              scene?.rootNode.enumerateChildNodes({ (child: SCNNode, _: UnsafeMutablePointer<ObjCBool>) in
-                  if var shaderModifiers = child.geometry?.shaderModifiers {
-                      shaderModifiers[SCNShaderModifierEntryPoint.geometry] = nil
-                      child.geometry?.shaderModifiers = shaderModifiers
-                  }
-
-                  if let materials = child.geometry?.materials {
-                      for material in materials where material.shaderModifiers != nil {
-                          var shaderModifiers = material.shaderModifiers!
-                          shaderModifiers[SCNShaderModifierEntryPoint.geometry] = nil
-                          material.shaderModifiers = shaderModifiers
-                      }
-                  }
-              })
-          }
-    }
+ 
     

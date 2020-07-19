@@ -114,7 +114,7 @@ class Character: NSObject {
     }
 
     private func loadCharacter() {
-        /// Load character from external file
+       
         let scene = SCNScene( named: "Art.scnassets/character/pig.scn")!
         model = scene.rootNode.childNode( withName: "Pig_rootNode", recursively: true)
         model.simdPosition = Character.modelOffset
@@ -129,7 +129,7 @@ class Character: NSObject {
         characterOrientation.addChildNode(model)
 
         let collider = model.childNode(withName: "collider", recursively: true)!
-        collider.physicsBody?.collisionBitMask = Int(([ .enemy, .trigger, .collectable ] as Bitmask).rawValue)
+        collider.physicsBody?.collisionBitMask = Int(([.collectable ] as Bitmask).rawValue)
 
         // Setup collision shape
         let (min, max) = model.boundingBox
@@ -164,16 +164,13 @@ class Character: NSObject {
         whiteSmokeEmitterBirthRate = whiteSmokeEmitter.birthRate
         whiteSmokeEmitter.birthRate = 0
 
-        particleScene = SCNScene(named:"Art.scnassets/particles/particles_spin.scn")!
-        spinParticle = (particleScene.rootNode.childNode(withName: "particles_spin", recursively: true)?.particleSystems?.first!)!
-        spinCircleParticle = (particleScene.rootNode.childNode(withName: "particles_spin_circle", recursively: true)?.particleSystems?.first!)!
+       
 
         particleEmitter.position = SCNVector3Make(0, 0.05, 0)
         particleEmitter.addParticleSystem(fireEmitter)
         particleEmitter.addParticleSystem(smokeEmitter)
         particleEmitter.addParticleSystem(whiteSmokeEmitter)
 
-        spinParticleAttach = model.childNode(withName: "particles_spin_circle", recursively: true)
     }
 
     private func loadSounds() {
@@ -354,11 +351,7 @@ class Character: NSObject {
         if !direction.allZero() {
             characterVelocity = direction * Float(characterSpeed)
             var runModifier = Float(1.0)
-            #if os(OSX)
-            if NSEvent.modifierFlags.contains(.shift) {
-                runModifier = 2.0
-            }
-            #endif
+           
             walkSpeed = CGFloat(runModifier * simd_length(direction))
             
             // move character
@@ -378,6 +371,7 @@ class Character: NSObject {
         let HIT_RANGE = Float(0.2)
         var p0 = wPosition
         var p1 = wPosition
+        
         p0.y = wPosition.y + up.y * HIT_RANGE
         p1.y = wPosition.y - up.y * HIT_RANGE
         
@@ -552,20 +546,7 @@ class Character: NSObject {
     
  
     
-    func wasTouchedByEnemy() {
-        let time = CFAbsoluteTimeGetCurrent()
-        if time > lastHitTime + 1 {
-            lastHitTime = time
-         
-            model!.runAction(SCNAction.sequence([
-                SCNAction.playAudio(hitSound, waitForCompletion: false),
-                SCNAction.repeat(SCNAction.sequence([
-                    SCNAction.fadeOpacity(to: 0.01, duration: 0.1),
-                    SCNAction.fadeOpacity(to: 1.0, duration: 0.1)
-                    ]), count: 4)
-                ]))
-        }
-    }
+
     
     // MARK: utils
     
@@ -581,6 +562,10 @@ class Character: NSObject {
         }
         return animationPlayer
     }
+    
+
+
+
     
     // MARK: - physics contact
     func slideInWorld(fromPosition start: float3, velocity: float3) {
@@ -654,7 +639,6 @@ class Character: NSObject {
         }
         let newDestinationPoint = (destinationPoint + t * slidePlaneNormal) - centerOffset
 
-        // Advance start position to nearest point without collision.
         let computedVelocity = frictionCoeff * Float(1.0 - closestContact.sweepTestFraction)
             * originalDistance * simd_normalize(newDestinationPoint - start)
 
