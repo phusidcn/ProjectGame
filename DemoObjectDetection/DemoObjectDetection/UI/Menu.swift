@@ -1,10 +1,6 @@
-/*
- Copyright (C) 2018 Apple Inc. All Rights Reserved.
- See LICENSE.txt for this sample’s licensing information
- 
- Abstract:
- The `SKNode` based menu.
- */
+// Menu.swift
+//  Created by thi nguyen on 8/4/20.
+//  Copyright © 2020 Busline Ticked. All rights reserved.
 
 import SpriteKit
 
@@ -19,7 +15,7 @@ class Menu: SKNode {
     weak var delegate: MenuDelegate?
 
     var cameraButtons = [Button]()
-    var dofSliders = [Slider]()
+    var dofSliders = [EventSwipe]()
     var isMenuHidden: Bool = false
     
     let buttonMargin = CGFloat(250)
@@ -48,7 +44,7 @@ class Menu: SKNode {
         // Depth of Field
         do {
             let buttonLabels = ["fStop", "Focus"]
-            dofSliders = buttonLabels.map { return Slider(width: 300, height: 10, text:$0) }
+            dofSliders = buttonLabels.map { return EventSwipe(width: 300, height: 10, text:$0) }
             
             for (i, slider) in dofSliders.enumerated() {
                 slider.position = CGPoint(x: buttonMargin, y: CGFloat(size.height - CGFloat(i) * 30.0 - 70.0))

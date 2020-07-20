@@ -1,10 +1,11 @@
-/*
- Copyright (C) 2018 Apple Inc. All Rights Reserved.
- See LICENSE.txt for this sample’s licensing information
- 
- Abstract:
- Exposes game controller action button type functionality with screen-rendered buttons.
- */
+//
+//  ControlOverlay.swift
+//  DemoObjectDetection
+//
+//  Created by thi nguyen on 5/6/20.
+//  Copyright © 2020 Huynh Lam Phu Si. All rights reserved.
+//
+
 
 import SpriteKit
 
@@ -12,8 +13,8 @@ class ControlOverlay: SKNode {
     
     let buttonMargin = CGFloat( 25 )
     
-    var leftPad = PadOverlay()
-    var rightPad = PadOverlay()
+    var leftPad = VieưPadOverlay()
+    var rightPad = VieưPadOverlay()
     var buttonA = ButtonOverlay("A")
     var buttonB = ButtonOverlay("B")
 

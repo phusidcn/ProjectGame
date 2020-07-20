@@ -39,7 +39,7 @@ class GameController: NSObject, ExtraProtocols {
     struct Config {
         let ALTITUDE = 1.00
     }
-        func padOverlayVirtualStickInteractionDidStart(_ padNode: PadOverlay) {
+        func padOverlayVirtualStickInteractionDidStart(_ padNode: VieưPadOverlay) {
             
             if padNode == overlay!.controlOverlay!.leftPad {
                 characterDirection = float2(Float(padNode.stickPosition.x), -Float(padNode.stickPosition.y))
@@ -52,7 +52,7 @@ class GameController: NSObject, ExtraProtocols {
         
         
 
-        func padOverlayVirtualStickInteractionDidChange(_ padNode: PadOverlay) {
+        func padOverlayVirtualStickInteractionDidChange(_ padNode: VieưPadOverlay) {
             if padNode == overlay!.controlOverlay!.leftPad {
                 characterDirection = float2(Float(padNode.stickPosition.x), -Float(padNode.stickPosition.y))
             }
@@ -61,7 +61,7 @@ class GameController: NSObject, ExtraProtocols {
             }
         }
 
-        func padOverlayVirtualStickInteractionDidEnd(_ padNode: PadOverlay) {
+        func padOverlayVirtualStickInteractionDidEnd(_ padNode: VieưPadOverlay) {
             if padNode == overlay!.controlOverlay!.leftPad {
                 characterDirection = [0, 0]
             }
@@ -96,7 +96,7 @@ class GameController: NSObject, ExtraProtocols {
     private var objectRecognition: VisionObjectRecognition?
 
     // Overlays
-    private var overlay: Overlay?
+    private var overlay: HUB?
     private let controllerQueue: DispatchQueue = DispatchQueue(label: "com.controller.sync")
     // Character
     public var character: Character?
@@ -331,7 +331,7 @@ class GameController: NSObject, ExtraProtocols {
 
     init(scnView: SCNView, viewController: ViewController) {
         super.init()
-        viewController.delegate = self
+//        viewController.delegate = self
         self.vc = viewController
         
         objectRecognition = VisionObjectRecognition()
@@ -350,7 +350,7 @@ class GameController: NSObject, ExtraProtocols {
         //scnView.showsStatistics = true
         
         // setup overlay
-        overlay = Overlay(size: scnView.bounds.size, controller: self)
+        overlay = HUB(size: scnView.bounds.size, controller: self)
         scnView.overlaySKScene = overlay
 
         //load the main scene
@@ -524,28 +524,28 @@ class GameController: NSObject, ExtraProtocols {
         self.overlay?.showEndScreen()
     }
 }
-    
-extension GameController: SmartDelegate {
-    func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch in touches {
-                   if true{
-                       // We're in the dpad
-                       if _padTouch  {
-                           _padTouch = touch;
-                       }
-                   }
-                   else if (!_panningTouch) {
-                       // Start panning
-                       _panningTouch = [touches anyObject];
-                   }
-
-                   if (_padTouch && _panningTouch)
-                       break;  // We already have what we need
-               }
-               [super touchesBegan:touches withEvent:event];
-        }
-    }
-}
+//    
+//extension GameController: SmartDelegate {
+//    func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        for touch in touches {
+//                   if true{
+//                       // We're in the dpad
+//                       if _padTouch  {
+//                           _padTouch = touch;
+//                       }
+//                   }
+//                   else if (!_panningTouch) {
+//                       // Start panning
+//                       _panningTouch = [touches anyObject];
+//                   }
+//
+//                   if (_padTouch && _panningTouch)
+//                       break;  // We already have what we need
+//               }
+//               [super touchesBegan:touches withEvent:event];
+//        }
+//    }
+//}
     
 
     

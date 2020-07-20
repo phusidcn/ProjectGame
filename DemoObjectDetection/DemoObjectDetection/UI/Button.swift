@@ -1,10 +1,7 @@
-/*
- Copyright (C) 2018 Apple Inc. All Rights Reserved.
- See LICENSE.txt for this sample’s licensing information
- 
- Abstract:
- A basic `SKNode` based button.
- */
+// Button.swift
+//  Created by thi nguyen on 8/4/20.
+//  Copyright © 2020 Busline Ticked. All rights reserved.
+
 
 import SpriteKit
 

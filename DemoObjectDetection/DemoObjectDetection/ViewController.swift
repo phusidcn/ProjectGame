@@ -38,7 +38,7 @@ class ViewController: UIViewController {
             self.gameView.preferredFramesPerSecond = 60
         }
         
-        gameController = GameController(scnView: gameView, self)
+//        gameController = GameController(scnView: gameView, self)
 
         // Configure the view
         gameView.backgroundColor = UIColor.black

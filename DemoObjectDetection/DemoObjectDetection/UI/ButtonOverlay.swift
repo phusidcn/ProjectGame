@@ -1,10 +1,11 @@
-/*
- Copyright (C) 2018 Apple Inc. All Rights Reserved.
- See LICENSE.txt for this sample’s licensing information
- 
- Abstract:
- Support class for action buttons.
- */
+//
+//  ButtonnOverlay.swift
+//  DemoObjectDetection
+//
+//  Created by thi nguyen on 5/6/20.
+//  Copyright © 2020 Huynh Lam Phu Si. All rights reserved.
+//
+
 
 import SpriteKit
 
