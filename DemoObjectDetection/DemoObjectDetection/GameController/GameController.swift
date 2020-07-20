@@ -331,7 +331,7 @@ class GameController: NSObject, ExtraProtocols {
 
     init(scnView: SCNView, viewController: ViewController) {
         super.init()
-//        viewController.delegate = self
+        viewController.delegate = self
         self.vc = viewController
         
         objectRecognition = VisionObjectRecognition()
@@ -524,9 +524,10 @@ class GameController: NSObject, ExtraProtocols {
         self.overlay?.showEndScreen()
     }
 }
-//    
-//extension GameController: SmartDelegate {
-//    func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    
+extension GameController: SmartDelegate {
+    func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print(touchesBegan)
 //        for touch in touches {
 //                   if true{
 //                       // We're in the dpad
@@ -543,9 +544,9 @@ class GameController: NSObject, ExtraProtocols {
 //                       break;  // We already have what we need
 //               }
 //               [super touchesBegan:touches withEvent:event];
-//        }
-//    }
-//}
+        }
+    }
+
     
 
     

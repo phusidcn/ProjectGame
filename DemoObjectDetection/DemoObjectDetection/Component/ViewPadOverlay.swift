@@ -1,10 +1,11 @@
-/*
- Copyright (C) 2018 Apple Inc. All Rights Reserved.
- See LICENSE.txt for this sample’s licensing information
- 
- Abstract:
- Exposes D-Pad game controller type functionality with screen-rendered buttons.
- */
+//
+//  ViewPadOverlay.swift
+//  DemoObjectDetection
+//
+//  Created by thi nguyen on 5/4/20.
+//  Copyright © 2020 Huynh Lam Phu Si. All rights reserved.
+//
+
 
 import SpriteKit
 import simd

@@ -2,7 +2,7 @@
 //  ControlOverlay.swift
 //  DemoObjectDetection
 //
-//  Created by thi nguyen on 5/6/20.
+//  Created by thi nguyen on 5/4/20.
 //  Copyright © 2020 Huynh Lam Phu Si. All rights reserved.
 //
 

@@ -11,7 +11,7 @@
 		3632230024C41DB4004E2C1A /* Ultils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363222FF24C41DB4004E2C1A /* Ultils.swift */; };
 		363CD02824C4BAC600A3E319 /* HandleCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363CD02724C4BAC600A3E319 /* HandleCamera.swift */; };
 		3646618824C422F200B7D68D /* Charecter+Behavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3646618724C422F200B7D68D /* Charecter+Behavior.swift */; };
-		36488A3D24C43FA100BF16BD /* VieưPadOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36488A3B24C43FA100BF16BD /* VieưPadOverlay.swift */; };
+		36488A3D24C43FA100BF16BD /* ViewPadOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36488A3B24C43FA100BF16BD /* ViewPadOverlay.swift */; };
 		36488A3E24C43FA100BF16BD /* ControlOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36488A3C24C43FA100BF16BD /* ControlOverlay.swift */; };
 		36488A5E24C447A300BF16BD /* collectBig.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 36488A4524C447A300BF16BD /* collectBig.mp3 */; };
 		36488A5F24C447A300BF16BD /* jump.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 36488A4624C447A300BF16BD /* jump.m4a */; };
@@ -77,7 +77,7 @@
 		363222FF24C41DB4004E2C1A /* Ultils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ultils.swift; sourceTree = "<group>"; };
 		363CD02724C4BAC600A3E319 /* HandleCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleCamera.swift; sourceTree = "<group>"; };
 		3646618724C422F200B7D68D /* Charecter+Behavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Charecter+Behavior.swift"; sourceTree = "<group>"; };
-		36488A3B24C43FA100BF16BD /* VieưPadOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VieưPadOverlay.swift"; sourceTree = "<group>"; };
+		36488A3B24C43FA100BF16BD /* ViewPadOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPadOverlay.swift; sourceTree = "<group>"; };
 		36488A3C24C43FA100BF16BD /* ControlOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlOverlay.swift; sourceTree = "<group>"; };
 		36488A4524C447A300BF16BD /* collectBig.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = collectBig.mp3; sourceTree = "<group>"; };
 		36488A4624C447A300BF16BD /* jump.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = jump.m4a; sourceTree = "<group>"; };
@@ -191,7 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				36488A3C24C43FA100BF16BD /* ControlOverlay.swift */,
-				36488A3B24C43FA100BF16BD /* VieưPadOverlay.swift */,
+				36488A3B24C43FA100BF16BD /* ViewPadOverlay.swift */,
 				BF38625B2473A0BA00DC1A03 /* ScaredStateComponent.swift */,
 				BF3862592473A0B900DC1A03 /* RootComponent.swift */,
 				BF3862582473A0B800DC1A03 /* PlayerComponent.swift */,
@@ -374,7 +374,7 @@
 				363CD02824C4BAC600A3E319 /* HandleCamera.swift in Sources */,
 				36FA601D24C427D000478133 /* HandlerBlock.swift in Sources */,
 				BF38625E2473A0BA00DC1A03 /* RootComponent.swift in Sources */,
-				36488A3D24C43FA100BF16BD /* VieưPadOverlay.swift in Sources */,
+				36488A3D24C43FA100BF16BD /* ViewPadOverlay.swift in Sources */,
 				BF3862622473A11300DC1A03 /* GameController.swift in Sources */,
 				3646618824C422F200B7D68D /* Charecter+Behavior.swift in Sources */,
 				5398E22C244BE50A0059E48B /* ViewController.swift in Sources */,
