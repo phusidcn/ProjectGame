@@ -8,7 +8,7 @@
 
 import GameplayKit
 
-class PlayerComponent: BaseComponent {
+class PlayerComponent: RootComponent {
     public var character: Character!
 
     override func update(deltaTime seconds: TimeInterval) {

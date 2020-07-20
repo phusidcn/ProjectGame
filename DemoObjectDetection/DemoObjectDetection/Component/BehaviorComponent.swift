@@ -13,7 +13,7 @@ enum ChaserState: Int {
     case dead
 }
 
-class BehaviorComponent: BaseComponent {
+class BehaviorComponent: RootComponent {
 
     @GKInspectable var hitDistance: Float = 0.5
     @GKInspectable var chaseDistance: Float = 3.0

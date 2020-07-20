@@ -1,9 +1,5 @@
 
-/*
-//  Overlay.swift
-//  Created by thi nguyen on 7/4/20.
-//  Copyright © 2020 Busline Ticked. All rights reserved.
-*/
+
 import Foundation
 import SceneKit
 import SpriteKit
@@ -17,7 +13,9 @@ class Overlay: SKScene {
     // demo UI
     private var demoMenu: Menu?
     
-
+#if os( iOS )
+    public var controlOverlay: ControlOverlay?
+#endif
 
 // MARK: - Initialization
     init(size: CGSize, controller: GameController) {
@@ -29,6 +27,7 @@ class Overlay: SKScene {
         
         collectedGemsSprites = []
         
+        // Setup the game overlays using SpriteKit.
         scaleMode = .resizeFill
         
         addChild(overlayNode)
@@ -60,11 +59,20 @@ class Overlay: SKScene {
         collectedKeySprite.yScale = 0.4
         overlayNode.addChild(collectedKeySprite)
         
-       
+        // The virtual D-pad
+        #if os( iOS )
+            controlOverlay = ControlOverlay(frame: CGRect(x: CGFloat(0), y: CGFloat(0), width: w, height: h))
+            controlOverlay!.leftPad.delegate = controller
+            controlOverlay!.rightPad.delegate = controller
+            controlOverlay!.buttonA.delegate = controller
+            controlOverlay!.buttonB.delegate = controller
+            addChild(controlOverlay!)
+        #endif
         // the demo UI
-        demoMenu = Menu(size: size)
-        demoMenu!.isHidden = true
-        overlayNode.addChild(demoMenu!)
+//        demoMenu = Menu(size: size)
+//        demoMenu!.delegate = controller
+//        demoMenu!.isHidden = true
+//        overlayNode.addChild(demoMenu!)
         
         // Assign the SpriteKit overlay to the SceneKit view.
         isUserInteractionEnabled = false
@@ -111,13 +119,13 @@ class Overlay: SKScene {
     
     var collectedGemsCount: Int = 0 {
         didSet {
-            collectedGemsSprites[collectedGemsCount - 1].texture = SKTexture(imageNamed:"collectableBIG_full.png")
-            
-            collectedGemsSprites[collectedGemsCount - 1].run(SKAction.sequence([
-                SKAction.wait(forDuration: 0.5),
-                SKAction.scale(by: 1.5, duration: 0.2),
-                SKAction.scale(by: 1 / 1.5, duration: 0.2)
-                ]))
+//            collectedGemsSprites[collectedGemsCount - 1].texture = SKTexture(imageNamed:"collectableBIG_full.png")
+//
+//            collectedGemsSprites[collectedGemsCount - 1].run(SKAction.sequence([
+//                SKAction.wait(forDuration: 0.5),
+//                SKAction.scale(by: 1.5, duration: 0.2),
+//                SKAction.scale(by: 1 / 1.5, duration: 0.2)
+//                ]))
         }
     }
     
@@ -130,9 +138,18 @@ class Overlay: SKScene {
             ]))
     }
     
+    #if os( iOS )
+    func showVirtualPad() {
+        controlOverlay!.isHidden = false
+    }
     
+    func hideVirtualPad() {
+        controlOverlay!.isHidden = true
+    }
+    #endif
     
-        
+    // MARK: Congratulate the player
+    
     func showEndScreen() {
         // Congratulation title
         let congratulationsNode = SKSpriteNode(imageNamed: "congratulations.png")

@@ -9,11 +9,21 @@
 import SceneKit
 import UIKit
 
+protocol SmartDelegate: class {
+    func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
+}
+
 class ViewController: UIViewController {
-    
+    public weak var delegate: SmartDelegate?
     var gameView: SCNView {
         return view as! SCNView
     }
+    
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        delegate?.touchesBegan(touches, with: event)
+    }
+    
     
     
     
@@ -28,7 +38,7 @@ class ViewController: UIViewController {
             self.gameView.preferredFramesPerSecond = 60
         }
         
-        gameController = GameController(scnView: gameView)
+        gameController = GameController(scnView: gameView, self)
 
         // Configure the view
         gameView.backgroundColor = UIColor.black
@@ -51,4 +61,6 @@ class ViewController: UIViewController {
     override var prefersStatusBarHidden: Bool { return true }
     override var shouldAutorotate: Bool { return true }
 }
+
+
 

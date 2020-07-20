@@ -19,7 +19,7 @@ struct Bitmask: OptionSet {
     static let collectable = Bitmask(rawValue: 1 << 4) // the collectables (gems and key)
 }
 
-    typealias ExtraProtocols = SCNSceneRendererDelegate & SCNPhysicsContactDelegate
+    typealias ExtraProtocols = SCNSceneRendererDelegate & SCNPhysicsContactDelegate & PadOverlayDelegate & ButtonOverlayDelegate
         
 
 
@@ -35,6 +35,56 @@ enum AudioSourceKind: Int {
     case totalCount
 }
 class GameController: NSObject, ExtraProtocols {
+    let touch = UIPanGestureRecognizer()
+    struct Config {
+        let ALTITUDE = 1.00
+    }
+        func padOverlayVirtualStickInteractionDidStart(_ padNode: PadOverlay) {
+            
+            if padNode == overlay!.controlOverlay!.leftPad {
+                characterDirection = float2(Float(padNode.stickPosition.x), -Float(padNode.stickPosition.y))
+            }
+            if padNode == overlay!.controlOverlay!.rightPad {
+                cameraDirection = float2( -Float(padNode.stickPosition.x), Float(padNode.stickPosition.y))
+            }
+        }
+        
+        
+        
+
+        func padOverlayVirtualStickInteractionDidChange(_ padNode: PadOverlay) {
+            if padNode == overlay!.controlOverlay!.leftPad {
+                characterDirection = float2(Float(padNode.stickPosition.x), -Float(padNode.stickPosition.y))
+            }
+            if padNode == overlay!.controlOverlay!.rightPad {
+                cameraDirection = float2( -Float(padNode.stickPosition.x), Float(padNode.stickPosition.y))
+            }
+        }
+
+        func padOverlayVirtualStickInteractionDidEnd(_ padNode: PadOverlay) {
+            if padNode == overlay!.controlOverlay!.leftPad {
+                characterDirection = [0, 0]
+            }
+            if padNode == overlay!.controlOverlay!.rightPad {
+                cameraDirection = [0, 0]
+            }
+        }
+
+        func willPress(_ button: ButtonOverlay) {
+            if button == overlay!.controlOverlay!.buttonA {
+                controllerJump(true)
+            }
+            if button == overlay!.controlOverlay!.buttonB {
+                controllerAttack()
+            }
+        }
+
+        func didPress(_ button: ButtonOverlay) {
+            if button == overlay!.controlOverlay!.buttonA {
+                controllerJump(false)
+            }
+        }
+        
 
 // Global settings
     static let DefaultCameraTransitionDuration = 1.0
@@ -57,6 +107,10 @@ class GameController: NSObject, ExtraProtocols {
     private var firstTriggerDone: Bool = false
 
    
+    // handle camera
+    
+    private var _cameraYHandle : SCNNode?
+    private var _cameraXHandle : SCNNode?
 
     
 
@@ -64,8 +118,16 @@ class GameController: NSObject, ExtraProtocols {
     private var collectedKeys: Int = 0
     private var collectedGems: Int = 0
     private var keyIsVisible: Bool = false
+    
+    //
+//
+    private var _direction = CGPoint()
+    private var _panningTouch = UITouch()
+    private var _padTouch = UITouch()
+   
+    private var _directionCacheValid : Bool = false
 
-
+    private var vc: UIViewController?
 
     // audio
     private var audioSources = [SCNAudioSource](repeatElement(SCNAudioSource(), count: AudioSourceKind.totalCount.rawValue))
@@ -80,11 +142,100 @@ class GameController: NSObject, ExtraProtocols {
 
     // update delta time
     private var lastUpdateTime = TimeInterval()
+    private var _lockCamera : Bool = false
 
 // MARK: -
 // MARK: Setup
 
+    func handleCamera() {
+        _cameraXHandle = SCNNode()
+        _cameraYHandle = SCNNode()
+        _cameraYHandle?.addChildNode(_cameraXHandle!)
+        
+        scene?.rootNode.addChildNode(_cameraYHandle!)
+        
+        _cameraXHandle?.position = SCNVector3Make(0, 1.0,0);
+        
+        let pov = self.sceneRenderer!.pointOfView;
+        
+        
+        pov!.eulerAngles = SCNVector3Make(0, 0, 0);
+        pov!.position = SCNVector3Make(0,0,10.0);
+        
+        _cameraYHandle!.rotation = SCNVector4Make(0, 0, 0, Float(.pi/2 + M_PI_4*3));
+        _cameraXHandle!.rotation = SCNVector4Make(0, 0, 0, Float(-M_PI_4*0.125));
+        _cameraXHandle!.addChildNode(pov!)
+        
+        _lockCamera = true
+        SCNTransaction.begin()
+        SCNTransaction.completionBlock = { [weak self]  in
+            self?._lockCamera = false }
+        
+        let cameraYAnimation = CABasicAnimation.init(keyPath: "rotation.w")
+        let i = (M_PI*2) - Double(_cameraYHandle!.rotation.w)
+        cameraYAnimation.fromValue =  i;
+        cameraYAnimation.toValue = 0.0;
+        cameraYAnimation.isAdditive = true;
+        cameraYAnimation.beginTime = CACurrentMediaTime()+3; // wait a little bit before stating
+        cameraYAnimation.fillMode = .both;
+        cameraYAnimation.duration = 5.0;
+        cameraYAnimation.timingFunction = CAMediaTimingFunction.init(name: .easeInEaseOut)
+        _cameraYHandle?.addAnimation(cameraYAnimation, forKey: nil)
+        
+        let cameraXAnimation = CABasicAnimation.init(keyPath: "rotation.w")
+               let x = (-M_PI*2) - Double(_cameraYHandle!.rotation.w)
+               cameraYAnimation.fromValue =  x;
+               cameraYAnimation.toValue = 0.0;
+               cameraYAnimation.isAdditive = true;
+               cameraYAnimation.beginTime = CACurrentMediaTime()+3; // wait a little bit before stating
+               cameraYAnimation.fillMode = .both;
+               cameraYAnimation.duration = 5.0;
+               cameraYAnimation.timingFunction = CAMediaTimingFunction.init(name: .easeInEaseOut)
+               _cameraXHandle?.addAnimation(cameraXAnimation, forKey: nil)
+        SCNTransaction.commit()
+        
+//        let lookAtConstraint
+        
+     
+        
+//        _lockCamera = true;
+    }
+    
+    
+    
+    func panCamera(dir :CGSize) {
+        if (_lockCamera == true) {
+               return;
+           }
+        SCNTransaction.begin()
+        SCNTransaction.animationDuration = 0.0
+        
+        _cameraYHandle!.removeAllActions()
+        _cameraXHandle!.removeAllActions()
+        
+        if (_cameraYHandle!.rotation.y < 0) {
+            _cameraYHandle!.rotation = SCNVector4Make(0, 1, 0, -_cameraYHandle!.rotation.w);
+        }
+        if (_cameraXHandle!.rotation.x < 0) {
+            _cameraXHandle!.rotation = SCNVector4Make(1, 0, 0, -_cameraXHandle!.rotation.w);
+        }
+        SCNTransaction.commit()
+        
+        // Update the camera position with some inertia.
+        SCNTransaction.begin()
+        SCNTransaction.animationDuration = 0.5
+        SCNTransaction.animationTimingFunction = CAMediaTimingFunction.init(name: .easeInEaseOut)
+        let F = 0.005
+        _cameraYHandle!.rotation = SCNVector4(0, 1, 0, _cameraYHandle!.rotation.y * (_cameraYHandle!.rotation.w -
+            Float(dir.width) * 0.005))
+        
+        _cameraXHandle!.rotation = SCNVector4(1, 0, 0, max(.pi, min(0.13, _cameraXHandle!.rotation.w + Float(dir.height) * 0.005)))
+        
 
+        
+        SCNTransaction.commit()
+
+    }
 
     func setupCharacter() {
         character = Character(scene: scene!)
@@ -178,8 +329,10 @@ class GameController: NSObject, ExtraProtocols {
 
     // MARK: - Init
 
-    init(scnView: SCNView) {
+    init(scnView: SCNView, viewController: ViewController) {
         super.init()
+        viewController.delegate = self
+        self.vc = viewController
         
         objectRecognition = VisionObjectRecognition()
         objectRecognition?.delegate = self
@@ -202,7 +355,6 @@ class GameController: NSObject, ExtraProtocols {
 
         //load the main scene
         self.scene = SCNScene(named: "Art.scnassets/scene.scn")
-
         //setup physics
 //        setupPhysics()
 
@@ -225,6 +377,7 @@ class GameController: NSObject, ExtraProtocols {
         //setup audio
         setupAudio()
 
+//        handleCamera()
 
 
         //register ourself as the physics contact delegate to receive contact notifications
@@ -326,6 +479,7 @@ class GameController: NSObject, ExtraProtocols {
     // MARK: - Update
 
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+
         // compute delta time
         if lastUpdateTime == 0 {
             lastUpdateTime = time
@@ -350,7 +504,14 @@ class GameController: NSObject, ExtraProtocols {
             collect(contact.nodeB)
         }
     }
+//
+    func touchs(touch : UITouch, isInRect: CGRect) -> Bool {
 
+        return true;
+        
+
+    }
+ 
     // MARK: - Congratulating the Player
 
     func showEndScreen() {
@@ -362,9 +523,33 @@ class GameController: NSObject, ExtraProtocols {
 
         self.overlay?.showEndScreen()
     }
-
- 
 }
+    
+extension GameController: SmartDelegate {
+    func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+                   if true{
+                       // We're in the dpad
+                       if _padTouch  {
+                           _padTouch = touch;
+                       }
+                   }
+                   else if (!_panningTouch) {
+                       // Start panning
+                       _panningTouch = [touches anyObject];
+                   }
+
+                   if (_padTouch && _panningTouch)
+                       break;  // We already have what we need
+               }
+               [super touchesBegan:touches withEvent:event];
+        }
+    }
+}
+    
+
+    
+
 
     // MARK: - GameController
 
