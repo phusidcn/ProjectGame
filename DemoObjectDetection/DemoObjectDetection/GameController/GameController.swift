@@ -244,9 +244,6 @@ class GameController: NSObject, ExtraProtocols {
         SCNTransaction.commit()
 
     }
-    
-
-
     func setupCharacter() {
         character = Character(scene: scene!)
         

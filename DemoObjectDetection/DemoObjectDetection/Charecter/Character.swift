@@ -114,20 +114,22 @@ class Character: NSObject {
         isWalking = true
         characterNode.runAction(moveForwardAction, completionHandler: {[weak self] in
             self?.isWalking = false
-            
         })
     }
     
     public func jumpFont(simd3 : SCNVector3) {
-        let duration = 0.2
-        let bounceUpAction = SCNAction.moveBy(x: 0, y: 1.0, z: 0, duration: duration)
-         let bounceDownAction = SCNAction.moveBy(x: 0, y: -1.0, z: 0, duration: duration)
+        model.animationPlayer(forKey: "jump")?.play()
+        let duration = 0.42
+        let bounceUpAction = SCNAction.moveBy(x: 0, y: 1.0, z: 0, duration: duration * 0.5)
+         let bounceDownAction = SCNAction.moveBy(x: 0, y: 0.0, z: 0, duration: duration * 0.5)
          bounceUpAction.timingMode = .easeOut
          bounceDownAction.timingMode = .easeIn
-        let moveForwardAction = SCNAction.moveBy(x: 0, y: 0, z: 1, duration: duration)
+        let moveForwardAction = SCNAction.moveBy(x: 0, y: 0, z: 2, duration: duration)
          let bounceAction = SCNAction.sequence([bounceUpAction, bounceDownAction])
         let actionJumpFontGroup = SCNAction.group([bounceAction, moveForwardAction])
-        characterNode.runAction(actionJumpFontGroup, completionHandler: nil)
+        characterNode.runAction(actionJumpFontGroup, completionHandler: { [weak self] in
+            self?.model.animationPlayer(forKey: "jump")?.stop()
+        })
        }
 
     private func loadCharacter() {
