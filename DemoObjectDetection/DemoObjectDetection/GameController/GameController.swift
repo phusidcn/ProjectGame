@@ -9,7 +9,7 @@ import GameplayKit
 import SceneKit
 import ObjectsDetectionKit
 
-    public let velocity: Float = 0.5
+    public let velocity: Float = 1
     
 // Collision bit masks
 struct Bitmask: OptionSet {
@@ -546,11 +546,6 @@ extension GameController: SmartDelegate {
 //               [super touchesBegan:touches withEvent:event];
         }
     }
-
-    
-
-    
-
 
     // MARK: - GameController
 
