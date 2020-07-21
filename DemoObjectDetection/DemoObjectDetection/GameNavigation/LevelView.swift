@@ -10,6 +10,9 @@ import Foundation
 import UIKit
 
 class LevelView: UIViewController {
+    static var sharedInstance: LevelView {
+        return LevelView()
+    }
     @IBOutlet var level1Button: UIButton?
     @IBOutlet var level2Button: UIButton?
     @IBOutlet var level3Button: UIButton?
@@ -20,39 +23,40 @@ class LevelView: UIViewController {
     @IBOutlet var level8Button: UIButton?
     @IBOutlet var backButton: UIButton?
     
-    @IBOutlet func tapToLevel2(_ sender: UIButton?) {
-        <#code#>
+    @IBAction func tapToLevel1(_ sender: UIButton?) {
+        
     }
     
-    @IBOutlet func tapToLevel2(_ sender: UIButton?) {
-        <#code#>
+    @IBAction func tapToLevel2(_ sender: UIButton?) {
+        
     }
     
-    @IBOutlet func tapToLevel3(_ sender: UIButton?) {
-        <#code#>
+    @IBAction func tapToLevel3(_ sender: UIButton?) {
+        
     }
     
-    @IBOutlet func tapToLevel4(_ sender: UIButton?) {
-        <#code#>
+    @IBAction func tapToLevel4(_ sender: UIButton?) {
+        
     }
     
-    @IBOutlet func tapToLevel5(_ sender: UIButton?) {
-        <#code#>
+    @IBAction func tapToLevel5(_ sender: UIButton?) {
+        
     }
     
-    @IBOutlet func tapToLevel6(_ sender: UIButton?) {
-        <#code#>
+    @IBAction func tapToLevel6(_ sender: UIButton?) {
+        
     }
     
-    @IBOutlet func tapToLevel7(_ sender: UIButton?) {
-        <#code#>
+    @IBAction func tapToLevel7(_ sender: UIButton?) {
+        
     }
     
-    @IBOutlet func tapToLevel8(_ sender: UIButton?) {
-        <#code#>
+    @IBAction func tapToLevel8(_ sender: UIButton?) {
+        
     }
     
-    @IBOutlet func tapToBackButton(_ sender: UIButton?) {
-        <#code#>
+    @IBAction func tapToBackButton(_ sender: UIButton?) {
+        MainMenuView.sharedInstance.modalPresentationStyle = .fullScreen
+        self.present(MainMenuView.sharedInstance, animated: true, completion: nil)
     }
 }

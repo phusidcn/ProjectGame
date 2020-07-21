@@ -10,10 +10,24 @@ import Foundation
 import UIKit
 
 class CompleteView: UIViewController {
+    public static var fisrtLevelIndex: Int = 0
+    public static var lastLevelIndex: Int = 8
+    public var currentLevelIndex: Int = 0
     @IBOutlet var nextLevelButton: UIButton?
     @IBOutlet var replayButton: UIButton?
     @IBOutlet var mainMenuButton: UIButton?
     @IBOutlet var settingButton: UIButton?
     
-    @IBOutlet func
+    @IBAction func tapNextLevelButton(_ sender: UIButton) {
+        currentLevelIndex += 1
+    }
+    
+    @IBAction func tapReplayButton(_ sender: UIButton) {
+        
+    }
+    
+    @IBAction func tapMainMenuButton(_ sender: UIButton) {
+        MainMenuView.sharedInstance.modalPresentationStyle = .fullScreen
+        self.present(MainMenuView.sharedInstance, animated: true, completion: nil)
+    }
 }

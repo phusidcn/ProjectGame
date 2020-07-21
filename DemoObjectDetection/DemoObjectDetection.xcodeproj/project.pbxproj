@@ -59,7 +59,6 @@
 		BF3862712473A37C00DC1A03 /* Art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = BF3862702473A37C00DC1A03 /* Art.scnassets */; };
 		BF6363322463AAD800E9BBC5 /* GameObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6363312463AAD800E9BBC5 /* GameObject.swift */; };
 		BF6363342463AE5400E9BBC5 /* art.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6363332463AE5400E9BBC5 /* art.swift */; };
-		BF6363392463B98300E9BBC5 /* Game1.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6363382463B98300E9BBC5 /* Game1.swift */; };
 		BF63633B2463C94000E9BBC5 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF63633A2463C94000E9BBC5 /* Character.swift */; };
 /* End PBXBuildFile section */
 
@@ -131,7 +130,6 @@
 		BF3862702473A37C00DC1A03 /* Art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = Art.scnassets; sourceTree = "<group>"; };
 		BF6363312463AAD800E9BBC5 /* GameObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameObject.swift; sourceTree = "<group>"; };
 		BF6363332463AE5400E9BBC5 /* art.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = art.swift; sourceTree = "<group>"; };
-		BF6363382463B98300E9BBC5 /* Game1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game1.swift; sourceTree = "<group>"; };
 		BF63633A2463C94000E9BBC5 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -263,7 +261,6 @@
 				5398E227244BE50A0059E48B /* AppDelegate.swift */,
 				5398E229244BE50A0059E48B /* SceneDelegate.swift */,
 				5398E22B244BE50A0059E48B /* ViewController.swift */,
-				BF6363382463B98300E9BBC5 /* Game1.swift */,
 				5398E22D244BE50A0059E48B /* Main.storyboard */,
 				362B6E0824C5A7C30049D5F6 /* game.scnassets */,
 				BF3862702473A37C00DC1A03 /* Art.scnassets */,
@@ -424,7 +421,6 @@
 				36FA601A24C426B500478133 /* HUB.swift in Sources */,
 				BF38625F2473A0BA00DC1A03 /* BehaviorComponent.swift in Sources */,
 				BF6363322463AAD800E9BBC5 /* GameObject.swift in Sources */,
-				BF6363392463B98300E9BBC5 /* Game1.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

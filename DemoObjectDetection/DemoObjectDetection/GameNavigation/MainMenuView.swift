@@ -10,14 +10,20 @@ import Foundation
 import UIKit
 
 class MainMenuView: UIViewController {
+    static var sharedInstance: MainMenuView {
+        return MainMenuView()
+    }
+    
     @IBOutlet var playButton: UIButton?
     @IBOutlet var settingButton: UIButton?
     
-    @IBOutlet func tapToPlayButton(_ sender: UIButton!) {
-        <#Code#>
+    @IBAction func tapToPlayButton(_ sender: UIButton!) {
+        LevelView.sharedInstance.modalPresentationStyle = .fullScreen
+        self.present(LevelView.sharedInstance, animated: true, completion: nil)
     }
     
-    @IBOutlet func tapToSetting(_ sender: UIButton!) {
-        <#Code#>
+    @IBAction func tapToSetting(_ sender: UIButton!) {
+        SettingView.sharedInstance.modalPresentationStyle = .fullScreen
+        self.present(SettingView.sharedInstance, animated: true, completion: nil)
     }
 }
