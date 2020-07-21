@@ -17,6 +17,7 @@ class CompleteView: UIViewController {
     @IBOutlet var replayButton: UIButton?
     @IBOutlet var mainMenuButton: UIButton?
     @IBOutlet var settingButton: UIButton?
+    @IBOutlet var levelSelectButton: UIButton?
     
     @IBAction func tapNextLevelButton(_ sender: UIButton) {
         currentLevelIndex += 1
@@ -29,5 +30,15 @@ class CompleteView: UIViewController {
     @IBAction func tapMainMenuButton(_ sender: UIButton) {
         MainMenuView.sharedInstance.modalPresentationStyle = .fullScreen
         self.present(MainMenuView.sharedInstance, animated: true, completion: nil)
+    }
+    
+    @IBAction func tapSettingButton(_ sender: UIButton) {
+        SettingView.sharedInstance.modalPresentationStyle = .fullScreen
+        self.present(SettingView.sharedInstance, animated: true, completion: nil)
+    }
+    
+    @IBAction func tapLevelSelectButton(_ sender: UIButton) {
+        LevelView.sharedInstance.modalPresentationStyle = .fullScreen
+        self.present(LevelView.sharedInstance, animated: true, completion: nil)
     }
 }
