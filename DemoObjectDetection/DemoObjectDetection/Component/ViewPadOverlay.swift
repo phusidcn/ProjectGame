@@ -11,12 +11,12 @@ import SpriteKit
 import simd
 
 protocol PadOverlayDelegate: NSObjectProtocol {
-    func padOverlayVirtualStickInteractionDidStart(_ padNode: VieưPadOverlay)
-    func padOverlayVirtualStickInteractionDidChange(_ padNode: VieưPadOverlay)
-    func padOverlayVirtualStickInteractionDidEnd(_ padNode: VieưPadOverlay)
+    func padOverlayVirtualStickInteractionDidStart(_ padNode: ViewPadOverlay)
+    func padOverlayVirtualStickInteractionDidChange(_ padNode: ViewPadOverlay)
+    func padOverlayVirtualStickInteractionDidEnd(_ padNode: ViewPadOverlay)
 }
 
-class VieưPadOverlay: SKNode {
+class ViewPadOverlay: SKNode {
     // Default 100, 100
     
     var size = CGSize.zero {

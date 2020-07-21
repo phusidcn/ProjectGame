@@ -8,6 +8,8 @@ import GameController
 import GameplayKit
 import SceneKit
 import ObjectsDetectionKit
+import simd
+
 
     public let velocity: Float = 0.5
     
@@ -35,14 +37,16 @@ enum AudioSourceKind: Int {
     case totalCount
 }
 class GameController: NSObject, ExtraProtocols {
-    let touch = UIPanGestureRecognizer()
+    var font : SCNNode?
+    
     struct Config {
         let ALTITUDE = 1.00
     }
-        func padOverlayVirtualStickInteractionDidStart(_ padNode: VieưPadOverlay) {
+        func padOverlayVirtualStickInteractionDidStart(_ padNode: ViewPadOverlay) {
             
             if padNode == overlay!.controlOverlay!.leftPad {
-                characterDirection = float2(Float(padNode.stickPosition.x), -Float(padNode.stickPosition.y))
+                character?.jumpFont(simd3: fontNode!.position)
+//                characterDirection = float2(Float(padNode.stickPosition.x), -Float(padNode.stickPosition.y))
             }
             if padNode == overlay!.controlOverlay!.rightPad {
                 cameraDirection = float2( -Float(padNode.stickPosition.x), Float(padNode.stickPosition.y))
@@ -52,16 +56,16 @@ class GameController: NSObject, ExtraProtocols {
         
         
 
-        func padOverlayVirtualStickInteractionDidChange(_ padNode: VieưPadOverlay) {
+        func padOverlayVirtualStickInteractionDidChange(_ padNode: ViewPadOverlay) {
             if padNode == overlay!.controlOverlay!.leftPad {
-                characterDirection = float2(Float(padNode.stickPosition.x), -Float(padNode.stickPosition.y))
+//                characterDirection = float2(Float(padNode.stickPosition.x), -Float(padNode.stickPosition.y))
             }
             if padNode == overlay!.controlOverlay!.rightPad {
-                cameraDirection = float2( -Float(padNode.stickPosition.x), Float(padNode.stickPosition.y))
+//                cameraDirection = float2( -Float(padNode.stickPosition.x), Float(padNode.stickPosition.y))
             }
         }
 
-        func padOverlayVirtualStickInteractionDidEnd(_ padNode: VieưPadOverlay) {
+        func padOverlayVirtualStickInteractionDidEnd(_ padNode: ViewPadOverlay) {
             if padNode == overlay!.controlOverlay!.leftPad {
                 characterDirection = [0, 0]
             }
@@ -85,7 +89,8 @@ class GameController: NSObject, ExtraProtocols {
             }
         }
         
-
+// 4 driection
+    private var fontNode : SCNNode?
 // Global settings
     static let DefaultCameraTransitionDuration = 1.0
     static let NumberOfFiends = 100
@@ -139,6 +144,9 @@ class GameController: NSObject, ExtraProtocols {
     private var gamePadCurrent: GCController?
     private var gamePadLeft: GCControllerDirectionPad?
     private var gamePadRight: GCControllerDirectionPad?
+    
+    private var collisionsCharacter : SCNNode?
+    
 
     // update delta time
     private var lastUpdateTime = TimeInterval()
@@ -236,10 +244,12 @@ class GameController: NSObject, ExtraProtocols {
         SCNTransaction.commit()
 
     }
+    
+
 
     func setupCharacter() {
         character = Character(scene: scene!)
-
+        
         // keep a pointer to the physicsWorld from the character because we will need it when updating the character's position
         character!.physicsWorld = scene!.physicsWorld
         scene!.rootNode.addChildNode(character!.node!)
@@ -254,11 +264,13 @@ class GameController: NSObject, ExtraProtocols {
 
     func setupCollisions() {
         // load the collision mesh from another scene and merge into main scene
-        let collisionsScene = SCNScene( named: "Art.scnassets/collision.scn" )
-        collisionsScene!.rootNode.enumerateChildNodes { (_ child: SCNNode, _ _: UnsafeMutablePointer<ObjCBool>) in
-            child.opacity = 0.0
-            self.scene?.rootNode.addChildNode(child)
-        }
+               let sceneCollision = SCNScene(named: "Art.scnassets/character/Collision.scn")
+
+              
+              collisionsCharacter = sceneCollision?.rootNode.childNode( withName: "Collision", recursively: true)
+              self.scene?.rootNode.addChildNode(collisionsCharacter!)
+              collisionsCharacter?.position = character!.characterNode.position
+                fontNode = collisionsCharacter?.childNode(withName: "fontNode", recursively: true)
     }
 
 
@@ -281,6 +293,10 @@ class GameController: NSObject, ExtraProtocols {
             })
             return particles
         }
+    }
+    
+    func updatePosition() {
+        collisionsCharacter?.position = character!.characterNode.position
     }
 
 
@@ -331,7 +347,6 @@ class GameController: NSObject, ExtraProtocols {
 
     init(scnView: SCNView, viewController: ViewController) {
         super.init()
-        viewController.delegate = self
         self.vc = viewController
         
         objectRecognition = VisionObjectRecognition()
@@ -353,16 +368,18 @@ class GameController: NSObject, ExtraProtocols {
         overlay = HUB(size: scnView.bounds.size, controller: self)
         scnView.overlaySKScene = overlay
 
+
         //load the main scene
         self.scene = SCNScene(named: "Art.scnassets/scene.scn")
         //setup physics
 //        setupPhysics()
+        //load the character
+
+        setupCharacter()
 
         //setup collisions
         setupCollisions()
 
-        //load the character
-        setupCharacter()
 
         let light = scene!.rootNode.childNode(withName: "DirectLight", recursively: true)!.light
         light!.shadowCascadeCount = 3  // turn on cascade shadows
@@ -376,6 +393,8 @@ class GameController: NSObject, ExtraProtocols {
 
         //setup audio
         setupAudio()
+        
+        setupCollisions()
 
 //        handleCamera()
 
@@ -492,6 +511,11 @@ class GameController: NSObject, ExtraProtocols {
 
      
     }
+    
+    func renderer(_ renderer: SCNSceneRenderer, didApplyAnimationsAtTime time: TimeInterval) {
+     updatePosition()
+    
+    }
 
     // MARK: - contact delegate
 
@@ -525,27 +549,7 @@ class GameController: NSObject, ExtraProtocols {
     }
 }
     
-extension GameController: SmartDelegate {
-    func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print(touchesBegan)
-//        for touch in touches {
-//                   if true{
-//                       // We're in the dpad
-//                       if _padTouch  {
-//                           _padTouch = touch;
-//                       }
-//                   }
-//                   else if (!_panningTouch) {
-//                       // Start panning
-//                       _panningTouch = [touches anyObject];
-//                   }
-//
-//                   if (_padTouch && _panningTouch)
-//                       break;  // We already have what we need
-//               }
-//               [super touchesBegan:touches withEvent:event];
-        }
-    }
+
 
     
 

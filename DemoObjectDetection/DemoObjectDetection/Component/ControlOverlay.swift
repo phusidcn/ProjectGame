@@ -13,8 +13,8 @@ class ControlOverlay: SKNode {
     
     let buttonMargin = CGFloat( 25 )
     
-    var leftPad = VieưPadOverlay()
-    var rightPad = VieưPadOverlay()
+    var leftPad = ViewPadOverlay()
+    var rightPad = ViewPadOverlay()
     var buttonA = ButtonOverlay("A")
     var buttonB = ButtonOverlay("B")
 

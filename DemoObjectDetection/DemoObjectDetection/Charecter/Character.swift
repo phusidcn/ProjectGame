@@ -21,7 +21,7 @@ class Character: NSObject {
     static private let speedFactor: CGFloat = 2.0
     static internal let stepsCount = 10
 
-    static private let initialPosition = float3(0.0, 0.1, 0.1)
+    static private let initialPosition = float3(0.0, 0.0, 0.0)
     
     // some constants
     static private let gravity = Float(0.004)
@@ -41,9 +41,9 @@ class Character: NSObject {
     }
     
     // Character handle
-    internal var characterNode: SCNNode!
+    public var characterNode: SCNNode!
     internal var characterOrientation: SCNNode!
-    internal var model: SCNNode!
+    public var model: SCNNode!
     
     // Physics
     private var characterCollisionShape: SCNPhysicsShape?
@@ -92,6 +92,8 @@ class Character: NSObject {
     
     internal(set) var offsetedMark: SCNNode?
     
+    private var fontNode : SCNNode?
+    
     // actions
     var isJump: Bool = false
     var direction = float2()
@@ -106,6 +108,27 @@ class Character: NSObject {
         loadSounds()
         loadAnimations()
     }
+    
+    public func moveFont(simd3 : SCNVector3) {
+        let moveForwardAction = SCNAction.moveBy(x: CGFloat(simd3.x), y: 0, z: CGFloat(simd3.z), duration: 1)
+        isWalking = true
+        characterNode.runAction(moveForwardAction, completionHandler: {[weak self] in
+            self?.isWalking = false
+            
+        })
+    }
+    
+    public func jumpFont(simd3 : SCNVector3) {
+        let duration = 0.2
+        let bounceUpAction = SCNAction.moveBy(x: 0, y: 1.0, z: 0, duration: duration)
+         let bounceDownAction = SCNAction.moveBy(x: 0, y: -1.0, z: 0, duration: duration)
+         bounceUpAction.timingMode = .easeOut
+         bounceDownAction.timingMode = .easeIn
+        let moveForwardAction = SCNAction.moveBy(x: 0, y: 0, z: 1, duration: duration)
+         let bounceAction = SCNAction.sequence([bounceUpAction, bounceDownAction])
+        let actionJumpFontGroup = SCNAction.group([bounceAction, moveForwardAction])
+        characterNode.runAction(actionJumpFontGroup, completionHandler: nil)
+       }
 
     private func loadCharacter() {
        
@@ -113,10 +136,15 @@ class Character: NSObject {
         model = scene.rootNode.childNode( withName: "Pig_rootNode", recursively: true)
         model.simdPosition = Character.modelOffset
 
-      
+        fontNode = model.childNode(withName: "font", recursively: true)
+        print("thu nao", fontNode?.simdPosition)
+        
+        
         characterNode = SCNNode()
         characterNode.name = "character"
         characterNode.simdPosition = Character.initialPosition
+        print("characterNode", characterNode.simdPosition)
+
 
         characterOrientation = SCNNode()
         characterNode.addChildNode(characterOrientation)
@@ -268,6 +296,7 @@ class Character: NSObject {
             previousUpdateTime = time
         }
         
+        
         let deltaTime = time - previousUpdateTime
         let characterSpeed = CGFloat(deltaTime) * Character.speedFactor * walkSpeed
         let virtualFrameCount = Int(deltaTime / (1 / 60.0))
@@ -285,7 +314,7 @@ class Character: NSObject {
             
             isWalking = true
         } else {
-            isWalking = false
+//            isWalking = false
         }
         
         // put the character on the ground
