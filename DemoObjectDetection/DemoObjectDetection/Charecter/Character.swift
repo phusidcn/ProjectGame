@@ -1,16 +1,15 @@
-/*
- Copyright (C) 2018 Apple Inc. All Rights Reserved.
- See LICENSE.txt for this sample’s licensing information
- 
- Abstract:
- This class manages the main character, including its animations, sounds and direction.
-*/
+//
+//  Charecter.swift
+//  DemoObjectDetection
+//
+//  Created by thi nguyen on 4/19/20.
+//  Copyright © 2020 Huynh Lam Phu Si. All rights reserved.
+//
 
 import Foundation
 import SceneKit
 import simd
 
-// Returns plane / ray intersection distance from ray origin.
 func planeIntersect(planeNormal: float3, planeDist: Float, rayOrigin: float3, rayDirection: float3) -> Float {
     return (planeDist - simd_dot(planeNormal, rayOrigin)) / simd_dot(planeNormal, rayDirection)
 }
@@ -20,7 +19,7 @@ func planeIntersect(planeNormal: float3, planeDist: Float, rayOrigin: float3, ra
 class Character: NSObject {
     
     static private let speedFactor: CGFloat = 2.0
-    static private let stepsCount = 10
+    static internal let stepsCount = 10
 
     static private let initialPosition = float3(0.0, 0.1, 0.1)
     
@@ -42,9 +41,9 @@ class Character: NSObject {
     }
     
     // Character handle
-    private var characterNode: SCNNode! 
-    private var characterOrientation: SCNNode!
-    private var model: SCNNode!
+    internal var characterNode: SCNNode!
+    internal var characterOrientation: SCNNode!
+    internal var model: SCNNode!
     
     // Physics
     private var characterCollisionShape: SCNPhysicsShape?
@@ -75,28 +74,23 @@ class Character: NSObject {
     
     // Particle systems
     private var jumpDustParticle: SCNParticleSystem!
-    private var fireEmitter: SCNParticleSystem!
-    private var smokeEmitter: SCNParticleSystem!
-    private var whiteSmokeEmitter: SCNParticleSystem!
-    private var spinParticle: SCNParticleSystem!
-    private var spinCircleParticle: SCNParticleSystem!
+ 
 
-    private var spinParticleAttach: SCNNode!
 
     private var fireEmitterBirthRate: CGFloat = 0.0
     private var smokeEmitterBirthRate: CGFloat = 0.0
     private var whiteSmokeEmitterBirthRate: CGFloat = 0.0
 
     // Sound effects
-    private var aahSound: SCNAudioSource!
-    private var ouchSound: SCNAudioSource!
-    private var hitSound: SCNAudioSource!
+    internal var aahSound: SCNAudioSource!
+    internal var ouchSound: SCNAudioSource!
+    internal var hitSound: SCNAudioSource!
    
-    private var catchFireSound: SCNAudioSource!
-    private var jumpSound: SCNAudioSource!
-    private var steps = [SCNAudioSource](repeating: SCNAudioSource(), count: Character.stepsCount )
+    internal var catchFireSound: SCNAudioSource!
+    internal var jumpSound: SCNAudioSource!
+    internal var steps = [SCNAudioSource](repeating: SCNAudioSource(), count: Character.stepsCount )
     
-    private(set) var offsetedMark: SCNNode?
+    internal(set) var offsetedMark: SCNNode?
     
     // actions
     var isJump: Bool = false
@@ -108,7 +102,7 @@ class Character: NSObject {
         super.init()
 
         loadCharacter()
-        loadParticles()
+//        loadParticles()
         loadSounds()
         loadAnimations()
     }
@@ -141,77 +135,22 @@ class Character: NSObject {
         collisionShapeOffsetFromModel = float3(0, Float(collisionCapsuleHeight) * 0.51, 0.0)
     }
 
-    private func loadParticles() {
-        var particleScene = SCNScene( named: "Art.scnassets/character/jump_dust.scn")!
-        let particleNode = particleScene.rootNode.childNode(withName: "particle", recursively: true)!
-        jumpDustParticle = particleNode.particleSystems!.first!
+//    private func loadParticles() {
+//        var particleScene = SCNScene( named: "Art.scnassets/character/jump_dust.scn")!
+//        let particleNode = particleScene.rootNode.childNode(withName: "particle", recursively: true)!
+//        jumpDustParticle = particleNode.particleSystems!.first!
+//
+//        particleScene = SCNScene( named: "Art.scnassets/particles/burn.scn")!
+//        let burnParticleNode = particleScene.rootNode.childNode(withName: "particles", recursively: true)!
+//
+//        let particleEmitter = SCNNode()
+//        characterOrientation.addChildNode(particleEmitter)
+//
+//
+//        particleEmitter.position = SCNVector3Make(0, 0.05, 0)
+//       }
 
-        particleScene = SCNScene( named: "Art.scnassets/particles/burn.scn")!
-        let burnParticleNode = particleScene.rootNode.childNode(withName: "particles", recursively: true)!
-
-        let particleEmitter = SCNNode()
-        characterOrientation.addChildNode(particleEmitter)
-
-        fireEmitter = burnParticleNode.childNode(withName: "fire", recursively: true)!.particleSystems![0]
-        fireEmitterBirthRate = fireEmitter.birthRate
-        fireEmitter.birthRate = 0
-
-        smokeEmitter = burnParticleNode.childNode(withName: "smoke", recursively: true)!.particleSystems![0]
-        smokeEmitterBirthRate = smokeEmitter.birthRate
-        smokeEmitter.birthRate = 0
-
-        whiteSmokeEmitter = burnParticleNode.childNode(withName: "whiteSmoke", recursively: true)!.particleSystems![0]
-        whiteSmokeEmitterBirthRate = whiteSmokeEmitter.birthRate
-        whiteSmokeEmitter.birthRate = 0
-
-       
-
-        particleEmitter.position = SCNVector3Make(0, 0.05, 0)
-        particleEmitter.addParticleSystem(fireEmitter)
-        particleEmitter.addParticleSystem(smokeEmitter)
-        particleEmitter.addParticleSystem(whiteSmokeEmitter)
-
-    }
-
-    private func loadSounds() {
-        aahSound = SCNAudioSource( named: "audio/aah_extinction.mp3")!
-        aahSound.volume = 1.0
-        aahSound.isPositional = false
-        aahSound.load()
-
-        catchFireSound = SCNAudioSource(named: "audio/panda_catch_fire.mp3")!
-        catchFireSound.volume = 5.0
-        catchFireSound.isPositional = false
-        catchFireSound.load()
-
-        ouchSound = SCNAudioSource(named: "audio/ouch_firehit.mp3")!
-        ouchSound.volume = 2.0
-        ouchSound.isPositional = false
-        ouchSound.load()
-
-        hitSound = SCNAudioSource(named: "audio/hit.mp3")!
-        hitSound.volume = 2.0
-        hitSound.isPositional = false
-        hitSound.load()
-
-       
-
-      
-
-        jumpSound = SCNAudioSource(named: "audio/jump.m4a")!
-        jumpSound.volume = 0.2
-        jumpSound.isPositional = false
-        jumpSound.load()
-
-    
-
-        for i in 0..<Character.stepsCount {
-            steps[i] = SCNAudioSource(named: "audio/Step_rock_0\(UInt32(i)).mp3")!
-            steps[i].volume = 0.5
-            steps[i].isPositional = false
-            steps[i].load()
-        }
-    }
+   
 
     private func loadAnimations() {
         let idleAnimation = Character.loadAnimation(fromSceneNamed: "Art.scnassets/character/pig_idle.scn")
@@ -264,16 +203,16 @@ class Character: NSObject {
     
    
     
-    var isBurning: Bool = false {
+    var isDying: Bool = false {
         didSet {
-            if isBurning == oldValue {
+            if isDying == oldValue {
                 return
             }
             //walk faster when burning
             let oldSpeed = walkSpeed
             walkSpeed = oldSpeed
             
-            if isBurning {
+            if isDying {
                 model.runAction(SCNAction.sequence([
                     SCNAction.playAudio(catchFireSound, waitForCompletion: false),
                     SCNAction.playAudio(ouchSound, waitForCompletion: false),
@@ -282,26 +221,13 @@ class Character: NSObject {
                         SCNAction.fadeOpacity(to: 1.0, duration: 0.1)
                         ]))
                     ]))
-                whiteSmokeEmitter.birthRate = 0
-                fireEmitter.birthRate = fireEmitterBirthRate
-                smokeEmitter.birthRate = smokeEmitterBirthRate
+                
             } else {
                 model.removeAllAudioPlayers()
                 model.removeAllActions()
                 model.opacity = 1.0
                 model.runAction(SCNAction.playAudio(aahSound, waitForCompletion: false))
                 
-                SCNTransaction.begin()
-                SCNTransaction.animationDuration = 0.0
-                whiteSmokeEmitter.birthRate = whiteSmokeEmitterBirthRate
-                fireEmitter.birthRate = 0
-                smokeEmitter.birthRate = 0
-                SCNTransaction.commit()
-                
-                SCNTransaction.begin()
-                SCNTransaction.animationDuration = 5.0
-                whiteSmokeEmitter.birthRate = 0
-                SCNTransaction.commit()
             }
         }
     }
@@ -387,7 +313,7 @@ class Character: NSObject {
         let wasTouchingTheGroup = groundNode != nil
         groundNode = nil
         var touchesTheGround = false
-        let wasBurning = isBurning
+        let wasBurning = isDying
         
         if let hit = hitResult {
             let ground = float3(hit.worldCoordinates)
@@ -399,8 +325,8 @@ class Character: NSObject {
                 groundNode = hit.node
                 touchesTheGround = true
                 
-                //touching lava?
-                isBurning = groundNode?.name == "COLL_lava"
+                //touching lava?x
+                isDying = groundNode?.name == "COLL_lava"
             }
         } else {
             if wPosition.y < Character.minAltitude {
@@ -436,7 +362,7 @@ class Character: NSObject {
                     model.animationPlayer(forKey: "jump")?.stop(withBlendOutDuration: 0.1)
                     
                     // trigger jump particles if not touching lava
-                    if isBurning {
+                    if isDying {
                         model.childNode(withName: "dustEmitter", recursively: true)?.addParticleSystem(jumpDustParticle)
                     } else {
                         // jump in lava again
@@ -455,7 +381,7 @@ class Character: NSObject {
             }
         }
         
-        if touchesTheGround && !wasTouchingTheGroup && !isBurning && lastStepFrame < frameCounter - 10 {
+        if touchesTheGround && !wasTouchingTheGroup && !isDying && lastStepFrame < frameCounter - 10 {
             // sound
             lastStepFrame = frameCounter
             characterNode.runAction(SCNAction.playAudio(steps[0], waitForCompletion: false))
@@ -492,7 +418,7 @@ class Character: NSObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.attackCount -= 1
         }
-        spinParticleAttach.addParticleSystem(spinCircleParticle)
+//        spinParticleAttach.addParticleSystem(spinCircleParticle)
     }
     
     var isWalking: Bool = false {
@@ -510,7 +436,7 @@ class Character: NSObject {
     
     var walkSpeed: CGFloat = 1.0 {
         didSet {
-            let burningFactor: CGFloat = isBurning ? 2: 1
+            let burningFactor: CGFloat = isDying ? 2: 1
             model.animationPlayer(forKey: "walk")?.speed = Character.speedFactor * walkSpeed * burningFactor
         }
     }
@@ -542,107 +468,53 @@ class Character: NSObject {
         downwardAcceleration = 0
     }
     
-    // MARK: enemy
+    // MARK: enemy if have
     
- 
-    
-
-    
-    // MARK: utils
-    
-    class func loadAnimation(fromSceneNamed sceneName: String) -> SCNAnimationPlayer {
-        let scene = SCNScene( named: sceneName )!
-        // find top level animation
-        var animationPlayer: SCNAnimationPlayer! = nil
-        scene.rootNode.enumerateChildNodes { (child, stop) in
-            if !child.animationKeys.isEmpty {
-                animationPlayer = child.animationPlayer(forKey: child.animationKeys[0])
-                stop.pointee = true
-            }
-        }
-        return animationPlayer
-    }
-    
-
-
-
+}
     
     // MARK: - physics contact
+extension Character {
     func slideInWorld(fromPosition start: float3, velocity: float3) {
-        let maxSlideIteration: Int = 4
-        var iteration = 0
-        var stop: Bool = false
+           let maxSlideIteration: Int = 4
+           var iteration = 0
+           var stop: Bool = false
 
-        var replacementPoint = start
+           var replacementPoint = start
 
-        var start = start
-        var velocity = velocity
-        let options: [SCNPhysicsWorld.TestOption: Any] = [
-            SCNPhysicsWorld.TestOption.collisionBitMask: Bitmask.collision.rawValue,
-            SCNPhysicsWorld.TestOption.searchMode: SCNPhysicsWorld.TestSearchMode.closest]
-        while !stop {
-            var from = matrix_identity_float4x4
-            from.position = start
+           var start = start
+           var velocity = velocity
+           let options: [SCNPhysicsWorld.TestOption: Any] = [
+               SCNPhysicsWorld.TestOption.collisionBitMask: Bitmask.collision.rawValue,
+               SCNPhysicsWorld.TestOption.searchMode: SCNPhysicsWorld.TestSearchMode.closest]
+           while !stop {
+               var from = matrix_identity_float4x4
+               from.position = start
 
-            var to: matrix_float4x4 = matrix_identity_float4x4
-            to.position = start + velocity
+               var to: matrix_float4x4 = matrix_identity_float4x4
+               to.position = start + velocity
 
-            let contacts = physicsWorld!.convexSweepTest(
-                with: characterCollisionShape!,
-                from: SCNMatrix4(from),
-                to: SCNMatrix4(to),
-                options: options)
-            if !contacts.isEmpty {
-                (velocity, start) = handleSlidingAtContact(contacts.first!, position: start, velocity: velocity)
-                iteration += 1
+               let contacts = physicsWorld!.convexSweepTest(
+                   with: characterCollisionShape!,
+                   from: SCNMatrix4(from),
+                   to: SCNMatrix4(to),
+                   options: options)
+               if !contacts.isEmpty {
+                   (velocity, start) = handleSlidingAtContact(contacts.first!, position: start, velocity: velocity)
+                   iteration += 1
 
-                if simd_length_squared(velocity) <= (10E-3 * 10E-3) || iteration >= maxSlideIteration {
-                    replacementPoint = start
-                    stop = true
-                }
-            } else {
-                replacementPoint = start + velocity
-                stop = true
-            }
-        }
-        characterNode!.simdWorldPosition = replacementPoint - collisionShapeOffsetFromModel
-    }
-
-    private func handleSlidingAtContact(_ closestContact: SCNPhysicsContact, position start: float3, velocity: float3)
-        -> (computedVelocity: simd_float3, colliderPositionAtContact: simd_float3) {
-        let originalDistance: Float = simd_length(velocity)
-
-        let colliderPositionAtContact = start + Float(closestContact.sweepTestFraction) * velocity
-
-        // Compute the sliding plane.
-        let slidePlaneNormal = float3(closestContact.contactNormal)
-        let slidePlaneOrigin = float3(closestContact.contactPoint)
-        let centerOffset = slidePlaneOrigin - colliderPositionAtContact
-
-        // Compute destination relative to the point of contact.
-        let destinationPoint = slidePlaneOrigin + velocity
-
-        // We now project the destination point onto the sliding plane.
-        let distPlane = simd_dot(slidePlaneOrigin, slidePlaneNormal)
-
-        // Project on plane.
-        var t = planeIntersect(planeNormal: slidePlaneNormal, planeDist: distPlane,
-                               rayOrigin: destinationPoint, rayDirection: slidePlaneNormal)
-
-        let normalizedVelocity = velocity * (1.0 / originalDistance)
-        let angle = simd_dot(slidePlaneNormal, normalizedVelocity)
-
-        var frictionCoeff: Float = 0.3
-        if fabs(angle) < 0.9 {
-            t += 10E-3
-            frictionCoeff = 1.0
-        }
-        let newDestinationPoint = (destinationPoint + t * slidePlaneNormal) - centerOffset
-
-        let computedVelocity = frictionCoeff * Float(1.0 - closestContact.sweepTestFraction)
-            * originalDistance * simd_normalize(newDestinationPoint - start)
-
-        return (computedVelocity, colliderPositionAtContact)
-    }
+                   if simd_length_squared(velocity) <= (10E-3 * 10E-3) || iteration >= maxSlideIteration {
+                       replacementPoint = start
+                       stop = true
+                   }
+               } else {
+                   replacementPoint = start + velocity
+                   stop = true
+               }
+           }
+           characterNode!.simdWorldPosition = replacementPoint - collisionShapeOffsetFromModel
+       }
 
 }
+   
+
+
