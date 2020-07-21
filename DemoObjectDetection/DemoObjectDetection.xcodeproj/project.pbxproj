@@ -34,6 +34,10 @@
 		36FA601F24C428BF00478133 /* GameController+HandEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FA601E24C428BF00478133 /* GameController+HandEffect.swift */; };
 		5304DCF7245912860075BC9C /* ObjectsDetectionKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5304DCF6245912860075BC9C /* ObjectsDetectionKit.framework */; };
 		5304DCF8245912860075BC9C /* ObjectsDetectionKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5304DCF6245912860075BC9C /* ObjectsDetectionKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		53923D9624C7250F009CAF5D /* MainMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53923D9524C7250F009CAF5D /* MainMenuView.swift */; };
+		53923D9824C7252C009CAF5D /* LevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53923D9724C7252C009CAF5D /* LevelView.swift */; };
+		53923D9A24C72543009CAF5D /* CompleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53923D9924C72543009CAF5D /* CompleteView.swift */; };
+		53923D9C24C725CB009CAF5D /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53923D9B24C725CB009CAF5D /* SettingView.swift */; };
 		5398E228244BE50A0059E48B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5398E227244BE50A0059E48B /* AppDelegate.swift */; };
 		5398E22A244BE50A0059E48B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5398E229244BE50A0059E48B /* SceneDelegate.swift */; };
 		5398E22C244BE50A0059E48B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5398E22B244BE50A0059E48B /* ViewController.swift */; };
@@ -100,6 +104,10 @@
 		36FA601C24C427D000478133 /* HandlerBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerBlock.swift; sourceTree = "<group>"; };
 		36FA601E24C428BF00478133 /* GameController+HandEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameController+HandEffect.swift"; sourceTree = "<group>"; };
 		5304DCF6245912860075BC9C /* ObjectsDetectionKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ObjectsDetectionKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		53923D9524C7250F009CAF5D /* MainMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuView.swift; sourceTree = "<group>"; };
+		53923D9724C7252C009CAF5D /* LevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelView.swift; sourceTree = "<group>"; };
+		53923D9924C72543009CAF5D /* CompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteView.swift; sourceTree = "<group>"; };
+		53923D9B24C725CB009CAF5D /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		5398E224244BE50A0059E48B /* DemoObjectDetection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoObjectDetection.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5398E227244BE50A0059E48B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5398E229244BE50A0059E48B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -220,6 +228,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		53923D9424C724E6009CAF5D /* GameNavigation */ = {
+			isa = PBXGroup;
+			children = (
+				53923D9524C7250F009CAF5D /* MainMenuView.swift */,
+				53923D9724C7252C009CAF5D /* LevelView.swift */,
+				53923D9924C72543009CAF5D /* CompleteView.swift */,
+				53923D9B24C725CB009CAF5D /* SettingView.swift */,
+			);
+			path = GameNavigation;
+			sourceTree = "<group>";
+		};
 		5398E21B244BE50A0059E48B = {
 			isa = PBXGroup;
 			children = (
@@ -274,6 +293,7 @@
 		BF6363302463AAB100E9BBC5 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				53923D9424C724E6009CAF5D /* GameNavigation */,
 				36FA601B24C426E100478133 /* Ultils */,
 				36FA601824C4269F00478133 /* Component */,
 				36FA601724C4268F00478133 /* GameController */,
@@ -378,11 +398,14 @@
 				36FA601D24C427D000478133 /* HandlerBlock.swift in Sources */,
 				BF38625E2473A0BA00DC1A03 /* RootComponent.swift in Sources */,
 				36488A3D24C43FA100BF16BD /* ViewPadOverlay.swift in Sources */,
+				53923D9C24C725CB009CAF5D /* SettingView.swift in Sources */,
 				BF3862622473A11300DC1A03 /* GameController.swift in Sources */,
 				3646618824C422F200B7D68D /* Charecter+Behavior.swift in Sources */,
 				5398E22C244BE50A0059E48B /* ViewController.swift in Sources */,
+				53923D9A24C72543009CAF5D /* CompleteView.swift in Sources */,
 				BF3862662473A13300DC1A03 /* ButtonOverlay.swift in Sources */,
 				BF6363342463AE5400E9BBC5 /* art.swift in Sources */,
+				53923D9824C7252C009CAF5D /* LevelView.swift in Sources */,
 				BF38626F2473A19300DC1A03 /* Button.swift in Sources */,
 				53CFF60F24C6C8F8001D2266 /* HandleUserGesture.swift in Sources */,
 				5398E228244BE50A0059E48B /* AppDelegate.swift in Sources */,
@@ -397,6 +420,7 @@
 				36488A3E24C43FA100BF16BD /* ControlOverlay.swift in Sources */,
 				BF3862602473A0BA00DC1A03 /* ScaredStateComponent.swift in Sources */,
 				BF38625624739DF600DC1A03 /* SimdExtensions.swift in Sources */,
+				53923D9624C7250F009CAF5D /* MainMenuView.swift in Sources */,
 				36FA601A24C426B500478133 /* HUB.swift in Sources */,
 				BF38625F2473A0BA00DC1A03 /* BehaviorComponent.swift in Sources */,
 				BF6363322463AAD800E9BBC5 /* GameObject.swift in Sources */,
