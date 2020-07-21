@@ -207,6 +207,8 @@ class GameController: NSObject, ExtraProtocols {
         if (_lockCamera == true) {
                return;
            }
+        _cameraXHandle = SCNNode()
+        _cameraYHandle = SCNNode()
         SCNTransaction.begin()
         SCNTransaction.animationDuration = 0.0
         
@@ -377,7 +379,7 @@ class GameController: NSObject, ExtraProtocols {
         //setup audio
         setupAudio()
 
-//        handleCamera()
+        //handleCamera()
 
 
         //register ourself as the physics contact delegate to receive contact notifications
@@ -524,28 +526,6 @@ class GameController: NSObject, ExtraProtocols {
         self.overlay?.showEndScreen()
     }
 }
-    
-extension GameController: SmartDelegate {
-    func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print(touchesBegan)
-//        for touch in touches {
-//                   if true{
-//                       // We're in the dpad
-//                       if _padTouch  {
-//                           _padTouch = touch;
-//                       }
-//                   }
-//                   else if (!_panningTouch) {
-//                       // Start panning
-//                       _panningTouch = [touches anyObject];
-//                   }
-//
-//                   if (_padTouch && _panningTouch)
-//                       break;  // We already have what we need
-//               }
-//               [super touchesBegan:touches withEvent:event];
-        }
-    }
 
     // MARK: - GameController
 

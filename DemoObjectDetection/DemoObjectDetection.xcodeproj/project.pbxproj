@@ -41,6 +41,7 @@
 		5398E232244BE50A0059E48B /* DemoObjectDetection.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5398E230244BE50A0059E48B /* DemoObjectDetection.xcdatamodeld */; };
 		5398E234244BE50C0059E48B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5398E233244BE50C0059E48B /* Assets.xcassets */; };
 		5398E237244BE50C0059E48B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5398E235244BE50C0059E48B /* LaunchScreen.storyboard */; };
+		53CFF60F24C6C8F8001D2266 /* HandleUserGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CFF60E24C6C8F8001D2266 /* HandleUserGesture.swift */; };
 		BF38625624739DF600DC1A03 /* SimdExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF38625524739DF600DC1A03 /* SimdExtensions.swift */; };
 		BF38625D2473A0BA00DC1A03 /* PlayerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3862582473A0B800DC1A03 /* PlayerComponent.swift */; };
 		BF38625E2473A0BA00DC1A03 /* RootComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3862592473A0B900DC1A03 /* RootComponent.swift */; };
@@ -108,6 +109,7 @@
 		5398E233244BE50C0059E48B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5398E236244BE50C0059E48B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5398E238244BE50C0059E48B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		53CFF60E24C6C8F8001D2266 /* HandleUserGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleUserGesture.swift; sourceTree = "<group>"; };
 		BF38625524739DF600DC1A03 /* SimdExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimdExtensions.swift; sourceTree = "<group>"; };
 		BF3862582473A0B800DC1A03 /* PlayerComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerComponent.swift; sourceTree = "<group>"; };
 		BF3862592473A0B900DC1A03 /* RootComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootComponent.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				36FA601C24C427D000478133 /* HandlerBlock.swift */,
 				36FA601E24C428BF00478133 /* GameController+HandEffect.swift */,
 				363CD02724C4BAC600A3E319 /* HandleCamera.swift */,
+				53CFF60E24C6C8F8001D2266 /* HandleUserGesture.swift */,
 			);
 			path = GameController;
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 				BF3862662473A13300DC1A03 /* ButtonOverlay.swift in Sources */,
 				BF6363342463AE5400E9BBC5 /* art.swift in Sources */,
 				BF38626F2473A19300DC1A03 /* Button.swift in Sources */,
+				53CFF60F24C6C8F8001D2266 /* HandleUserGesture.swift in Sources */,
 				5398E228244BE50A0059E48B /* AppDelegate.swift in Sources */,
 				36FA601F24C428BF00478133 /* GameController+HandEffect.swift in Sources */,
 				3632230024C41DB4004E2C1A /* Ultils.swift in Sources */,
