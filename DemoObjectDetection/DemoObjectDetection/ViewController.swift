@@ -15,17 +15,18 @@ protocol SmartDelegate: class {
 
 class ViewController: UIViewController {
     public weak var delegate: SmartDelegate?
-    var gameView: SCNView {
-        return view as! SCNView
+    var gameView: GameView {
+        return self.view as! GameView
     }
     
+    override func loadView() {
+        super.loadView()
+        self.view = GameView(frame: UIScreen.main.bounds, options: nil)
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         delegate?.touchesBegan(touches, with: event)
     }
-    
-    
-    
     
     var gameController: GameController?
 
@@ -37,11 +38,18 @@ class ViewController: UIViewController {
             self.gameView.contentScaleFactor = min(1.3, self.gameView.contentScaleFactor)
             self.gameView.preferredFramesPerSecond = 60
         }
-        
+        self.gameView.controller = self
+        self.gameView.allowsCameraControl = true
         gameController = GameController(scnView: gameView, viewController: self)
+        self.delegate = gameController
 
         // Configure the view
         gameView.backgroundColor = UIColor.black
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.gameView.setUp()
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
