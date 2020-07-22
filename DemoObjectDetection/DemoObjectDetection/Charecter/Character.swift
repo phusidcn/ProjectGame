@@ -14,6 +14,13 @@ func planeIntersect(planeNormal: float3, planeDist: Float, rayOrigin: float3, ra
     return (planeDist - simd_dot(planeNormal, rayOrigin)) / simd_dot(planeNormal, rayDirection)
 }
 
+enum DirectionRotate {
+    case forward
+    case backward
+    case left
+    case right
+}
+
 
 
 class Character: NSObject {
@@ -31,6 +38,13 @@ class Character: NSObject {
     static private let collisionMargin = Float(0.04)
     static private let modelOffset = float3(0, -collisionMargin, 0)
     static private let collisionMeshBitMask = 8
+    
+    // collision
+    private var collisionDirection : SCNNode?
+    private var forwardCollision : SCNNode?
+    private var backwardCollision : SCNNode?
+    private var leftCollision : SCNNode?
+    private var rightCollision : SCNNode?
     
     enum GroundType: Int {
         case grass
@@ -104,33 +118,107 @@ class Character: NSObject {
         super.init()
 
         loadCharacter()
+        setupCollisions()
 //        loadParticles()
         loadSounds()
         loadAnimations()
     }
     
-    public func moveFont(simd3 : SCNVector3) {
-        let moveForwardAction = SCNAction.moveBy(x: CGFloat(simd3.x), y: 0, z: CGFloat(simd3.z), duration: 1)
+    public func moveByPosition(direction: DirectionRotate) {
+       
+        let turnAction =  createActionRotate(direction: direction)
+        var nodeDirection : SCNNode {
+            switch direction {
+            case .backward:
+                return backwardCollision!
+            case . forward:
+                 return forwardCollision!
+            case .left:
+                 return leftCollision!
+            case .right:
+                 return rightCollision!
+            }
+        }
+        
+  
+        let moveAction = SCNAction.move(to: nodeDirection.worldPosition, duration: 0.5)
+        let actionGroup = SCNAction.group([turnAction, moveAction])
         isWalking = true
-        characterNode.runAction(moveForwardAction, completionHandler: {[weak self] in
-            self?.isWalking = false
+        characterNode.runAction(actionGroup, completionHandler: {[weak self] in
+            if let wSelf = self {
+                wSelf.isWalking = false
+            }
         })
     }
     
-    public func jumpFont(simd3 : SCNVector3) {
-        model.animationPlayer(forKey: "jump")?.play()
-        let duration = 0.42
-        let bounceUpAction = SCNAction.moveBy(x: 0, y: 1.0, z: 0, duration: duration * 0.5)
-         let bounceDownAction = SCNAction.moveBy(x: 0, y: 0.0, z: 0, duration: duration * 0.5)
-         bounceUpAction.timingMode = .easeOut
-         bounceDownAction.timingMode = .easeIn
-        let moveForwardAction = SCNAction.moveBy(x: 0, y: 0, z: 2, duration: duration)
-         let bounceAction = SCNAction.sequence([bounceUpAction, bounceDownAction])
-        let actionJumpFontGroup = SCNAction.group([bounceAction, moveForwardAction])
-        characterNode.runAction(actionJumpFontGroup, completionHandler: { [weak self] in
-            self?.model.animationPlayer(forKey: "jump")?.stop()
-        })
-       }
+    public func jumpByPosition(direction : DirectionRotate) {
+           model.animationPlayer(forKey: "jump")?.play()
+           let duration = 0.4
+           let bounceUpAction =  SCNAction.moveBy(x: 0, y: 1.0, z: 0, duration: duration * 0.5)
+            let bounceDownAction = SCNAction.moveBy(x: 0, y: 0.0, z: 0, duration: duration * 0.5)
+            bounceUpAction.timingMode = .easeOut
+            bounceDownAction.timingMode = .easeIn
+           
+           let turnAction =  createActionRotate(direction: direction)
+           var nodeDirection : SCNNode {
+               switch direction {
+               case .backward:
+                   return backwardCollision!
+               case . forward:
+                    return forwardCollision!
+               case .left:
+                    return leftCollision!
+               case .right:
+                    return rightCollision!
+               }
+           }
+           
+           let moveForwardAction = SCNAction.move(to: nodeDirection.worldPosition, duration: duration)
+            let bounceAction = SCNAction.sequence([bounceUpAction, bounceDownAction])
+           let actionJumpFontGroup = SCNAction.group([turnAction, bounceAction, moveForwardAction])
+           characterNode.runAction(actionJumpFontGroup, completionHandler: { [weak self] in
+               self?.model.animationPlayer(forKey: "jump")?.stop()
+           })
+          }
+    
+ 
+    
+    func createActionRotate(direction: DirectionRotate) -> SCNAction {
+        let duration = 0.2
+        switch direction {
+        case .forward:
+            return  SCNAction.rotateBy(x: 0, y: convertToRadians(angle: 0), z: 0, duration: duration)
+        case .backward:
+            return  SCNAction.rotateBy(x: 0, y: convertToRadians(angle: 180), z: 0, duration: duration)
+        
+        case .left:
+            return SCNAction.rotateBy(x: 0, y: convertToRadians(angle: 90), z: 0, duration: duration)
+        case .right:
+            return SCNAction.rotateBy(x: 0, y: convertToRadians(angle: -90), z: 0, duration: duration)
+        }
+    }
+    
+    
+    
+    
+   
+    
+     func setupCollisions() {
+            // load the collision mesh from another scene and merge into main scene
+            let collisionsScene = SCNScene.init(named:"Art.scnassets/character/Collision.scn")
+
+            collisionDirection =  collisionsScene?.rootNode.childNode(withName: "Collision", recursively: true)
+    //        collisionDirection?.position = character!.characterNode.position
+            
+            forwardCollision = collisionDirection?.childNode(withName: "fontNode", recursively: true)
+            backwardCollision = collisionDirection?.childNode(withName: "backNode", recursively: true)
+            leftCollision = collisionDirection?.childNode(withName: "leftNode", recursively: true)
+            rightCollision = collisionDirection?.childNode(withName: "rightNode", recursively: true)
+            collisionDirection?.position = characterNode.position
+
+
+            self.characterNode?.addChildNode(collisionDirection!)
+        }
 
     private func loadCharacter() {
        
@@ -139,7 +227,6 @@ class Character: NSObject {
         model.simdPosition = Character.modelOffset
 
         fontNode = model.childNode(withName: "font", recursively: true)
-        print("thu nao", fontNode?.simdPosition)
         
         
         characterNode = SCNNode()
@@ -322,7 +409,10 @@ class Character: NSObject {
         // put the character on the ground
         let up = float3(0, 1, 0)
         var wPosition = characterNode.simdWorldPosition
+//        collisionDirection?.simdWorldPosition = wPosition
+        print("collisionDirection", collisionDirection?.childNode(withName: "backNode", recursively: true)?.simdWorldPosition)
         // gravity
+        
         downwardAcceleration -= Character.gravity
         wPosition.y += downwardAcceleration
         let HIT_RANGE = Float(0.2)

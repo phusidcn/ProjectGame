@@ -35,11 +35,10 @@ enum AudioSourceKind: Int {
     case totalCount
 }
 class GameController: NSObject, ExtraProtocols {
-    let touch = UIPanGestureRecognizer()
     struct Config {
         let ALTITUDE = 1.00
     }
-        func padOverlayVirtualStickInteractionDidStart(_ padNode: VieưPadOverlay) {
+        func padOverlayVirtualStickInteractionDidStart(_ padNode: ViewPadOverlay) {
             
             if padNode == overlay!.controlOverlay!.leftPad {
                 characterDirection = float2(Float(padNode.stickPosition.x), -Float(padNode.stickPosition.y))
@@ -52,7 +51,7 @@ class GameController: NSObject, ExtraProtocols {
         
         
 
-        func padOverlayVirtualStickInteractionDidChange(_ padNode: VieưPadOverlay) {
+        func padOverlayVirtualStickInteractionDidChange(_ padNode: ViewPadOverlay) {
             if padNode == overlay!.controlOverlay!.leftPad {
                 characterDirection = float2(Float(padNode.stickPosition.x), -Float(padNode.stickPosition.y))
             }
@@ -61,7 +60,7 @@ class GameController: NSObject, ExtraProtocols {
             }
         }
 
-        func padOverlayVirtualStickInteractionDidEnd(_ padNode: VieưPadOverlay) {
+        func padOverlayVirtualStickInteractionDidEnd(_ padNode: ViewPadOverlay) {
             if padNode == overlay!.controlOverlay!.leftPad {
                 characterDirection = [0, 0]
             }
@@ -72,16 +71,32 @@ class GameController: NSObject, ExtraProtocols {
 
         func willPress(_ button: ButtonOverlay) {
             if button == overlay!.controlOverlay!.buttonA {
-                controllerJump(true)
+                character?.moveByPosition(direction: .left)
+//                character?.moveByPosition(simd3: leftCollision!.worldPosition  , direction: .left)
             }
             if button == overlay!.controlOverlay!.buttonB {
-                controllerAttack()
+                
             }
         }
 
         func didPress(_ button: ButtonOverlay) {
             if button == overlay!.controlOverlay!.buttonA {
                 controllerJump(false)
+            } else {
+//                print("right!.charector truoc", character?.characterNode!.worldPosition)
+//                print("right!.position truoc", collisionDirection!.worldPosition)
+//
+//                let vector = SCNVector3(1, 0, 0)
+                character?.jumpByPosition(direction: .backward)
+//
+////                updatePositionAndOrientationOf(collisionDirection!, withPosition: character!.characterNode.worldPosition, relativeTo: character!.characterNode)
+////                let turnLeft = SCNAction.rotateTo(x: 0, y: convertToRadians(angle: -90), z: 0, duration: 0.5, usesShortestUnitArc: true)
+////                      collisionDirection?.runAction(turnLeft)
+//                let moveRightAction = SCNAction.moveBy(x: 1.0, y: 0, z: 0, duration: 0.2)
+//                collisionDirection?.position = character!.characterNode.position
+////                rightCollision = collisionDirection?.childNode(withName: "rightNode", recursively: true)
+//                print("right!.position", collisionDirection!.worldPosition)
+
             }
         }
         
@@ -119,7 +134,12 @@ class GameController: NSObject, ExtraProtocols {
     private var collectedGems: Int = 0
     private var keyIsVisible: Bool = false
     
-    //
+    // collision
+    private var collisionDirection : SCNNode?
+    private var forwardCollision : SCNNode?
+    private var backwardCollision : SCNNode?
+    private var leftCollision : SCNNode?
+    private var rightCollision : SCNNode?
 //
     private var _direction = CGPoint()
     private var _panningTouch = UITouch()
@@ -146,6 +166,20 @@ class GameController: NSObject, ExtraProtocols {
 
 // MARK: -
 // MARK: Setup
+    
+    func updatePositionAndOrientationOf(_ node: SCNNode, withPosition position: SCNVector3, relativeTo referenceNode: SCNNode) {
+        let referenceNodeTransform = matrix_float4x4(referenceNode.transform)
+
+        // Setup a translation matrix with the desired position
+        var translationMatrix = matrix_identity_float4x4
+        translationMatrix.columns.3.x = position.x
+        translationMatrix.columns.3.y = position.y
+        translationMatrix.columns.3.z = position.z
+
+        // Combine the configured translation matrix with the referenceNode's transform to get the desired position AND orientation
+        let updatedTransform = matrix_multiply(referenceNodeTransform, translationMatrix)
+        node.transform = SCNMatrix4(updatedTransform)
+    }
 
     func handleCamera() {
         _cameraXHandle = SCNNode()
@@ -256,11 +290,23 @@ class GameController: NSObject, ExtraProtocols {
 
     func setupCollisions() {
         // load the collision mesh from another scene and merge into main scene
-        let collisionsScene = SCNScene( named: "Art.scnassets/collision.scn" )
-        collisionsScene!.rootNode.enumerateChildNodes { (_ child: SCNNode, _ _: UnsafeMutablePointer<ObjCBool>) in
-            child.opacity = 0.0
-            self.scene?.rootNode.addChildNode(child)
-        }
+        let collisionsScene = SCNScene.init(named:"Art.scnassets/character/Collision.scn")
+
+        collisionDirection =  collisionsScene?.rootNode.childNode(withName: "Collision", recursively: true)
+        collisionDirection?.position = SCNVector3(x: 0, y: -1.563998, z: 0)
+//        collisionDirection?.position = character!.characterNode.position
+        
+        forwardCollision = collisionDirection?.childNode(withName: "fontNode", recursively: true)
+        backwardCollision = collisionDirection?.childNode(withName: "backNode", recursively: true)
+        leftCollision = collisionDirection?.childNode(withName: "leftNode", recursively: true)
+        rightCollision = collisionDirection?.childNode(withName: "rightNode", recursively: true)
+        
+
+        self.scene?.rootNode.addChildNode(collisionDirection!)
+    }
+    
+    func updatePositionCollision () {
+//        updatePositionAndOrientationOf(collisionDirection!, withPosition: character!.characterNode.worldPosition, relativeTo: character!.characterNode)
     }
 
 
@@ -360,11 +406,16 @@ class GameController: NSObject, ExtraProtocols {
         //setup physics
 //        setupPhysics()
 
-        //setup collisions
-        setupCollisions()
+        
 
         //load the character
+        
         setupCharacter()
+        
+        //setup collisions
+
+        
+//        setupCollisions()
 
         let light = scene!.rootNode.childNode(withName: "DirectLight", recursively: true)!.light
         light!.shadowCascadeCount = 3  // turn on cascade shadows
@@ -493,6 +544,10 @@ class GameController: NSObject, ExtraProtocols {
         character!.update(atTime: time, with: renderer)
 
      
+    }
+    
+    func renderer(_ renderer: SCNSceneRenderer, didApplyAnimationsAtTime time: TimeInterval) {
+        updatePositionCollision()
     }
 
     // MARK: - contact delegate
