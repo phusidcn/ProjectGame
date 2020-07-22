@@ -28,7 +28,7 @@ class Character: NSObject {
     static private let speedFactor: CGFloat = 2.0
     static internal let stepsCount = 10
     
-    static private let initialPosition = float3(0.0, 0.0, 0.0)
+    static private let initialPosition = float3(0.0, 2.0, 0.0)
     
     // some constants
     static private let gravity = Float(0.004)
@@ -124,46 +124,7 @@ class Character: NSObject {
         loadAnimations()
     }
     
-   
-
-    
-    
-//    public func moveByPosition(direction: DirectionRotate) {
-//
-//        let turnAction =  createActionRotate(direction: direction)
-//        var nodeDirection : SCNNode {
-//            switch direction {
-//            case .backward:
-//                return backwardCollision!
-//            case . forward:
-//                return forwardCollision!
-//            case .left:
-//                return leftCollision!
-//            case .right:
-//                return rightCollision!
-//            }
-//        }
-//
-//
-//        let moveAction = SCNAction.move(to: nodeDirection.worldPosition, duration: 0.5)
-//        let actionGroup = SCNAction.group([turnAction, moveAction])
-//        isWalking = true
-//        characterNode.runAction(actionGroup, completionHandler: {[weak self] in
-//            if let wSelf = self {
-//                wSelf.isWalking = false
-//            }
-//        })
-//    }
-    
-    public func jumpByPosition(direction : DirectionRotate) {
-        model.animationPlayer(forKey: "jump")?.play()
-        let duration = 0.4
-        let bounceUpAction =  SCNAction.moveBy(x: 0, y: 3.0, z: 0, duration: duration * 0.5)
-        let bounceDownAction = SCNAction.moveBy(x: 0, y: -1.0, z: 0, duration: duration * 0.5)
-        bounceUpAction.timingMode = .easeOut
-        bounceDownAction.timingMode = .easeIn
-        
-        let turnAction =  createActionRotate(direction: direction)
+    func getCurrentDirection(direction : DirectionRotate, handler: (DirectionRotate) -> ()) {
         var nodeDirection : SCNNode {
             switch direction {
             case .backward:
@@ -176,16 +137,17 @@ class Character: NSObject {
                 return rightCollision!
             }
         }
+       let position = nodeDirection.worldPosition
+        print("position", position)
         
-        jumpState = 0
-        let moveForwardAction = SCNAction.move(to: nodeDirection.worldPosition, duration: duration)
-        let bounceAction = SCNAction.sequence([bounceUpAction, bounceDownAction])
-        let actionJumpFontGroup = SCNAction.group([turnAction, bounceAction, moveForwardAction])
-        characterNode.runAction(actionJumpFontGroup, completionHandler: { [weak self] in
-            self?.jumpState = 1
-            self?.model.animationPlayer(forKey: "jump")?.stop()
-        })
+       return convertVector2Direction(node1: self.characterNode!, node2: nodeDirection, handler: handler)
     }
+    
+    
+    
+    
+    
+   
     
     
     
@@ -220,7 +182,7 @@ class Character: NSObject {
         backwardCollision = collisionDirection?.childNode(withName: "backNode", recursively: true)
         leftCollision = collisionDirection?.childNode(withName: "leftNode", recursively: true)
         rightCollision = collisionDirection?.childNode(withName: "rightNode", recursively: true)
-        collisionDirection?.position = characterNode.position
+//        collisionDirection?.worldPosition = characterNode.worldPosition
         
         
         self.characterNode?.addChildNode(collisionDirection!)
@@ -360,6 +322,8 @@ class Character: NSObject {
         didSet {
             characterOrientation.runAction(
                 SCNAction.rotateTo(x: 0.0, y: directionAngle, z: 0.0, duration: 0.1, usesShortestUnitArc:true))
+            collisionDirection!.runAction(
+            SCNAction.rotateTo(x: 0.0, y: directionAngle, z: 0.0, duration: 0.1, usesShortestUnitArc:true))
         }
     }
     
@@ -586,6 +550,7 @@ class Character: NSObject {
                 directionWorld = speed * simd_normalize(directionWorld)
             }
         }
+        print(directionWorld)
         return directionWorld
     }
     
@@ -595,6 +560,20 @@ class Character: NSObject {
     }
     
     // MARK: enemy if have
+    
+    func updatePositionAndOrientationOf(_ node: SCNNode, withPosition position: SCNVector3, relativeTo referenceNode: SCNNode) {
+           let referenceNodeTransform = matrix_float4x4(referenceNode.transform)
+
+           // Setup a translation matrix with the desired position
+           var translationMatrix = matrix_identity_float4x4
+           translationMatrix.columns.3.x = position.x
+           translationMatrix.columns.3.y = position.y
+           translationMatrix.columns.3.z = position.z
+
+           // Combine the configured translation matrix with the referenceNode's transform to get the desired position AND orientation
+           let updatedTransform = matrix_multiply(referenceNodeTransform, translationMatrix)
+           node.transform = SCNMatrix4(updatedTransform)
+       }
     
 }
 
@@ -638,6 +617,7 @@ extension Character {
             }
         }
         characterNode!.simdWorldPosition = replacementPoint - collisionShapeOffsetFromModel
+//        collisionDirection?.eulerAngles = characterNode!.eulerAngles
     }
     
 }

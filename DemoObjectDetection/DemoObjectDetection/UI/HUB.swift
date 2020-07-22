@@ -9,6 +9,7 @@ class HUB: SKScene {
     private var congratulationsGroupNode: SKNode?
     private var collectedKeySprite: SKSpriteNode!
     private var collectedGemsSprites = [SKSpriteNode]()
+    private var countItemLabel : SKLabelNode!
     
     // demo UI
     private var demoMenu: Menu?
@@ -30,7 +31,14 @@ class HUB: SKScene {
         
         addChild(overlayNode)
         overlayNode.position = CGPoint(x: 0.0, y: h)
-        
+    
+        countItemLabel = SKLabelNode()
+        countItemLabel.xScale = 1
+        countItemLabel.yScale = 1
+        countItemLabel.text = "xxxxxxxxxxx0"
+        countItemLabel!.position = CGPoint(x:150, y:-50)
+        overlayNode.addChild(countItemLabel)
+
         // The Max icon.
         let characterNode = SKSpriteNode(imageNamed: "MaxIcon.png")
         let menuButton = Button(skNode: characterNode)
@@ -64,6 +72,8 @@ class HUB: SKScene {
             controlOverlay!.buttonA.delegate = controller
             controlOverlay!.buttonB.delegate = controller
             addChild(controlOverlay!)
+        
+     
         // the demo UI
 //        demoMenu = Menu(size: size)
 //        demoMenu!.delegate = controller
@@ -115,6 +125,8 @@ class HUB: SKScene {
     
     var collectedGemsCount: Int = 0 {
         didSet {
+            
+            
 //            collectedGemsSprites[collectedGemsCount - 1].texture = SKTexture(imageNamed:"collectableBIG_full.png")
 //
 //            collectedGemsSprites[collectedGemsCount - 1].run(SKAction.sequence([
