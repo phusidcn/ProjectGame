@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+
 class MainMenuView: UIViewController {
     static var sharedInstance: MainMenuView {
         return MainMenuView()
