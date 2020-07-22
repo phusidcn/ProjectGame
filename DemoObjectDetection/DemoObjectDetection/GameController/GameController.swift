@@ -271,13 +271,11 @@ class GameController: NSObject, ExtraProtocols {
         if (_lockCamera == true) {
                return;
            }
-        _cameraXHandle = SCNNode()
-        _cameraYHandle = SCNNode()
         SCNTransaction.begin()
         SCNTransaction.animationDuration = 0.0
         
-        _cameraYHandle!.removeAllActions()
-        _cameraXHandle!.removeAllActions()
+        _cameraYHandle?.removeAllActions()
+        _cameraXHandle?.removeAllActions()
         
         if (_cameraYHandle!.rotation.y < 0) {
             _cameraYHandle!.rotation = SCNVector4Make(0, 1, 0, -_cameraYHandle!.rotation.w);
@@ -292,10 +290,11 @@ class GameController: NSObject, ExtraProtocols {
         SCNTransaction.animationDuration = 0.5
         SCNTransaction.animationTimingFunction = CAMediaTimingFunction.init(name: .easeInEaseOut)
         let F = 0.005
-        _cameraYHandle!.rotation = SCNVector4(0, 1, 0, _cameraYHandle!.rotation.y * (_cameraYHandle!.rotation.w -
-            Float(dir.width) * 0.005))
+        let Yhandler = _cameraYHandle!.rotation.w - Float(dir.width) * Float(F)
+        let Xhandler = _cameraXHandle!.rotation.w + Float(dir.height) * Float(F)
+        _cameraYHandle!.rotation = SCNVector4(0, 1, 0, _cameraYHandle!.rotation.y * Yhandler)
         
-        _cameraXHandle!.rotation = SCNVector4(1, 0, 0, max(.pi, min(0.13, _cameraXHandle!.rotation.w + Float(dir.height) * 0.005)))
+        _cameraXHandle!.rotation = SCNVector4(1, 0, 0, max(.pi / 2, min(0.13, Xhandler)))
         
 
         
@@ -407,7 +406,7 @@ class GameController: NSObject, ExtraProtocols {
 
     // MARK: - Init
 
-    init(scnView: SCNView, viewController: ViewController) {
+    init(scnView: SCNView, viewController: GameViewController) {
         super.init()
         viewController.delegate = self
         self.vc = viewController
@@ -460,7 +459,10 @@ class GameController: NSObject, ExtraProtocols {
         //setup audio
         setupAudio()
 
+        //TODO: handle camera
         //handleCamera()
+        _cameraXHandle = SCNNode()
+        _cameraYHandle = SCNNode()
 
 
         //register ourself as the physics contact delegate to receive contact notifications

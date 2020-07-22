@@ -21,7 +21,10 @@ class LevelVC: UIViewController {
     }
 
     @IBAction func tapToLevelButton(_ sender: UIButton) {
-        print("tap \(sender.tag) level")
+        //print("tap \(sender.tag) level")
+        let gameVC = GameViewController()
+        gameVC.modalPresentationStyle = .fullScreen
+        self.present(gameVC, animated: true, completion: nil)
     }
     /*
     // MARK: - Navigation
