@@ -22,6 +22,8 @@ extension Character {
         var animationPlayer: SCNAnimationPlayer! = nil
         scene.rootNode.enumerateChildNodes { (child, stop) in
             if !child.animationKeys.isEmpty {
+                print("child.animationKeys", child.animationKeys[0])
+                
                 animationPlayer = child.animationPlayer(forKey: child.animationKeys[0])
                 stop.pointee = true
             }
