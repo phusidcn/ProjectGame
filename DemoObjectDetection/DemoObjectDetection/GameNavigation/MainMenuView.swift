@@ -14,6 +14,12 @@ class MainMenuView: UIViewController {
         return MainMenuView()
     }
     
+    @IBOutlet weak var playBtn: UIButton!
+    @IBOutlet weak var background: UIImageView!
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
     @IBOutlet var playButton: UIButton?
     @IBOutlet var settingButton: UIButton?
     

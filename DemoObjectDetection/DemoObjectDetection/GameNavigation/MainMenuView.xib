@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainMenuView" customModule="DemoObjectDetection" customModuleProvider="target">
+            <connections>
+                <outlet property="background" destination="3VN-4G-ZuO" id="C52-Vy-enc"/>
+                <outlet property="playBtn" destination="UqQ-GG-pwz" id="2oM-4X-HKt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainMenuBackground" translatesAutoresizingMaskIntoConstraints="NO" id="3VN-4G-ZuO">
+                    <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UqQ-GG-pwz">
+                    <rect key="frame" x="321.5" y="334" width="125" height="125"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="125" id="ZCN-50-OiK"/>
+                        <constraint firstAttribute="height" constant="125" id="t4V-F4-yFm"/>
+                    </constraints>
+                    <state key="normal" title="Play choi ne"/>
+                </button>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstItem="3VN-4G-ZuO" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="1I1-UK-cdK"/>
+                <constraint firstItem="3VN-4G-ZuO" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="Kur-1L-tFS"/>
+                <constraint firstItem="UqQ-GG-pwz" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="UVm-1k-qtl"/>
+                <constraint firstItem="3VN-4G-ZuO" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="Zev-Lk-fHL"/>
+                <constraint firstItem="3VN-4G-ZuO" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="voM-Is-Jbi"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="131.25" y="118.35937499999999"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="MainMenuBackground" width="508" height="729"/>
+    </resources>
+</document>

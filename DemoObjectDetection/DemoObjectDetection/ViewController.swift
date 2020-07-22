@@ -32,19 +32,20 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        let menuVC = MainMenuView()
+        self.present(menuVC, animated: false, completion: nil)
         // 1.3x on iPads
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            self.gameView.contentScaleFactor = min(1.3, self.gameView.contentScaleFactor)
-            self.gameView.preferredFramesPerSecond = 60
-        }
-        self.gameView.controller = self
-        self.gameView.allowsCameraControl = true
-        gameController = GameController(scnView: gameView, viewController: self)
-        self.delegate = gameController
-
-        // Configure the view
-        gameView.backgroundColor = UIColor.black
+//        if UIDevice.current.userInterfaceIdiom == .pad {
+//            self.gameView.contentScaleFactor = min(1.3, self.gameView.contentScaleFactor)
+//            self.gameView.preferredFramesPerSecond = 60
+//        }
+//        self.gameView.controller = self
+//        self.gameView.allowsCameraControl = true
+//        gameController = GameController(scnView: gameView, viewController: self)
+//        self.delegate = gameController
+//
+//        // Configure the view
+//        gameView.backgroundColor = UIColor.black
     }
     
     override func viewDidAppear(_ animated: Bool) {
