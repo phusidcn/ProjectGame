@@ -154,8 +154,8 @@ class Character: NSObject {
     public func jumpByPosition(direction : DirectionRotate) {
            model.animationPlayer(forKey: "jump")?.play()
            let duration = 0.4
-           let bounceUpAction =  SCNAction.moveBy(x: 0, y: 1.0, z: 0, duration: duration * 0.5)
-            let bounceDownAction = SCNAction.moveBy(x: 0, y: 0.0, z: 0, duration: duration * 0.5)
+           let bounceUpAction =  SCNAction.moveBy(x: 0, y: 3.0, z: 0, duration: duration * 0.5)
+            let bounceDownAction = SCNAction.moveBy(x: 0, y: -1.0, z: 0, duration: duration * 0.5)
             bounceUpAction.timingMode = .easeOut
             bounceDownAction.timingMode = .easeIn
            
@@ -173,10 +173,12 @@ class Character: NSObject {
                }
            }
            
+            jumpState = 0
            let moveForwardAction = SCNAction.move(to: nodeDirection.worldPosition, duration: duration)
             let bounceAction = SCNAction.sequence([bounceUpAction, bounceDownAction])
            let actionJumpFontGroup = SCNAction.group([turnAction, bounceAction, moveForwardAction])
            characterNode.runAction(actionJumpFontGroup, completionHandler: { [weak self] in
+            self?.jumpState = 1
                self?.model.animationPlayer(forKey: "jump")?.stop()
            })
           }
@@ -412,7 +414,6 @@ class Character: NSObject {
 //        collisionDirection?.simdWorldPosition = wPosition
         print("collisionDirection", collisionDirection?.childNode(withName: "backNode", recursively: true)?.simdWorldPosition)
         // gravity
-        
         downwardAcceleration -= Character.gravity
         wPosition.y += downwardAcceleration
         let HIT_RANGE = Float(0.2)
@@ -519,7 +520,8 @@ class Character: NSObject {
         }
         baseAltitude *= 0.95
         baseAltitude += targetAltitude * 0.05
-        
+//        collisionDirection?.simdWorldPosition.y = -1.7
+
         characterVelocity.y += downwardAcceleration
         if simd_length_squared(characterVelocity) > 10E-4 * 10E-4 {
             let startPosition = characterNode!.presentation.simdWorldPosition + collisionShapeOffsetFromModel
