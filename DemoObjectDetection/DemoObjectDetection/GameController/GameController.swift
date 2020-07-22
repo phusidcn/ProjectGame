@@ -71,11 +71,12 @@ class GameController: NSObject, ExtraProtocols {
 
         func willPress(_ button: ButtonOverlay) {
             if button == overlay!.controlOverlay!.buttonA {
-                character?.moveByPosition(direction: .left)
+                character?.jumpByPosition(direction: .forward)
 //                character?.moveByPosition(simd3: leftCollision!.worldPosition  , direction: .left)
             }
             if button == overlay!.controlOverlay!.buttonB {
-                
+                character?.jumpByPosition(direction: .backward)
+
             }
         }
 
@@ -87,7 +88,7 @@ class GameController: NSObject, ExtraProtocols {
 //                print("right!.position truoc", collisionDirection!.worldPosition)
 //
 //                let vector = SCNVector3(1, 0, 0)
-                character?.jumpByPosition(direction: .backward)
+//                character?.jumpByPosition(direction: .backward)
 //
 ////                updatePositionAndOrientationOf(collisionDirection!, withPosition: character!.characterNode.worldPosition, relativeTo: character!.characterNode)
 ////                let turnLeft = SCNAction.rotateTo(x: 0, y: convertToRadians(angle: -90), z: 0, duration: 0.5, usesShortestUnitArc: true)
