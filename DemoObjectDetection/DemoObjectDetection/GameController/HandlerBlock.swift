@@ -36,7 +36,7 @@ extension GameController: ObjectsRecognitionDelegate {
     
     func move(type: MoveType, number: Int) {
         for _ in 0 ..< number {
-            self.semaphore.wait(timeout: .now() + .milliseconds(1500))
+            self.semaphore.wait(timeout: .now() + .milliseconds(1100))
             switch type {
             case .walk:
                 character?.moveByPosition(direction: .forward)
