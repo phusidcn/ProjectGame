@@ -49,14 +49,38 @@ class GameController: NSObject, ExtraProtocols {
         }
         
         
+    
+        func converDirectionToOXY(direction: DirectionRotate) -> vector_float2 {
+           switch direction {
+                      case .backward:
+                          return vector_float2(0, -1)
+                      case . forward:
+                          return vector_float2(0 , 1)
+                      case .left:
+                          return vector_float2(1,0)
+                      case .right:
+                          return vector_float2(0,1)
+                      }
+        }
+       
+   
+    
+//        func move1Step(direction : DirectionRotate) {
+//            switch direction {
+//            case .backward:
+//                <#code#>
+//            default:
+//                <#code#>
+//            }
+//        }
         
 
         func padOverlayVirtualStickInteractionDidChange(_ padNode: ViewPadOverlay) {
             if padNode == overlay!.controlOverlay!.leftPad {
-                characterDirection = float2(Float(padNode.stickPosition.x), -Float(padNode.stickPosition.y))
+//                characterDirection = float2(Float(padNode.stickPosition.x), -Float(padNode.stickPosition.y))
             }
             if padNode == overlay!.controlOverlay!.rightPad {
-                cameraDirection = float2( -Float(padNode.stickPosition.x), Float(padNode.stickPosition.y))
+//                cameraDirection = float2( -Float(padNode.stickPosition.x), Float(padNode.stickPosition.y))
             }
         }
 
@@ -71,19 +95,23 @@ class GameController: NSObject, ExtraProtocols {
 
         func willPress(_ button: ButtonOverlay) {
             if button == overlay!.controlOverlay!.buttonA {
-                character?.jumpByPosition(direction: .forward)
+                character?.isJump = true
+                characterDirection = converDirectionToOXY(direction: .forward)
 //                character?.moveByPosition(simd3: leftCollision!.worldPosition  , direction: .left)
             }
             if button == overlay!.controlOverlay!.buttonB {
-                character?.jumpByPosition(direction: .backward)
+                characterDirection = converDirectionToOXY(direction: .backward)
 
             }
         }
 
         func didPress(_ button: ButtonOverlay) {
             if button == overlay!.controlOverlay!.buttonA {
+                characterDirection = [0, 0]
                 controllerJump(false)
             } else {
+                characterDirection = [0, 0]
+
 //                print("right!.charector truoc", character?.characterNode!.worldPosition)
 //                print("right!.position truoc", collisionDirection!.worldPosition)
 //
