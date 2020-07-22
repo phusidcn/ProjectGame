@@ -37,7 +37,7 @@ class GameViewController: UIViewController {
             self.gameView.preferredFramesPerSecond = 60
         }
         self.gameView.controller = self
-        self.gameView.allowsCameraControl = false
+        self.gameView.allowsCameraControl = true
         gameController = GameController(scnView: gameView, viewController: self)
         self.delegate = gameController
 
