@@ -119,12 +119,12 @@ class GameController: NSObject, ExtraProtocols {
 //                let vector = SCNVector3(1, 0, 0)
 //                character?.jumpByPosition(direction: .backward)
 //
-////                updatePositionAndOrientationOf(collisionDirection!, withPosition: character!.characterNode.worldPosition, relativeTo: character!.characterNode)
-////                let turnLeft = SCNAction.rotateTo(x: 0, y: convertToRadians(angle: -90), z: 0, duration: 0.5, usesShortestUnitArc: true)
-////                      collisionDirection?.runAction(turnLeft)
+//                updatePositionAndOrientationOf(collisionDirection!, withPosition: character!.characterNode.worldPosition, relativeTo: character!.characterNode)
+//                let turnLeft = SCNAction.rotateTo(x: 0, y: convertToRadians(angle: -90), z: 0, duration: 0.5, usesShortestUnitArc: true)
+//                      collisionDirection?.runAction(turnLeft)
 //                let moveRightAction = SCNAction.moveBy(x: 1.0, y: 0, z: 0, duration: 0.2)
 //                collisionDirection?.position = character!.characterNode.position
-////                rightCollision = collisionDirection?.childNode(withName: "rightNode", recursively: true)
+//                rightCollision = collisionDirection?.childNode(withName: "rightNode", recursively: true)
 //                print("right!.position", collisionDirection!.worldPosition)
 
             }
@@ -288,13 +288,11 @@ class GameController: NSObject, ExtraProtocols {
         if (_lockCamera == true) {
                return;
            }
-        _cameraXHandle = SCNNode()
-        _cameraYHandle = SCNNode()
         SCNTransaction.begin()
         SCNTransaction.animationDuration = 0.0
         
-        _cameraYHandle!.removeAllActions()
-        _cameraXHandle!.removeAllActions()
+        _cameraYHandle?.removeAllActions()
+        _cameraXHandle?.removeAllActions()
         
         if (_cameraYHandle!.rotation.y < 0) {
             _cameraYHandle!.rotation = SCNVector4Make(0, 1, 0, -_cameraYHandle!.rotation.w);
@@ -309,10 +307,11 @@ class GameController: NSObject, ExtraProtocols {
         SCNTransaction.animationDuration = 0.5
         SCNTransaction.animationTimingFunction = CAMediaTimingFunction.init(name: .easeInEaseOut)
         let F = 0.005
-        _cameraYHandle!.rotation = SCNVector4(0, 1, 0, _cameraYHandle!.rotation.y * (_cameraYHandle!.rotation.w -
-            Float(dir.width) * 0.005))
+        let Yhandler = _cameraYHandle!.rotation.w - Float(dir.width) * Float(F)
+        let Xhandler = _cameraXHandle!.rotation.w + Float(dir.height) * Float(F)
+        _cameraYHandle!.rotation = SCNVector4(0, 1, 0, _cameraYHandle!.rotation.y * Yhandler)
         
-        _cameraXHandle!.rotation = SCNVector4(1, 0, 0, max(.pi, min(0.13, _cameraXHandle!.rotation.w + Float(dir.height) * 0.005)))
+        _cameraXHandle!.rotation = SCNVector4(1, 0, 0, max(.pi / 2, min(0.13, Xhandler)))
         
 
         
@@ -409,19 +408,19 @@ class GameController: NSObject, ExtraProtocols {
 
     // MARK: - Init
 
-    init(scnView: SCNView, viewController: ViewController) {
+    init(scnView: SCNView, viewController: GameViewController) {
         super.init()
         viewController.delegate = self
         self.vc = viewController
         
         objectRecognition = VisionObjectRecognition()
-        objectRecognition?.delegate = self
-        objectRecognition?.setupAVCapture()
-        do {
-            try objectRecognition?.setupVision()
-        } catch let error {
-            print(error)
-        }
+//        objectRecognition?.delegate = self
+//        objectRecognition?.setupAVCapture()
+//        do {
+//            try objectRecognition?.setupVision()
+//        } catch let error {
+//            print(error)
+//        }
         
         sceneRenderer = scnView
         sceneRenderer!.delegate = self
@@ -461,12 +460,15 @@ class GameController: NSObject, ExtraProtocols {
         //setup audio
         setupAudio()
 
+        //TODO: handle camera
         //handleCamera()
+        _cameraXHandle = SCNNode()
+        _cameraYHandle = SCNNode()
 
 
         //register ourself as the physics contact delegate to receive contact notifications
         sceneRenderer!.scene!.physicsWorld.contactDelegate = self
-        objectRecognition?.startCaptureSession()
+        //objectRecognition?.startCaptureSession()
     }
 
     func resetPlayerPosition() {

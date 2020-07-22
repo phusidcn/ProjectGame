@@ -14,7 +14,7 @@ class GameView: SCNView {
     
     private var _direction: CGPoint? = nil
     private var panningTouch: UITouch? = nil
-    public weak var controller: ViewController?
+    public weak var controller: GameViewController?
     var defaultFov: Double = 1.0
     
     func setUp() {
