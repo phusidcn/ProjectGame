@@ -102,6 +102,7 @@ class GameController: NSObject, ExtraProtocols {
         
 
 // Global settings
+    let semaphore = DispatchSemaphore(value: 0)
     static let DefaultCameraTransitionDuration = 1.0
     static let NumberOfFiends = 100
     static let CameraOrientationSensitivity: Float = 0.05
