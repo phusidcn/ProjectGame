@@ -337,13 +337,13 @@ class GameController: NSObject, ExtraProtocols {
         self.vc = viewController
         
         objectRecognition = VisionObjectRecognition()
-        objectRecognition?.delegate = self
-        objectRecognition?.setupAVCapture()
-        do {
-            try objectRecognition?.setupVision()
-        } catch let error {
-            print(error)
-        }
+//        objectRecognition?.delegate = self
+//        objectRecognition?.setupAVCapture()
+//        do {
+//            try objectRecognition?.setupVision()
+//        } catch let error {
+//            print(error)
+//        }
         
         sceneRenderer = scnView
         sceneRenderer!.delegate = self
@@ -384,7 +384,7 @@ class GameController: NSObject, ExtraProtocols {
 
         //register ourself as the physics contact delegate to receive contact notifications
         sceneRenderer!.scene!.physicsWorld.contactDelegate = self
-        objectRecognition?.startCaptureSession()
+        //objectRecognition?.startCaptureSession()
     }
 
     func resetPlayerPosition() {
