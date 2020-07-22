@@ -11,76 +11,86 @@ import SceneKit
 import ObjectsDetectionKit
 
 extension GameController: ObjectsRecognitionDelegate {
-        
-        func convert(action: UserStep) -> float2 {
-            switch action.action {
-            case .Hand_Down:
-                return float2(x: 0, y: 0)
-            case .Hand_Up:
-                return float2(x: 0, y: 0)
-            case .Hand_Left:
-                return float2(x: 0, y: 0)
-            case .Hand_Right:
-                return float2(x: 0, y: 0)
-            case .Jump_Down:
-                return float2(x: 0, y: velocity)
-            case .Jump_Up:
-                return float2(x: 0, y: -velocity)
-            case .Jump_Left:
-                return float2(x: -velocity, y: 0)
-            case .Jump_Right:
-                return float2(x: velocity, y: 0)
-            case .Walk_Up:
-                return float2(x: 0, y: -velocity)
-            case .Walk_Down:
-                return float2(x: 0, y: velocity)
-            case .Walk_Left:
-                return float2(x: -velocity, y: 0)
-            case .Walk_Right:
-                return float2(x: velocity, y: 0)
-            default:
-                return float2(x: 0, y: 0)
-            }
+    
+    enum moveType {
+        case walk
+        case jump
+    }
+    
+    func repeatNumberOf(action: UserStep) -> Int {
+        switch action.number {
+        case .one:
+            return 1
+        case .two:
+            return 2
+        case .three:
+            return 3
+        case .four:
+            return 4
+        case .five:
+            return 5
+        default:
+            return 1
         }
-        
-        func repeatNumberOf(action: UserStep) -> Int {
-            switch action.number {
-            case .one:
-                return 1
-            case .two:
-                return 2
-            case .three:
-                return 3
-            case .four:
-                return 4
-            case .five:
-                return 5
-            default:
-                return 1
-            }
-        }
+    }
+    
+    func stopMove() {
+        semaphore.wait(timeout: .now() + .milliseconds(500))
+        self.characterDirection = float2(x: 0, y: 0)
+        print("position new \(character?.characterNode.worldPosition)")
+        semaphore.wait(timeout: .now() + .milliseconds(500))
+    }
     
     func walkAction(userStep: UserStep) {
-        let semaphore: DispatchSemaphore = DispatchSemaphore(value: 0)
+        //let semaphore: DispatchSemaphore = DispatchSemaphore(value: 0)
         let repeatTime = repeatNumberOf(action: userStep)
-        let navigation = convert(action: userStep)
-        for _ in 0 ..< repeatTime {
-            self.characterDirection = navigation
-            semaphore.wait(timeout: .now() + .milliseconds(500))
-            self.characterDirection = float2(x: 0, y: 0)
-            semaphore.wait(timeout: .now() + .milliseconds(500))
+        switch userStep.action {
+        case .Walk_Up:
+            move(direction: .forward)
+        case .Walk_Down:
+            move(direction: .backward)
+        case .Walk_Left:
+            move(direction: .left)
+        case .Walk_Right:
+            move(direction: .right)
+        default:
+            break
+        }
+        stopMove()
+        for _ in 0 ..< repeatTime - 1 {
+            move(direction: .forward)
+            stopMove()
         }
     }
     
     func jumpAction(userStep: UserStep) {
-        let semaphore: DispatchSemaphore = DispatchSemaphore(value: 0)
-        let navigation = convert(action: userStep)
         let repeatTime = repeatNumberOf(action: userStep)
-        for _ in 0 ..< repeatTime {
+        
+        character?.isJump = true
+        switch userStep.action {
+        case .Jump_Up:
+            move(direction: .forward)
+        case .Jump_Down:
+            move(direction: .backward)
+        case .Jump_Left:
+            move(direction: .left)
+        case .Jump_Right:
+            move(direction: .right)
+        default:
+            break
+        }
+        semaphore.wait(timeout: .now() + .milliseconds(500))
+        character?.isJump = false
+        print("position new \(character?.characterNode.worldPosition)")
+        self.characterDirection = float2(x: 0, y: 0)
+        semaphore.wait(timeout: .now() + .milliseconds(500))
+        
+        for _ in 0 ..< repeatTime - 1 {
             character?.isJump = true
-            self.characterDirection = navigation
-            semaphore.wait(timeout: .now() + .milliseconds(700))
+            move(direction: .forward)
+            semaphore.wait(timeout: .now() + .milliseconds(500))
             character?.isJump = false
+            print("position new \(character?.characterNode.worldPosition)")
             self.characterDirection = float2(x: 0, y: 0)
             semaphore.wait(timeout: .now() + .milliseconds(500))
         }
