@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:ObjectDetectionKit/ObjectsDetectionKit.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:DemoObjectDetection.xcodeproj">
    </FileRef>
    <FileRef
