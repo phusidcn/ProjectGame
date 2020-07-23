@@ -97,7 +97,7 @@ extension GameController: ObjectsRecognitionDelegate {
     }
     
     func repeatSequence(actions: [UserStep], times: Int) {
-        for _ in 0 ..< times {
+        for _ in 0 ..< times + 1 {
             for i in 0 ..< actions.count {
                 switch actions[i].action {
                 case .Walk_Right, .Walk_Left, .Walk_Down, .Walk_Up:
