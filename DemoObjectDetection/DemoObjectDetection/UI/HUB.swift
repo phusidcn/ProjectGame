@@ -33,9 +33,9 @@ class HUB: SKScene {
         overlayNode.position = CGPoint(x: 0.0, y: h)
     
         countItemLabel = SKLabelNode()
-        countItemLabel.xScale = 1
-        countItemLabel.yScale = 1
-        countItemLabel.text = "xxxxxxxxxxx0"
+        countItemLabel.xScale = 2
+        countItemLabel.yScale = 2
+        countItemLabel.text = "x0"
         countItemLabel!.position = CGPoint(x:150, y:-50)
         overlayNode.addChild(countItemLabel)
 
@@ -45,7 +45,7 @@ class HUB: SKScene {
         menuButton.position = CGPoint(x: 50, y: -50)
         menuButton.xScale = 0.5
         menuButton.yScale = 0.5
-        overlayNode.addChild(menuButton)
+//        overlayNode.addChild(menuButton)
         menuButton.setClickedTarget(self, action: #selector(self.toggleMenu))
         
         // The Gems
@@ -63,7 +63,7 @@ class HUB: SKScene {
         collectedKeySprite.position = CGPoint(x: CGFloat(195), y: CGFloat(-50))
         collectedKeySprite.xScale = 0.4
         collectedKeySprite.yScale = 0.4
-        overlayNode.addChild(collectedKeySprite)
+//        overlayNode.addChild(collectedKeySprite)
         
         // The virtual D-pad
             controlOverlay = ControlOverlay(frame: CGRect(x: CGFloat(0), y: CGFloat(0), width: w, height: h))
@@ -125,15 +125,13 @@ class HUB: SKScene {
     
     var collectedGemsCount: Int = 0 {
         didSet {
-            
-            
-//            collectedGemsSprites[collectedGemsCount - 1].texture = SKTexture(imageNamed:"collectableBIG_full.png")
-//
-//            collectedGemsSprites[collectedGemsCount - 1].run(SKAction.sequence([
-//                SKAction.wait(forDuration: 0.5),
-//                SKAction.scale(by: 1.5, duration: 0.2),
-//                SKAction.scale(by: 1 / 1.5, duration: 0.2)
-//                ]))
+            countItemLabel.text = "x" + String(collectedGemsCount)
+            countItemLabel.run(SKAction.sequence([
+                SKAction.wait(forDuration: 0.5),
+                               SKAction.scale(by: 1.5, duration: 0.2),
+                               SKAction.scale(by: 1 / 1.5, duration: 0.2)
+            ]))
+          
         }
     }
     
@@ -158,8 +156,38 @@ class HUB: SKScene {
     // MARK: Congratulate the player
     
     func showEndScreen() {
-        
-    }
+           // Congratulation title
+           let congratulationsNode = SKSpriteNode(imageNamed: "congratulations.png")
+           
+           // Max image
+           let characterNode = SKSpriteNode(imageNamed: "congratulations_pandaMax.png")
+           characterNode.position = CGPoint(x: CGFloat(0.0), y: CGFloat(-220.0))
+           characterNode.anchorPoint = CGPoint(x: CGFloat(0.5), y: CGFloat(0.0))
+           
+           congratulationsGroupNode = SKNode()
+           congratulationsGroupNode!.addChild(characterNode)
+           congratulationsGroupNode!.addChild(congratulationsNode)
+           addChild(congratulationsGroupNode!)
+           
+           // Layout the overlay
+           layout2DOverlay()
+           
+           // Animate
+           congratulationsNode.alpha = 0.0
+           congratulationsNode.xScale = 0.0
+           congratulationsNode.yScale = 0.0
+           congratulationsNode.run( SKAction.group([SKAction.fadeIn(withDuration: 0.25),
+                                    SKAction.sequence([SKAction.scale(to: 1.22, duration: 0.25),
+                                   SKAction.scale(to: 1.0, duration: 0.1)])]))
+           
+           characterNode.alpha = 0.0
+           characterNode.xScale = 0.0
+           characterNode.yScale = 0.0
+           characterNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
+                            SKAction.group([SKAction.fadeIn(withDuration: 0.5),
+                            SKAction.sequence([SKAction.scale(to: 1.22, duration: 0.25),
+                           SKAction.scale(to: 1.0, duration: 0.1)])])]))
+       }
     
     @objc
     func toggleMenu(_ sender: Button) {

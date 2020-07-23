@@ -65,7 +65,7 @@
             }
         }
         
-
+        
         
         
         func padOverlayVirtualStickInteractionDidChange(_ padNode: ViewPadOverlay) {
@@ -141,6 +141,7 @@
         private var _cameraYHandle : SCNNode?
         private var _cameraXHandle : SCNNode?
         
+        private var targetNumber: Int = 1
         
         
         //collected objects
@@ -179,6 +180,8 @@
         private var _lockCamera : Bool = false
         private var isEncounterWall: Bool = false
         
+        private var playingCinematic: Bool = false
+
         // MARK: -
         // MARK: Setup
         
@@ -371,7 +374,7 @@
                 node.addAudioPlayer(SCNAudioPlayer(source: audioSource))
             }
             // volcano
-       
+            
             
             // other sounds
             audioSources[AudioSourceKind.collect.rawValue] = SCNAudioSource(named: "audio/collect.mp3")!
@@ -392,7 +395,7 @@
             super.init()
             viewController.delegate = self
             self.vc = viewController
-        
+            
             objectRecognition = VisionObjectRecognition()
             objectRecognition?.delegate = self
             objectRecognition?.setupAVCapture()
@@ -403,6 +406,7 @@
             }
             
             sceneRenderer = scnView
+            
             sceneRenderer!.delegate = self
             
             // Uncomment to show statistics such as fps and timing information
@@ -458,7 +462,8 @@
         // MARK: - cinematic
         
         func startCinematic() {
-            
+            playingCinematic = true
+            character!.node!.isPaused = true
         }
         
         func stopCinematic() {
@@ -488,7 +493,7 @@
                 }
                     
                     //the gems
-                else if collectable.name == "CollectableBig" {
+                else if collectable.name == "appleItem" {
                     self.collectedGems += 1
                     
                     // play sound
@@ -496,7 +501,17 @@
                     
                     // update the overlay
                     self.overlay?.collectedGemsCount = self.collectedGems
-                    
+                    startCinematic()
+                    if let scenView = self.sceneRenderer as? SCNView {
+                        scenView.allowsCameraControl = false
+                    }
+                    if collectedGems == targetNumber {
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() +
+                            Double(Int64(1.0 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: {() -> Void in
+                                self.showEndScreen()
+                        })
+                        
+                    }
                     
                 }
                 
@@ -556,6 +571,10 @@
             let deltaTime: TimeInterval = time - lastUpdateTime
             lastUpdateTime = time
             
+            // stop here if cinematic
+            if playingCinematic == true {
+                       return
+            }
             // update characters
             if !isEncounterWall {
                 character!.update(atTime: time, with: renderer)
@@ -573,33 +592,33 @@
         
         func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
             // collectables
-                 // triggers
-              if contact.nodeA.physicsBody!.categoryBitMask == Bitmask.wall.rawValue {
-//                  isEncounterWall = true
-//                    let location = SCNVector3(oldLocation!.x, oldLocation!.y, oldLocation!.z)
-//                  let action = SCNAction.move(to: location, duration: 0.2)
-//                    character?.characterNode.runAction(action, completionHandler: { [weak self] in
-//                        self?.isEncounterWall = false
-//                    })
-              }
-              if contact.nodeB.physicsBody!.categoryBitMask == Bitmask.wall.rawValue {
-                  isEncounterWall = true
-                    let location = SCNVector3(oldLocation!.x, oldLocation!.y, oldLocation!.z)
-                  let action = SCNAction.move(to: location, duration: 0.2)
-                    character?.characterNode.runAction(action, completionHandler: { [weak self] in
-                        self?.isEncounterWall = false
-                    })
-              }
-
-              // collectables
-              if contact.nodeA.physicsBody!.categoryBitMask == Bitmask.collectable.rawValue {
-                  collect(contact.nodeA)
-              }
-              if contact.nodeB.physicsBody!.categoryBitMask == Bitmask.collectable.rawValue {
-                  collect(contact.nodeB)
-              }
+            // triggers
+            if contact.nodeA.physicsBody!.categoryBitMask == Bitmask.wall.rawValue {
+                //                  isEncounterWall = true
+                //                    let location = SCNVector3(oldLocation!.x, oldLocation!.y, oldLocation!.z)
+                //                  let action = SCNAction.move(to: location, duration: 0.2)
+                //                    character?.characterNode.runAction(action, completionHandler: { [weak self] in
+                //                        self?.isEncounterWall = false
+                //                    })
+            }
+            if contact.nodeB.physicsBody!.categoryBitMask == Bitmask.wall.rawValue {
+                isEncounterWall = true
+                let location = SCNVector3(oldLocation!.x, oldLocation!.y, oldLocation!.z)
+                let action = SCNAction.move(to: location, duration: 0.2)
+                character?.characterNode.runAction(action, completionHandler: { [weak self] in
+                    self?.isEncounterWall = false
+                })
+            }
             
-           
+            // collectables
+            if contact.nodeA.physicsBody!.categoryBitMask == Bitmask.collectable.rawValue {
+                collect(contact.nodeA)
+            }
+            if contact.nodeB.physicsBody!.categoryBitMask == Bitmask.collectable.rawValue {
+                collect(contact.nodeB)
+            }
+            
+            
             
         }
         
