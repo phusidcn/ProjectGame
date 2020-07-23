@@ -5,7 +5,7 @@
       location = "group:ObjectDetectionKit/ObjectsDetectionKit.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:DemoObjectDetection.xcodeproj">
+      location = "group:/Users/huynhlamphusi/Downloads/1612559_1612648/KL_2020_1612559_1612648_MaNguon/ProjectGame/DemoObjectDetection/AdventureOfBamboo.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

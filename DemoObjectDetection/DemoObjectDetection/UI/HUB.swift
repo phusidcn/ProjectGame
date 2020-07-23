@@ -17,7 +17,7 @@ class HUB: SKScene {
     public var controlOverlay: ControlOverlay?
 
 // MARK: - Initialization
-    init(size: CGSize, controller: GameController) {
+        init(size: CGSize, controller: GameController) {
         overlayNode = SKNode()
         super.init(size: size)
         
@@ -71,7 +71,7 @@ class HUB: SKScene {
             controlOverlay!.rightPad.delegate = controller
             controlOverlay!.buttonA.delegate = controller
             controlOverlay!.buttonB.delegate = controller
-            addChild(controlOverlay!)
+//            addChild(controlOverlay!)
         
      
         // the demo UI

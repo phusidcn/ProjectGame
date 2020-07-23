@@ -19,24 +19,26 @@
             <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="MainMenuBackground" highlighted="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cql-oP-KOi">
-                    <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="MainMenuBackground" translatesAutoresizingMaskIntoConstraints="NO" id="eOI-DR-z9g">
+                    <rect key="frame" x="-1" y="0.0" width="768" height="1024"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y3W-dl-dIe">
-                    <rect key="frame" x="322" y="291" width="125" height="125"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Button"/>
-                    <connections>
-                        <action selector="tapToPlayButton:" destination="-1" eventType="touchUpInside" id="d77-qQ-Ty6"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0NL-4G-0BD">
-                    <rect key="frame" x="702" y="20" width="46" height="30"/>
+                    <rect key="frame" x="701" y="20" width="49" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Button"/>
+                    <state key="normal" title="Setting"/>
                     <connections>
                         <action selector="tapToSetting:" destination="-1" eventType="touchUpInside" id="v5N-aJ-WnZ"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="y3W-dl-dIe">
+                    <rect key="frame" x="321" y="284" width="125" height="125"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="PlayButton" backgroundImage="Play">
+                        <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="tapToPlayButton:" destination="-1" eventType="touchUpInside" id="d77-qQ-Ty6"/>
                     </connections>
                 </button>
             </subviews>
@@ -46,6 +48,7 @@
         </view>
     </objects>
     <resources>
-        <image name="MainMenuBackground" width="508" height="729"/>
+        <image name="MainMenuBackground" width="6376" height="8534"/>
+        <image name="Play" width="86" height="78"/>
     </resources>
 </document>
