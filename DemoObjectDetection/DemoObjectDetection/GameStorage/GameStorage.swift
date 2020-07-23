@@ -2,7 +2,7 @@
 //  GameStorage.swift
 //  DemoObjectDetection
 //
-//  Created by Huynh Lam Phu Si on 7/22/20.
+//  Created by Huynh Lam Phu Si on 7/1/20.
 //  Copyright © 2020 Huynh Lam Phu Si. All rights reserved.
 //
 

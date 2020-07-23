@@ -65,16 +65,7 @@
             }
         }
         
-        
-        
-        //        func move1Step(direction : DirectionRotate) {
-        //            switch direction {
-        //            case .backward:
-        //                <#code#>
-        //            default:
-        //                <#code#>
-        //            }
-        //        }
+
         
         
         func padOverlayVirtualStickInteractionDidChange(_ padNode: ViewPadOverlay) {
