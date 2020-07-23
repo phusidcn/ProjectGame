@@ -183,17 +183,14 @@ extension VisionObjectRecognition {
             let rawObject = objectDetection(name: topLabelObservationName, bound: objectBounds)
             rawResults.append(rawObject)
         }
-        if self.playMode == .onePlayer {
-            sortObjectOnTopDownOrderWithOnePlayerMode(with: rawResults)
-        } else {
-            sortObjectOnTopDownOrderWithTwoPlayerMode(with: rawResults)
-        }
+        sortObjectOnTopDownOrderWithOnePlayerMode(with: rawResults)
     }
     
     private func findNearest(position: CGRect, in objects: [objectDetection]) -> objectDetection {
         var min = bufferSize.height
         var suitedObject: objectDetection = objectDetection(name: "", bound: .zero)
         for object in objects {
+            let objectRightTopCorner = CGPoint(x: object.bound.origin.x + object.bound.width, y: object.bound.origin.y)
             let distance = position.origin.y - object.bound.origin.y > 0 ? position.origin.y - object.bound.origin.y : object.bound.origin.y - position.origin.y
             if distance < min {
                 min = distance
@@ -245,6 +242,7 @@ extension VisionObjectRecognition {
             }
         }
         var results: [UserStep] = []
+        var elseStep: [UserStep] = []
         for number in numbers {
             let suitedAction = findNearest(position: number.bound, in: actions)
             var userStep = UserStep(action: .Walk_Up, position: suitedAction.bound)
@@ -352,46 +350,12 @@ extension VisionObjectRecognition {
             let userStep = userGesture.name == "Pressed" ? UserStep(action: .Pressed, position: userGesture.bound) : UserStep(action: .UnPress, position: userGesture.bound)
             results.append(userStep)
         }
-        results.sort(by: {(step1: UserStep, step2: UserStep) -> Bool in
-            return step1.position.origin.y > step2.position.origin.y
-        })
+        
+        
+        
         if !isPreviousObjectsSame(currentObjects: results) {
             previousObjects = results
-            self.delegate?.actionSequenceDidChange(actions: results)
+            self.delegate?.actionSequenceDidChange(actions: results, elseActions: elseStep)
         }
-    }
-    
-    private func centerOfRect(_ rect: CGRect) -> CGPoint {
-        let midX = rect.origin.x + (rect.width / 2)
-        let midY = rect.origin.y + (rect.height / 2)
-        return CGPoint(x: midX, y: midY)
-    }
-    
-    private func sortObjectOnTopDownOrderWithTwoPlayerMode(with objects: [objectDetection]) {
-        var actions: [objectDetection] = []
-        var numbers: [objectDetection] = []
-        var danger: objectDetection? = nil
-        var stars: objectDetection? = nil
-        var userGesture: objectDetection? = nil
-        let centerX = self.previewLayer.bounds.width / 2
-        for object in objects {
-            if object.name == "Walk_Up" || object.name == "Walk_Down" || object.name == "Walk_Left" || object.name == "Walk_Right" || object.name == "Jump_Up" || object.name == "Jump_Down" || object.name == "Jump_Left" || object.name == "Jump_Right" || object.name == "Hand_Up" || object.name == "Hand_Down" || object.name == "Hand_Left" || object.name == "Hand_Right" || object.name == "Repeat" {
-                actions.append(object)
-                continue
-            }
-            if object.name == "Number_1" || object.name == "Number_2" || object.name == "Number_3" || object.name == "Number_4" || object.name == "Number_5" {
-                numbers.append(object)
-                continue
-            }
-            if object.name == "Stars" {
-                stars = object
-                continue
-            } else {
-                userGesture = object
-            }
-        }
-
-        
-        
     }
 }

@@ -59,11 +59,11 @@ extension UserStep: Equatable {
 }
 
 public protocol ObjectsRecognitionDelegate {
-    func actionSequenceDidChange(actions: [UserStep])
+    func actionSequenceDidChange(actions: [UserStep], elseActions: [UserStep])
     func actionSquenceDidChange(OfPlayer1 actions1: [UserStep], AndPlayer2 action2:[UserStep])
 }
 
 public extension ObjectsRecognitionDelegate {
-    func actionSequenceDidChange(actions: [UserStep]) {}
+    func actionSequenceDidChange(actions: [UserStep], elseActions: [UserStep]) {}
     func actionSquenceDidChange(OfPlayer1 actions1: [UserStep], AndPlayer2 action2:[UserStep]) {}
 }
