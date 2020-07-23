@@ -8,6 +8,7 @@
     import GameplayKit
     import SceneKit
     import ObjectsDetectionKit
+    import RxSwift 
     
     public let velocity: Float = 1
     
@@ -90,6 +91,8 @@
             if button == overlay!.controlOverlay!.buttonA {
                 //                character?.isJump = true
                 move(direction: .left)
+                print("sap dung tuong")
+                
                 //                character?.moveByPosition(simd3: leftCollision!.worldPosition  , direction: .left)
             }
             if button == overlay!.controlOverlay!.buttonB {
@@ -110,6 +113,10 @@
                 
             }
         }
+        
+        // rxSwift
+        
+        public var streamEncounterWall = BehaviorSubject<Bool>.init(value: false)
         
         
         // Global settings
@@ -181,7 +188,7 @@
         private var isEncounterWall: Bool = false
         
         private var playingCinematic: Bool = false
-
+        
         // MARK: -
         // MARK: Setup
         
@@ -428,7 +435,7 @@
             setupCharacter()
             
             //setup collisions
-            
+            setupRx()
             
             // setting light
             let light = scene!.rootNode.childNode(withName: "DirectLight", recursively: true)!.light
@@ -573,10 +580,11 @@
             
             // stop here if cinematic
             if playingCinematic == true {
-                       return
+                return
             }
             // update characters
             if !isEncounterWall {
+                
                 character!.update(atTime: time, with: renderer)
             }
             
@@ -594,6 +602,7 @@
             // collectables
             // triggers
             if contact.nodeA.physicsBody!.categoryBitMask == Bitmask.wall.rawValue {
+                print("cham dat")
                 //                  isEncounterWall = true
                 //                    let location = SCNVector3(oldLocation!.x, oldLocation!.y, oldLocation!.z)
                 //                  let action = SCNAction.move(to: location, duration: 0.2)
@@ -603,8 +612,11 @@
             }
             if contact.nodeB.physicsBody!.categoryBitMask == Bitmask.wall.rawValue {
                 isEncounterWall = true
+                print("1dung tuong ")
+                characterDirection = [0,0]
                 let location = SCNVector3(oldLocation!.x, oldLocation!.y, oldLocation!.z)
                 let action = SCNAction.move(to: location, duration: 0.2)
+                streamEncounterWall.onNext(true)
                 character?.characterNode.runAction(action, completionHandler: { [weak self] in
                     self?.isEncounterWall = false
                 })
@@ -620,6 +632,14 @@
             
             
             
+        }
+        
+        func setupRx() {
+            streamEncounterWall.subscribe(onNext: { bool in
+                if bool {
+                    print("dung tuong roi be oi")
+                }
+            })
         }
         
         //
