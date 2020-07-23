@@ -186,7 +186,7 @@
         private var lastUpdateTime = TimeInterval()
         private var _lockCamera : Bool = false
         private var isEncounterWall: Bool = false
-        
+        private lazy var disposeBag = DisposeBag()
         private var playingCinematic: Bool = false
         
         // MARK: -
@@ -225,51 +225,62 @@
         
         
         func handleCamera() {
-            _cameraXHandle = SCNNode()
-            _cameraYHandle = SCNNode()
-            _cameraYHandle?.addChildNode(_cameraXHandle!)
+//            let camera = self.scene?.rootNode.childNode(withName: "cameraStart_node", recursively: true)
+//            let cameraStart = camera?.childNode(withName: "camLookAt_cameraStart", recursively: true)
+//            
+//            
+////            let camera = self.scene?.rootNode.childNode(withName: "")
+//            let action = SCNAction.moveBy(x: -5.4, y: 7.7, z: -11.018, duration: 4)
+//            let actionRotate = SCNAction.rotateBy(x: convertToDegrees(angle: -120), y:  convertToDegrees(angle: -0.7), z:  convertToDegrees(angle: 37), duration: 4)
+//            let actionGroup = SCNAction.group([actionRotate, action])
+//            cameraStart?.runAction(actionGroup)
+//            _cameraXHandle = SCNNode()
+//            _cameraYHandle = SCNNode()
+//            _cameraYHandle?.addChildNode(_cameraXHandle!)
+//
+//            scene?.rootNode.addChildNode(_cameraYHandle!)
+//
+//            _cameraXHandle?.position = SCNVector3Make(0, 1.0,0);
+//
+//            let pov = self.sceneRenderer!.pointOfView;
+//
+//
+//            pov!.eulerAngles = SCNVector3Make(0, 0, 0);
+//            pov!.position = SCNVector3Make(0,0,10.0);
+//
+//            _cameraYHandle!.rotation = SCNVector4Make(0, 0, 0, Float(.pi/2 + M_PI_4*3));
+//            _cameraXHandle!.rotation = SCNVector4Make(0, 0, 0, Float(-M_PI_4*0.125));
+//            _cameraXHandle!.addChildNode(pov!)
+//
+//            _lockCamera = true
+//            SCNTransaction.begin()
+//            SCNTransaction.completionBlock = { [weak self]  in
+//                self?._lockCamera = false }
+//
+//            let cameraYAnimation = CABasicAnimation.init(keyPath: "rotation.w")
+//            let i = (M_PI*2) - Double(_cameraYHandle!.rotation.w)
+//            cameraYAnimation.fromValue =  i;
+//            cameraYAnimation.toValue = 0.0;
+//            cameraYAnimation.isAdditive = true;
+//            cameraYAnimation.beginTime = CACurrentMediaTime()+3; // wait a little bit before stating
+//            cameraYAnimation.fillMode = .both;
+//            cameraYAnimation.duration = 5.0;
+//            cameraYAnimation.timingFunction = CAMediaTimingFunction.init(name: .easeInEaseOut)
+//            _cameraYHandle?.addAnimation(cameraYAnimation, forKey: nil)
+//
+//            let cameraXAnimation = CABasicAnimation.init(keyPath: "rotation.w")
+//            let x = (-M_PI*2) - Double(_cameraYHandle!.rotation.w)
+//            cameraYAnimation.fromValue =  x;
+//            cameraYAnimation.toValue = 0.0;
+//            cameraYAnimation.isAdditive = true;
+//            cameraYAnimation.beginTime = CACurrentMediaTime()+3; // wait a little bit before stating
+//            cameraYAnimation.fillMode = .both;
+//            cameraYAnimation.duration = 5.0;
+//            cameraYAnimation.timingFunction = CAMediaTimingFunction.init(name: .easeInEaseOut)
+//            _cameraXHandle?.addAnimation(cameraXAnimation, forKey: nil)
+//            SCNTransaction.commit()
             
-            scene?.rootNode.addChildNode(_cameraYHandle!)
-            
-            _cameraXHandle?.position = SCNVector3Make(0, 1.0,0);
-            
-            let pov = self.sceneRenderer!.pointOfView;
-            
-            
-            pov!.eulerAngles = SCNVector3Make(0, 0, 0);
-            pov!.position = SCNVector3Make(0,0,10.0);
-            
-            _cameraYHandle!.rotation = SCNVector4Make(0, 0, 0, Float(.pi/2 + M_PI_4*3));
-            _cameraXHandle!.rotation = SCNVector4Make(0, 0, 0, Float(-M_PI_4*0.125));
-            _cameraXHandle!.addChildNode(pov!)
-            
-            _lockCamera = true
-            SCNTransaction.begin()
-            SCNTransaction.completionBlock = { [weak self]  in
-                self?._lockCamera = false }
-            
-            let cameraYAnimation = CABasicAnimation.init(keyPath: "rotation.w")
-            let i = (M_PI*2) - Double(_cameraYHandle!.rotation.w)
-            cameraYAnimation.fromValue =  i;
-            cameraYAnimation.toValue = 0.0;
-            cameraYAnimation.isAdditive = true;
-            cameraYAnimation.beginTime = CACurrentMediaTime()+3; // wait a little bit before stating
-            cameraYAnimation.fillMode = .both;
-            cameraYAnimation.duration = 5.0;
-            cameraYAnimation.timingFunction = CAMediaTimingFunction.init(name: .easeInEaseOut)
-            _cameraYHandle?.addAnimation(cameraYAnimation, forKey: nil)
-            
-            let cameraXAnimation = CABasicAnimation.init(keyPath: "rotation.w")
-            let x = (-M_PI*2) - Double(_cameraYHandle!.rotation.w)
-            cameraYAnimation.fromValue =  x;
-            cameraYAnimation.toValue = 0.0;
-            cameraYAnimation.isAdditive = true;
-            cameraYAnimation.beginTime = CACurrentMediaTime()+3; // wait a little bit before stating
-            cameraYAnimation.fillMode = .both;
-            cameraYAnimation.duration = 5.0;
-            cameraYAnimation.timingFunction = CAMediaTimingFunction.init(name: .easeInEaseOut)
-            _cameraXHandle?.addAnimation(cameraXAnimation, forKey: nil)
-            SCNTransaction.commit()
+           
             
             //        let lookAtConstraint
             
@@ -286,10 +297,10 @@
             }
             SCNTransaction.begin()
             SCNTransaction.animationDuration = 0.0
-            
+
             _cameraYHandle?.removeAllActions()
             _cameraXHandle?.removeAllActions()
-            
+
             if (_cameraYHandle!.rotation.y < 0) {
                 _cameraYHandle!.rotation = SCNVector4Make(0, 1, 0, -_cameraYHandle!.rotation.w);
             }
@@ -297,7 +308,7 @@
                 _cameraXHandle!.rotation = SCNVector4Make(1, 0, 0, -_cameraXHandle!.rotation.w);
             }
             SCNTransaction.commit()
-            
+
             // Update the camera position with some inertia.
             SCNTransaction.begin()
             SCNTransaction.animationDuration = 0.5
@@ -306,11 +317,11 @@
             let Yhandler = _cameraYHandle!.rotation.w - Float(dir.width) * Float(F)
             let Xhandler = _cameraXHandle!.rotation.w + Float(dir.height) * Float(F)
             _cameraYHandle!.rotation = SCNVector4(0, 1, 0, _cameraYHandle!.rotation.y * Yhandler)
-            
+
             _cameraXHandle!.rotation = SCNVector4(1, 0, 0, max(.pi / 2, min(0.13, Xhandler)))
-            
-            
-            
+
+
+
             SCNTransaction.commit()
             
         }
@@ -452,7 +463,7 @@
             setupAudio()
             
             //TODO: handle camera
-            //handleCamera()
+            handleCamera()
             _cameraXHandle = SCNNode()
             _cameraYHandle = SCNNode()
             
@@ -601,6 +612,9 @@
         func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
             // collectables
             // triggers
+            if isEncounterWall {
+                return
+            }
             if contact.nodeA.physicsBody!.categoryBitMask == Bitmask.wall.rawValue {
                 print("cham dat")
                 //                  isEncounterWall = true
@@ -612,22 +626,27 @@
             }
             if contact.nodeB.physicsBody!.categoryBitMask == Bitmask.wall.rawValue {
                 isEncounterWall = true
-                print("1dung tuong ")
+                
                 characterDirection = [0,0]
+                streamEncounterWall.onNext(isEncounterWall)
+                
+                
+                
                 let location = SCNVector3(oldLocation!.x, oldLocation!.y, oldLocation!.z)
                 let action = SCNAction.move(to: location, duration: 0.2)
-                streamEncounterWall.onNext(true)
+                streamEncounterWall.onNext(isEncounterWall)
                 character?.characterNode.runAction(action, completionHandler: { [weak self] in
                     self?.isEncounterWall = false
+                    
                 })
             }
             
             // collectables
             if contact.nodeA.physicsBody!.categoryBitMask == Bitmask.collectable.rawValue {
-                collect(contact.nodeA)
+                //                collect(contact.nodeA)
             }
             if contact.nodeB.physicsBody!.categoryBitMask == Bitmask.collectable.rawValue {
-                collect(contact.nodeB)
+                //                collect(contact.nodeB)
             }
             
             
@@ -639,7 +658,7 @@
                 if bool {
                     print("dung tuong roi be oi")
                 }
-            })
+            }).disposed(by: disposeBag)
         }
         
         //
