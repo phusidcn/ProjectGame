@@ -197,27 +197,25 @@ class Character: NSObject {
         fontNode = model.childNode(withName: "font", recursively: true)
         
         
-        characterNode = SCNNode()
-        characterNode.name = "character"
-        characterNode.simdPosition = Character.initialPosition
-        print("characterNode", characterNode.simdPosition)
-        
-        
-        characterOrientation = SCNNode()
-        characterNode.addChildNode(characterOrientation)
-        characterOrientation.addChildNode(model)
-        
-        let collider = model.childNode(withName: "collider", recursively: true)!
-        collider.physicsBody?.collisionBitMask = Int(([.collectable ] as Bitmask).rawValue)
-        
-        // Setup collision shape
-        let (min, max) = model.boundingBox
-        let collisionCapsuleRadius = CGFloat(max.x - min.x) * CGFloat(0.4)
-        let collisionCapsuleHeight = CGFloat(max.y - min.y)
-        
-        let collisionGeometry = SCNCapsule(capRadius: collisionCapsuleRadius, height: collisionCapsuleHeight)
-        characterCollisionShape = SCNPhysicsShape(geometry: collisionGeometry, options:[.collisionMargin: Character.collisionMargin])
-        collisionShapeOffsetFromModel = float3(0, Float(collisionCapsuleHeight) * 0.51, 0.0)
+         characterNode = SCNNode()
+               characterNode.name = "character"
+               characterNode.simdPosition = Character.initialPosition
+
+               characterOrientation = SCNNode()
+               characterNode.addChildNode(characterOrientation)
+               characterOrientation.addChildNode(model)
+
+               let collider = model.childNode(withName: "collider", recursively: true)!
+               collider.physicsBody?.collisionBitMask = Int(([ .wall, .collectable ] as Bitmask).rawValue)
+
+               // Setup collision shape
+               let (min, max) = model.boundingBox
+               let collisionCapsuleRadius = CGFloat(max.x - min.x) * CGFloat(0.4)
+               let collisionCapsuleHeight = CGFloat(max.y - min.y)
+
+               let collisionGeometry = SCNCapsule(capRadius: collisionCapsuleRadius, height: collisionCapsuleHeight)
+               characterCollisionShape = SCNPhysicsShape(geometry: collisionGeometry, options:[.collisionMargin: Character.collisionMargin])
+               collisionShapeOffsetFromModel = float3(0, Float(collisionCapsuleHeight) * 0.51, 0.0)
     }
     
     //    private func loadParticles() {
