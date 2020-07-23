@@ -1,11 +1,13 @@
+project 'AdventureOfBamboo.xcodeproj'
+
 # Uncomment the next line to define a global platform for your project
 # platform :ios, '9.0'
-	pod 'SnapKit', '~> 5.0.0'
-	 pod 'RxSwift', '~> 5'
-target 'DemoObjectDetection' do
+
+target 'AdventureOfBamboo' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
+  pod 'RxSwift', '~> 5.0'
 
-  # Pods for DemoObjectDetection
+  # Pods for AdventureOfBamboo
 
 end

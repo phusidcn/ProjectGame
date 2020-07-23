@@ -49,7 +49,7 @@
 		53CFF60F24C6C8F8001D2266 /* HandleUserGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CFF60E24C6C8F8001D2266 /* HandleUserGesture.swift */; };
 		53E0071A24C7C2CB00F4D0B3 /* GameStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E0071924C7C2CB00F4D0B3 /* GameStorage.swift */; };
 		53E0072224C7D9DE00F4D0B3 /* GameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E0072124C7D9DE00F4D0B3 /* GameTests.swift */; };
-		61CED24E023B490EB0519FCE /* Pods_DemoObjectDetection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E51498060D6FEB16C67BDD1 /* Pods_DemoObjectDetection.framework */; };
+		8CD56C4CBF55C175B8554674 /* Pods_AdventureOfBamboo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCE504D9F09985A9AB6BEF50 /* Pods_AdventureOfBamboo.framework */; };
 		BF38625624739DF600DC1A03 /* SimdExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF38625524739DF600DC1A03 /* SimdExtensions.swift */; };
 		BF38625D2473A0BA00DC1A03 /* PlayerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3862582473A0B800DC1A03 /* PlayerComponent.swift */; };
 		BF38625E2473A0BA00DC1A03 /* RootComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3862592473A0B900DC1A03 /* RootComponent.swift */; };
@@ -91,7 +91,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0E51498060D6FEB16C67BDD1 /* Pods_DemoObjectDetection.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DemoObjectDetection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0FFC65B88391F07AC1C85417 /* Pods-AdventureOfBamboo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdventureOfBamboo.debug.xcconfig"; path = "Target Support Files/Pods-AdventureOfBamboo/Pods-AdventureOfBamboo.debug.xcconfig"; sourceTree = "<group>"; };
+		2D55720D17D48D57B4828F19 /* Pods-AdventureOfBamboo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdventureOfBamboo.release.xcconfig"; path = "Target Support Files/Pods-AdventureOfBamboo/Pods-AdventureOfBamboo.release.xcconfig"; sourceTree = "<group>"; };
 		362B6E0824C5A7C30049D5F6 /* game.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = game.scnassets; sourceTree = "<group>"; };
 		363222FF24C41DB4004E2C1A /* Ultils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ultils.swift; sourceTree = "<group>"; };
 		363CD02724C4BAC600A3E319 /* HandleCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleCamera.swift; sourceTree = "<group>"; };
@@ -137,8 +138,6 @@
 		53E0071F24C7D9DE00F4D0B3 /* GameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		53E0072124C7D9DE00F4D0B3 /* GameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTests.swift; sourceTree = "<group>"; };
 		53E0072324C7D9DE00F4D0B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6043FF6FE69199248CBCEED0 /* Pods-DemoObjectDetection.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoObjectDetection.debug.xcconfig"; path = "Target Support Files/Pods-DemoObjectDetection/Pods-DemoObjectDetection.debug.xcconfig"; sourceTree = "<group>"; };
-		AACD785B3ACE51A5E3CA4484 /* Pods-DemoObjectDetection.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoObjectDetection.release.xcconfig"; path = "Target Support Files/Pods-DemoObjectDetection/Pods-DemoObjectDetection.release.xcconfig"; sourceTree = "<group>"; };
 		BF38625524739DF600DC1A03 /* SimdExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimdExtensions.swift; sourceTree = "<group>"; };
 		BF3862582473A0B800DC1A03 /* PlayerComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerComponent.swift; sourceTree = "<group>"; };
 		BF3862592473A0B900DC1A03 /* RootComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootComponent.swift; sourceTree = "<group>"; };
@@ -153,6 +152,7 @@
 		BF6363312463AAD800E9BBC5 /* GameObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameObject.swift; sourceTree = "<group>"; };
 		BF6363332463AE5400E9BBC5 /* art.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = art.swift; sourceTree = "<group>"; };
 		BF63633A2463C94000E9BBC5 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
+		CCE504D9F09985A9AB6BEF50 /* Pods_AdventureOfBamboo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdventureOfBamboo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,7 +161,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5304DCF7245912860075BC9C /* ObjectsDetectionKit.framework in Frameworks */,
-				61CED24E023B490EB0519FCE /* Pods_DemoObjectDetection.framework in Frameworks */,
+				8CD56C4CBF55C175B8554674 /* Pods_AdventureOfBamboo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,7 +253,7 @@
 			isa = PBXGroup;
 			children = (
 				5304DCF6245912860075BC9C /* ObjectsDetectionKit.framework */,
-				0E51498060D6FEB16C67BDD1 /* Pods_DemoObjectDetection.framework */,
+				CCE504D9F09985A9AB6BEF50 /* Pods_AdventureOfBamboo.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -330,8 +330,8 @@
 		B433F7EFDBCFE4DC3EEEC109 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				6043FF6FE69199248CBCEED0 /* Pods-DemoObjectDetection.debug.xcconfig */,
-				AACD785B3ACE51A5E3CA4484 /* Pods-DemoObjectDetection.release.xcconfig */,
+				0FFC65B88391F07AC1C85417 /* Pods-AdventureOfBamboo.debug.xcconfig */,
+				2D55720D17D48D57B4828F19 /* Pods-AdventureOfBamboo.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -370,12 +370,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5398E23B244BE50C0059E48B /* Build configuration list for PBXNativeTarget "AdventureOfBamboo" */;
 			buildPhases = (
-				7B131278A5633981CFE2720A /* [CP] Check Pods Manifest.lock */,
+				FAA6A714BFB5771C31562A17 /* [CP] Check Pods Manifest.lock */,
 				5398E220244BE50A0059E48B /* Sources */,
 				5398E221244BE50A0059E48B /* Frameworks */,
 				5398E222244BE50A0059E48B /* Resources */,
 				5304DCF4245912790075BC9C /* Embed Frameworks */,
-				781E0ADBD25924B455EE087C /* [CP] Embed Pods Frameworks */,
+				BAA588D3F6CFF58ADA860924 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -483,24 +483,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		781E0ADBD25924B455EE087C /* [CP] Embed Pods Frameworks */ = {
+		BAA588D3F6CFF58ADA860924 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-DemoObjectDetection/Pods-DemoObjectDetection-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-AdventureOfBamboo/Pods-AdventureOfBamboo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-DemoObjectDetection/Pods-DemoObjectDetection-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-AdventureOfBamboo/Pods-AdventureOfBamboo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DemoObjectDetection/Pods-DemoObjectDetection-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AdventureOfBamboo/Pods-AdventureOfBamboo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7B131278A5633981CFE2720A /* [CP] Check Pods Manifest.lock */ = {
+		FAA6A714BFB5771C31562A17 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -515,7 +515,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-DemoObjectDetection-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-AdventureOfBamboo-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -718,7 +718,7 @@
 		};
 		5398E23C244BE50C0059E48B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6043FF6FE69199248CBCEED0 /* Pods-DemoObjectDetection.debug.xcconfig */;
+			baseConfigurationReference = 0FFC65B88391F07AC1C85417 /* Pods-AdventureOfBamboo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -740,7 +740,7 @@
 		};
 		5398E23D244BE50C0059E48B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AACD785B3ACE51A5E3CA4484 /* Pods-DemoObjectDetection.release.xcconfig */;
+			baseConfigurationReference = 2D55720D17D48D57B4828F19 /* Pods-AdventureOfBamboo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
