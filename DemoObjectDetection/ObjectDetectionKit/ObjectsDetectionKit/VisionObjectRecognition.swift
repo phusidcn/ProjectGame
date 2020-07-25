@@ -189,9 +189,10 @@ extension VisionObjectRecognition {
     private func findNearest(position: CGRect, in objects: [objectDetection]) -> objectDetection {
         var min = bufferSize.height
         var suitedObject: objectDetection = objectDetection(name: "", bound: .zero)
+        let centerPoint1 = CGPoint(x: position.origin.x + position.width / 2, y: position.origin.y + position.height / 2)
         for object in objects {
-            let objectRightTopCorner = CGPoint(x: object.bound.origin.x + object.bound.width, y: object.bound.origin.y)
-            let distance = position.origin.y - object.bound.origin.y > 0 ? position.origin.y - object.bound.origin.y : object.bound.origin.y - position.origin.y
+            let centerPoint2 = CGPoint(x: object.bound.origin.x + object.bound.width / 2, y: object.bound.origin.y + object.bound.height / 2)
+            let distance = sqrt(pow(centerPoint1.x - centerPoint2.x, 2) + pow(centerPoint1.y - centerPoint2.y, 2))
             if distance < min {
                 min = distance
                 suitedObject = object
@@ -326,9 +327,10 @@ extension VisionObjectRecognition {
             results.append(userStep)
         }
         
+        var dangeridx: Int = 0
+        
         if let danger = danger {
             var minRange = bufferSize.height
-            var index: Int = 0
             //let dangerResult = UserStep(action: .Hand_Down, position: .zero)
             for result in results {
                 let distance = danger.bound.origin.y - result.position.origin.y > 0 ? danger.bound.origin.y - result.position.origin.y : result.position.origin.y - danger.bound.origin.y
@@ -337,10 +339,10 @@ extension VisionObjectRecognition {
                     guard let resultIndex = try? results.firstIndex(where: {(userStep: UserStep) throws -> Bool in
                         return userStep == result
                     }) else { continue }
-                    index = resultIndex
+                    dangeridx = resultIndex
                 }
             }
-            results[index].isDanger = true
+            results[dangeridx].isDanger = true
         }
         if let stars = stars {
             let userStep = UserStep(action: .Stars, position: stars.bound)
@@ -351,7 +353,15 @@ extension VisionObjectRecognition {
             results.append(userStep)
         }
         
+        results.sort {step1, step2 -> Bool in
+            return step1.position.origin.y < step2.position.origin.y
+        }
         
+        for i in 0 ..< results.count {
+            if results[i].isDanger == true {
+                dangeridx = i
+            }
+        }
         
         if !isPreviousObjectsSame(currentObjects: results) {
             previousObjects = results

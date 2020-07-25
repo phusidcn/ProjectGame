@@ -48,7 +48,7 @@
 		539CE37624C85F4800E32ED1 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539CE37524C85F4800E32ED1 /* GameViewController.swift */; };
 		53CFF60F24C6C8F8001D2266 /* HandleUserGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CFF60E24C6C8F8001D2266 /* HandleUserGesture.swift */; };
 		53E0071A24C7C2CB00F4D0B3 /* GameStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E0071924C7C2CB00F4D0B3 /* GameStorage.swift */; };
-		53E0072224C7D9DE00F4D0B3 /* GameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E0072124C7D9DE00F4D0B3 /* GameTests.swift */; };
+		53F5E9CD24CC0A9700BB68EE /* GameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E0072124C7D9DE00F4D0B3 /* GameTests.swift */; };
 		8CD56C4CBF55C175B8554674 /* Pods_AdventureOfBamboo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCE504D9F09985A9AB6BEF50 /* Pods_AdventureOfBamboo.framework */; };
 		BF38625624739DF600DC1A03 /* SimdExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF38625524739DF600DC1A03 /* SimdExtensions.swift */; };
 		BF38625D2473A0BA00DC1A03 /* PlayerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3862582473A0B800DC1A03 /* PlayerComponent.swift */; };
@@ -566,7 +566,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				53E0072224C7D9DE00F4D0B3 /* GameTests.swift in Sources */,
+				53F5E9CD24CC0A9700BB68EE /* GameTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -777,7 +777,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DemoObjectDetection.app/DemoObjectDetection";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AdventureOfBamboo.app/AdventureOfBamboo";
 			};
 			name = Debug;
 		};
@@ -798,7 +798,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DemoObjectDetection.app/DemoObjectDetection";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AdventureOfBamboo.app/AdventureOfBamboo";
 			};
 			name = Release;
 		};

@@ -32,18 +32,12 @@ public class GameStorage {
         let fileManager = FileManager.default
         let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).last
         let path = url?.appendingPathComponent(fileName)
-        if let path = path {
-            if !fileManager.fileExists(atPath: path.absoluteString) {
-                return false
-            }
-        } else {
-            return false
-        }
         do {
-            let fileHandle = try FileHandle(forReadingFrom: path!)
+            guard let path = path else { return false}
+            let fileHandle = try FileHandle(forReadingFrom: path)
             let savedData = try String(data: fileHandle.readToEnd() ?? Data(), encoding: .utf8)
             let savedContent = savedData?.components(separatedBy: "\n")
-            for i in 0 ..< (savedContent?.count ?? 0) {
+            for i in 0 ..< ((savedContent?.count ?? 1) - 1) {
                 let levelInfo = savedContent?[i].components(separatedBy: " ")
                 GameStorage.points[i] = Int(levelInfo?[0] ?? "0") ?? 0
                 GameStorage.starsNumber[i] = Int(levelInfo?[1] ?? "0") ?? 0
@@ -66,10 +60,13 @@ public class GameStorage {
         let fileManager = FileManager.default
         let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).last
         let path = url?.appendingPathComponent(fileName)
-        if let path = path?.absoluteString, fileManager.fileExists(atPath: path) == false {
-            let result = fileManager.createFile(atPath: path, contents: currentStateString.data(using: .utf8), attributes: nil)
-            if result == true {
-                print("OK")
+        if let path = path, fileManager.fileExists(atPath: path.absoluteString) == false {
+            //let result = fileManager.createFile(atPath: path, contents: currentStateString.data(using: .utf8), attributes: nil)
+            let data = currentStateString.data(using: .utf8)
+            do {
+                try data?.write(to: path, options: .atomicWrite)
+            } catch let error {
+                print(error.localizedDescription)
             }
         } else {
             guard let path = path else { return }

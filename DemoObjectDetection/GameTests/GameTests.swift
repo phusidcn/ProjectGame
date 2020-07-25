@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import DemoObjectDetection
+import AdventureOfBamboo
 
 class GameTests: XCTestCase {
 
