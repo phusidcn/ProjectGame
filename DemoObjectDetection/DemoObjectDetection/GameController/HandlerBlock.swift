@@ -111,24 +111,16 @@ extension GameController: ObjectsRecognitionDelegate {
         }
     }
     
-    func actionSequenceDidChange(actions: [UserStep]) {
-        let needToExecute: Bool = actions.contains(where: {userstep in
+    func actionSequenceDidChange(actions: [UserStep], elseActions: [UserStep]) {
+        var needToExecute = false
+        needToExecute = actions.contains(where: {userstep in
+            return userstep.action == .Pressed
+        })
+        needToExecute = elseActions.contains(where: {userstep in
             return userstep.action == .Pressed
         })
         if needToExecute {
-            for i in 0 ..< actions.count {
-                switch actions[i].action {
-                case .Walk_Up, .Walk_Down, .Walk_Left, .Walk_Right:
-                    walkAction(userStep: actions[i])
-                case .Jump_Up, .Jump_Down, .Jump_Left, .Jump_Right:
-                    jumpAction(userStep: actions[i])
-                case .Repeat:
-                    repeatSequence(actions: Array(actions[(i + 1) ..< actions.count]), times: repeatNumberOf(action: actions[i]))
-                    return
-                default:
-                    break
-                }
-            }
+            
         }
     }
 }
