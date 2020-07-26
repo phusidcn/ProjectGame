@@ -43,12 +43,14 @@ extension GameController: ObjectsRecognitionDelegate {
         semaphore.wait(timeout: .now() + .milliseconds(500))
     }
 
-    func stopMoveAndCheckEncounter(currntAction: UserStep, elseSteps: [UserStep]) {
+    func stopMoveAndCheckEncounter(currntAction: UserStep, elseSteps: [UserStep]) -> Bool {
         stopMove()
         if currntAction.isDanger == true && self.stateCharacter == .encounter {
             doActionSequence(elseSteps)
-            return
+            self.stateCharacter = .none
+            return true
         }
+        return false
     }
     
     func walkAction(userStep: UserStep, elseSteps: [UserStep]) {
@@ -65,10 +67,14 @@ extension GameController: ObjectsRecognitionDelegate {
         default:
             break
         }
-        stopMoveAndCheckEncounter(currntAction: userStep, elseSteps: elseSteps)
+        if stopMoveAndCheckEncounter(currntAction: userStep, elseSteps: elseSteps) {
+            return
+        }
         for _ in 0 ..< repeatTime - 1 {
             move(direction: .forward)
-            stopMoveAndCheckEncounter(currntAction: userStep, elseSteps: elseSteps)
+            if stopMoveAndCheckEncounter(currntAction: userStep, elseSteps: elseSteps) {
+                return
+            }
         }
     }
     
@@ -88,12 +94,16 @@ extension GameController: ObjectsRecognitionDelegate {
         default:
             break
         }
-        stopMoveAndCheckEncounter(currntAction: userStep, elseSteps: elseSteps)
+        if stopMoveAndCheckEncounter(currntAction: userStep, elseSteps: elseSteps) {
+            return
+        }
         
         for _ in 0 ..< repeatTime - 1 {
             character?.isJump = true
             move(direction: .forward)
-            stopMoveAndCheckEncounter(currntAction: userStep, elseSteps: elseSteps)
+            if stopMoveAndCheckEncounter(currntAction: userStep, elseSteps: elseSteps) {
+                return
+            }
         }
     }
 

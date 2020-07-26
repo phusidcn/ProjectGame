@@ -442,7 +442,7 @@
             scnView.overlaySKScene = overlay
             
             //load the main scene
-            self.scene = SCNScene(named: "game.scnassets/level_scene.scn")
+            self.scene = SCNScene(named: "Art.scnassets/level_scene.scn")
             //setup physics
             //        setupPhysics()
             

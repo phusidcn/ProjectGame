@@ -356,7 +356,6 @@ extension VisionObjectRecognition {
         
         if let danger = danger {
             var minRange = bufferSize.height
-            //let dangerResult = UserStep(action: .Hand_Down, position: .zero)
             for result in tempResults {
                 let distance = danger.bound.origin.y - result.position.origin.y > 0 ? danger.bound.origin.y - result.position.origin.y : result.position.origin.y - danger.bound.origin.y
                 if distance < minRange {
@@ -367,7 +366,9 @@ extension VisionObjectRecognition {
                     dangeridx = resultIndex
                 }
             }
-            tempResults[dangeridx].isDanger = true
+            if tempResults.count > dangeridx {
+                tempResults[dangeridx].isDanger = true
+            }
         }
         if let stars = stars {
             let userStep = UserStep(action: .Stars, position: stars.bound)
@@ -392,6 +393,7 @@ extension VisionObjectRecognition {
                     break
                 }
             }
+            if dangeridx >= tempResults.count { return }
             let conditionalArray: [UserStep] = Array(tempResults[dangeridx + 1 ..< tempResults.count])
             for i in 0 ..< conditionalArray.count {
                 if centerPoint(of: conditionalArray[i].position).x < bufferSize.width / 2 {
