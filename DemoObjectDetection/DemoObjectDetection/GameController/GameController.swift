@@ -435,7 +435,7 @@
             scnView.overlaySKScene = overlay
             
             //load the main scene
-            self.scene = SCNScene(named: "Art.scnassets/scene.scn")
+            self.scene = SCNScene(named: "game.scnassets/level2.scn")
             //setup physics
             //        setupPhysics()
             
@@ -632,7 +632,7 @@
                 
                 
                 
-                let location = SCNVector3(oldLocation!.x, oldLocation!.y, oldLocation!.z)
+                let location = SCNVector3(oldLocation?.x ?? 0, oldLocation?.y ?? 0, oldLocation?.z ?? 0)
                 let action = SCNAction.move(to: location, duration: 0.2)
                 streamEncounterWall.onNext(isEncounterWall)
                 character?.characterNode.runAction(action, completionHandler: { [weak self] in

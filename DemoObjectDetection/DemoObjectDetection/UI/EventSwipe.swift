@@ -22,7 +22,8 @@ class EventSwipe: SKNode {
         super.init()
 
         // create a label
-       
+        let fontName: String = "Optima-ExtraBlack"
+        label = SKLabelNode(fontNamed: fontName)
         label!.text = txt
         label!.fontSize = 18
         label!.fontColor = SKColor.white

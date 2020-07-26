@@ -10,7 +10,7 @@ class HUB: SKScene {
     private var collectedKeySprite: SKSpriteNode!
     private var collectedGemsSprites = [SKSpriteNode]()
     private var countItemLabel : SKLabelNode!
-    
+//    private var btnEndGame : SKSpriteNode!
     // demo UI
     private var demoMenu: Menu?
     
@@ -45,7 +45,7 @@ class HUB: SKScene {
         menuButton.position = CGPoint(x: 50, y: -50)
         menuButton.xScale = 0.5
         menuButton.yScale = 0.5
-//        overlayNode.addChild(menuButton)
+        overlayNode.addChild(menuButton)
         menuButton.setClickedTarget(self, action: #selector(self.toggleMenu))
         
         // The Gems
@@ -57,6 +57,9 @@ class HUB: SKScene {
             overlayNode.addChild(gemNode)
             collectedGemsSprites.append(gemNode)
         }
+            
+            // end game
+           
         
         // The key
         collectedKeySprite = SKSpriteNode(imageNamed: "key_empty.png")
@@ -75,10 +78,11 @@ class HUB: SKScene {
         
      
         // the demo UI
-//        demoMenu = Menu(size: size)
+        demoMenu = Menu(size: size)
+        demoMenu?.isMenuHidden
 //        demoMenu!.delegate = controller
-//        demoMenu!.isHidden = true
-//        overlayNode.addChild(demoMenu!)
+        demoMenu!.isHidden = true
+        overlayNode.addChild(demoMenu!)
         
         // Assign the SpriteKit overlay to the SceneKit view.
         isUserInteractionEnabled = false
@@ -168,7 +172,17 @@ class HUB: SKScene {
            congratulationsGroupNode!.addChild(characterNode)
            congratulationsGroupNode!.addChild(congratulationsNode)
            addChild(congratulationsGroupNode!)
+        
+            let btnEndImg = SKSpriteNode(imageNamed: "MaxIcon.png")
+
+                      let btnEnd = Button(skNode: btnEndImg)
+                       btnEnd.position = CGPoint(x: 0, y: 0)
+                       btnEnd.xScale = 0.5
+                             btnEnd.yScale = 0.5
+                     //        overlayNode.addChild(menuButton)
+                       btnEnd.setClickedTarget(self, action: #selector(self.toggleLevel))
            
+            congratulationsGroupNode!.addChild(btnEnd)
            // Layout the overlay
            layout2DOverlay()
            
@@ -191,7 +205,15 @@ class HUB: SKScene {
     
     @objc
     func toggleMenu(_ sender: Button) {
+        print("toggleMenu")
         demoMenu!.isHidden = !demoMenu!.isHidden
     }
+    
+    @objc
+     func toggleLevel(_ sender: Button) {
+         demoMenu!.isHidden = !demoMenu!.isHidden
+     }
+    
+    
 }
 
