@@ -155,7 +155,7 @@
         private var _cameraYHandle : SCNNode?
         private var _cameraXHandle : SCNNode?
         
-        private var targetNumber: Int = 1
+        private var targetNumber: Int!
         
         
         //collected objects
@@ -416,11 +416,12 @@
         
         // MARK: - Init
         
-        init(scnView: SCNView, viewController: GameViewController) {
+        init(scnView: SCNView, viewController: GameViewController, targetNumber : Int, level : String ) {
             super.init()
             viewController.delegate = self
             self.vc = viewController
             
+            self.targetNumber = targetNumber
             objectRecognition = VisionObjectRecognition()
             objectRecognition?.delegate = self
             objectRecognition?.setupAVCapture()
@@ -689,7 +690,7 @@
                 
                 self.scene?.rootNode.addAudioPlayer(SCNAudioPlayer(source: victoryMusic))
                 
-                self.overlay?.showEndScreen()
+                self.overlay?.showEndScreen(isWin: isWin)
             } else {
                 
             }

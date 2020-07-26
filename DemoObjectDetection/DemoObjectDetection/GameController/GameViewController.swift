@@ -38,7 +38,7 @@ class GameViewController: UIViewController {
         }
         self.gameView.controller = self
         self.gameView.allowsCameraControl = true
-        gameController = GameController(scnView: gameView, viewController: self)
+        gameController = GameController(scnView: gameView, viewController: self, targetNumber: 3, level: "Art.scnassets/level2.scn")
         self.delegate = gameController
 
         // Configure the view
