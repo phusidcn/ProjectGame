@@ -38,6 +38,7 @@ public class VisionObjectRecognition: UIViewController {
     
     //MARK: - Private Properties
     private var previousObjects: [UserStep] = []
+    private var previousElseObjects: [UserStep] = []
     var bufferSize: CGSize = .zero
     var rootLayer: CALayer! = nil
     private let session = AVCaptureSession()
@@ -47,12 +48,11 @@ public class VisionObjectRecognition: UIViewController {
     private let defaultDevice: [AVCaptureDevice.DeviceType] = [.builtInWideAngleCamera]
     
     private var requests = [VNRequest]()
-    
-    
+
     private let videoDataOutputQueue = DispatchQueue(label: "VideoDataOutput", qos: .userInitiated, attributes: [], autoreleaseFrequency: .workItem)
     
     public func setupAVCapture() {
-//        setupAVCapture(WithDeviceType: defaultDevice, position: defaultPosition)
+        setupAVCapture(WithDeviceType: defaultDevice, position: defaultPosition)
     }
     
     public func setupAVCapture(WithDeviceType type:[AVCaptureDevice.DeviceType], position: AVCaptureDevice.Position) {
@@ -186,19 +186,45 @@ extension VisionObjectRecognition {
         sortObjectOnTopDownOrderWithOnePlayerMode(with: rawResults)
     }
     
+    func distanFrom(_ point1: CGPoint, to point2: CGPoint) -> CGFloat {
+        return sqrt(pow(point1.x - point2.x, 2) + pow(point1.y - point2.y, 2))
+    }
+    
+    func centerPoint(of rect: CGRect) -> CGPoint {
+        return CGPoint(x: rect.origin.x + rect.width / 2, y: rect.origin.y + rect.height / 2)
+    }
+    
     private func findNearest(position: CGRect, in objects: [objectDetection]) -> objectDetection {
-        var min = bufferSize.height
+        var minX = bufferSize.height
+        var minY = bufferSize.width
         var suitedObject: objectDetection = objectDetection(name: "", bound: .zero)
-        let centerPoint1 = CGPoint(x: position.origin.x + position.width / 2, y: position.origin.y + position.height / 2)
         for object in objects {
-            let centerPoint2 = CGPoint(x: object.bound.origin.x + object.bound.width / 2, y: object.bound.origin.y + object.bound.height / 2)
-            let distance = sqrt(pow(centerPoint1.x - centerPoint2.x, 2) + pow(centerPoint1.y - centerPoint2.y, 2))
-            if distance < min {
-                min = distance
+            if abs(position.origin.x + position.width - object.bound.origin.x) <= 40 && abs(position.origin.y - object.bound.origin.y) <= 40 {
                 suitedObject = object
+                break
             }
+//            if distance < min {
+//                min = distance
+//                suitedObject = object
+//            }
         }
         return suitedObject
+    }
+    
+    private func isPreviousElseObjectSame(currentElseObjects: [UserStep]) -> Bool {
+        guard currentElseObjects.count == previousElseObjects.count else {
+            return false
+        }
+        
+        for (index, currentElseObject) in currentElseObjects.enumerated() {
+            let previousElseObject = previousElseObjects[index]
+            if currentElseObject.action == previousElseObject.action && currentElseObject.isDanger == previousElseObject.isDanger && currentElseObject.number == previousElseObject.number {
+                continue
+            } else {
+                return false
+            }
+        }
+        return true
     }
     
     private func isPreviousObjectsSame(currentObjects: [UserStep]) -> Bool {
@@ -242,8 +268,7 @@ extension VisionObjectRecognition {
                 userGesture = object
             }
         }
-        var results: [UserStep] = []
-        var elseStep: [UserStep] = []
+        var tempResults: [UserStep] = []
         for number in numbers {
             let suitedAction = findNearest(position: number.bound, in: actions)
             var userStep = UserStep(action: .Walk_Up, position: suitedAction.bound)
@@ -286,7 +311,7 @@ extension VisionObjectRecognition {
             } else if number.name == "Number_5" {
                 userStep.number = .five
             }
-            results.append(userStep)
+            tempResults.append(userStep)
             do {
                 try actions.removeAll(where: {(removeAction: objectDetection) throws -> Bool in
                     return removeAction == suitedAction
@@ -324,7 +349,7 @@ extension VisionObjectRecognition {
             } else if action.name == "Repeat" {
                 userStep.action = .Repeat
             }
-            results.append(userStep)
+            tempResults.append(userStep)
         }
         
         var dangeridx: Int = 0
@@ -332,40 +357,61 @@ extension VisionObjectRecognition {
         if let danger = danger {
             var minRange = bufferSize.height
             //let dangerResult = UserStep(action: .Hand_Down, position: .zero)
-            for result in results {
+            for result in tempResults {
                 let distance = danger.bound.origin.y - result.position.origin.y > 0 ? danger.bound.origin.y - result.position.origin.y : result.position.origin.y - danger.bound.origin.y
                 if distance < minRange {
                     minRange = distance
-                    guard let resultIndex = try? results.firstIndex(where: {(userStep: UserStep) throws -> Bool in
+                    guard let resultIndex = try? tempResults.firstIndex(where: {(userStep: UserStep) throws -> Bool in
                         return userStep == result
                     }) else { continue }
                     dangeridx = resultIndex
                 }
             }
-            results[dangeridx].isDanger = true
+            tempResults[dangeridx].isDanger = true
         }
         if let stars = stars {
             let userStep = UserStep(action: .Stars, position: stars.bound)
-            results.append(userStep)
+            tempResults.append(userStep)
         }
         if let userGesture = userGesture {
             let userStep = userGesture.name == "Pressed" ? UserStep(action: .Pressed, position: userGesture.bound) : UserStep(action: .UnPress, position: userGesture.bound)
-            results.append(userStep)
+            tempResults.append(userStep)
         }
         
-        results.sort {step1, step2 -> Bool in
-            return step1.position.origin.y < step2.position.origin.y
+        tempResults.sort {step1, step2 -> Bool in
+            return step1.position.origin.y > step2.position.origin.y
         }
+        var elseStep: [UserStep] = []
+        var results: [UserStep] = []
         
-        for i in 0 ..< results.count {
-            if results[i].isDanger == true {
-                dangeridx = i
+        if danger != nil {
+            for i in 0 ..< tempResults.count {
+                results.append(tempResults[i])
+                if tempResults[i].isDanger == true {
+                    dangeridx = i
+                    break
+                }
+            }
+            let conditionalArray: [UserStep] = Array(tempResults[dangeridx + 1 ..< tempResults.count])
+            for i in 0 ..< conditionalArray.count {
+                if centerPoint(of: conditionalArray[i].position).x < bufferSize.width / 2 {
+                    elseStep.append(conditionalArray[i])
+                } else {
+                    results.append(conditionalArray[i])
+                }
+            }
+            if !isPreviousObjectsSame(currentObjects: results) || !isPreviousObjectsSame(currentObjects: elseStep) {
+                previousObjects = results
+                previousElseObjects = elseStep
+                self.delegate?.actionSequenceDidChange(actions: results, elseActions: elseStep)
+            }
+        } else {
+            if !isPreviousObjectsSame(currentObjects: tempResults) {
+                previousObjects = tempResults
+                self.delegate?.actionSequenceDidChange(actions: tempResults, elseActions: elseStep)
             }
         }
         
-        if !isPreviousObjectsSame(currentObjects: results) {
-            previousObjects = results
-            self.delegate?.actionSequenceDidChange(actions: results, elseActions: elseStep)
-        }
+        
     }
 }

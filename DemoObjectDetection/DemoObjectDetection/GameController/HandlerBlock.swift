@@ -16,6 +16,7 @@ extension GameController: ObjectsRecognitionDelegate {
         case walk
         case jump
     }
+
     
     func repeatNumberOf(action: UserStep) -> Int {
         switch action.number {
@@ -36,13 +37,21 @@ extension GameController: ObjectsRecognitionDelegate {
     
     func stopMove() {
         semaphore.wait(timeout: .now() + .milliseconds(500))
+        character?.isJump = false
         self.characterDirection = float2(x: 0, y: 0)
         print("position new \(character?.characterNode.worldPosition)")
         semaphore.wait(timeout: .now() + .milliseconds(500))
     }
+
+    func stopMoveAndCheckEncounter(currntAction: UserStep, elseSteps: [UserStep]) {
+        stopMove()
+        if currntAction.isDanger == true && self.stateCharacter == .encounter {
+            doActionSequence(elseSteps)
+            return
+        }
+    }
     
-    func walkAction(userStep: UserStep) {
-        //let semaphore: DispatchSemaphore = DispatchSemaphore(value: 0)
+    func walkAction(userStep: UserStep, elseSteps: [UserStep]) {
         let repeatTime = repeatNumberOf(action: userStep)
         switch userStep.action {
         case .Walk_Up:
@@ -56,14 +65,14 @@ extension GameController: ObjectsRecognitionDelegate {
         default:
             break
         }
-        stopMove()
+        stopMoveAndCheckEncounter(currntAction: userStep, elseSteps: elseSteps)
         for _ in 0 ..< repeatTime - 1 {
             move(direction: .forward)
-            stopMove()
+            stopMoveAndCheckEncounter(currntAction: userStep, elseSteps: elseSteps)
         }
     }
     
-    func jumpAction(userStep: UserStep) {
+    func jumpAction(userStep: UserStep, elseSteps: [UserStep]) {
         let repeatTime = repeatNumberOf(action: userStep)
         
         character?.isJump = true
@@ -79,31 +88,39 @@ extension GameController: ObjectsRecognitionDelegate {
         default:
             break
         }
-        semaphore.wait(timeout: .now() + .milliseconds(500))
-        character?.isJump = false
-        print("position new \(character?.characterNode.worldPosition)")
-        self.characterDirection = float2(x: 0, y: 0)
-        semaphore.wait(timeout: .now() + .milliseconds(500))
+        stopMoveAndCheckEncounter(currntAction: userStep, elseSteps: elseSteps)
         
         for _ in 0 ..< repeatTime - 1 {
             character?.isJump = true
             move(direction: .forward)
-            semaphore.wait(timeout: .now() + .milliseconds(500))
-            character?.isJump = false
-            print("position new \(character?.characterNode.worldPosition)")
-            self.characterDirection = float2(x: 0, y: 0)
-            semaphore.wait(timeout: .now() + .milliseconds(500))
+            stopMoveAndCheckEncounter(currntAction: userStep, elseSteps: elseSteps)
+        }
+    }
+
+    func doActionSequence(_ actions: [UserStep]) {
+        for i in 0 ..< actions.count {
+            switch actions[i].action {
+            case .Walk_Down, .Walk_Left, .Walk_Right, .Walk_Up:
+                walkAction(userStep: actions[i], elseSteps: [])
+            case .Jump_Down, .Jump_Left, .Jump_Right, .Jump_Up:
+                jumpAction(userStep: actions[i], elseSteps: [])
+            case .Repeat:
+                repeatSequence(actions: Array(actions[i ..< actions.count]), times: repeatNumberOf(action: actions[i]), isDanger: false, elseSteps: [])
+                return
+            default:
+                break
+            }
         }
     }
     
-    func repeatSequence(actions: [UserStep], times: Int) {
+    func repeatSequence(actions: [UserStep], times: Int, isDanger: Bool, elseSteps: [UserStep]) {
         for _ in 0 ..< times + 1 {
             for i in 0 ..< actions.count {
                 switch actions[i].action {
                 case .Walk_Right, .Walk_Left, .Walk_Down, .Walk_Up:
-                    walkAction(userStep: actions[i])
+                    walkAction(userStep: actions[i], elseSteps: [])
                 case .Jump_Right, .Jump_Left, .Jump_Down, .Jump_Up:
-                    jumpAction(userStep: actions[i])
+                    jumpAction(userStep: actions[i], elseSteps: [])
                 default:
                     break
                 }
@@ -111,23 +128,26 @@ extension GameController: ObjectsRecognitionDelegate {
         }
     }
     
-    func actionSequenceDidChange(actions: [UserStep]) {
-        let needToExecute: Bool = actions.contains(where: {userstep in
+    func actionSequenceDidChange(actions: [UserStep], elseActions: [UserStep]) {
+        var needToExecute = false
+        needToExecute = actions.contains(where: {userstep in
             return userstep.action == .Pressed
         })
         if needToExecute {
-            for i in 0 ..< actions.count {
-                switch actions[i].action {
-                case .Walk_Up, .Walk_Down, .Walk_Left, .Walk_Right:
-                    walkAction(userStep: actions[i])
-                case .Jump_Up, .Jump_Down, .Jump_Left, .Jump_Right:
-                    jumpAction(userStep: actions[i])
+            var stepIndex = 0
+            while stepIndex < actions.count {
+                switch actions[stepIndex].action {
+                case .Walk_Right, .Walk_Left, .Walk_Up, .Walk_Down:
+                    walkAction(userStep: actions[stepIndex], elseSteps: elseActions)
+                case .Jump_Right, .Jump_Left, .Jump_Down, .Jump_Up:
+                    jumpAction(userStep: actions[stepIndex], elseSteps: elseActions)
                 case .Repeat:
-                    repeatSequence(actions: Array(actions[(i + 1) ..< actions.count]), times: repeatNumberOf(action: actions[i]))
+                    repeatSequence(actions: Array(actions[stepIndex ..< actions.count]), times: repeatNumberOf(action: actions[stepIndex]), isDanger: actions[stepIndex].isDanger, elseSteps: elseActions)
                     return
                 default:
                     break
                 }
+                stepIndex += 1
             }
         }
     }
