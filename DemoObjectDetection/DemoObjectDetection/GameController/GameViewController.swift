@@ -39,6 +39,7 @@ class GameViewController: UIViewController {
         self.gameView.controller = self
         self.gameView.allowsCameraControl = true
         gameController = GameController(scnView: gameView, viewController: self)
+        gameController?.inGameDelegate = self
         self.delegate = gameController
 
         // Configure the view
@@ -50,16 +51,15 @@ class GameViewController: UIViewController {
         super.viewDidAppear(animated)
         self.gameView.setUp()
     }
-    
 
-    /*
-    // MARK: - Navigation
+}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+extension GameViewController: InGameDelegate {
+    func backToLevel() {
+        self.present(LevelVC.sharedInstance, animated: true, completion: nil)
     }
-    */
-
+    
+    func backToMenu() {
+        self.present(MainMenuVC.sharedInstance, animated: true, completion: nil)
+    }
 }

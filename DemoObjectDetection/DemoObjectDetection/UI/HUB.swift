@@ -4,7 +4,13 @@ import Foundation
 import SceneKit
 import SpriteKit
 
+protocol InGameDelegate: AnyObject {
+    func backToMenu()
+    func backToLevel()
+}
+
 class HUB: SKScene {
+    public weak var inGameDelegate: InGameDelegate?
     private var overlayNode: SKNode
     private var congratulationsGroupNode: SKNode?
     private var collectedKeySprite: SKSpriteNode!
@@ -203,15 +209,15 @@ class HUB: SKScene {
                            SKAction.scale(to: 1.0, duration: 0.1)])])]))
        }
     
+    //TODO: End game, show menu
     @objc
     func toggleMenu(_ sender: Button) {
-        print("toggleMenu")
-        demoMenu!.isHidden = !demoMenu!.isHidden
+        self.inGameDelegate?.backToMenu()
     }
     
     @objc
      func toggleLevel(_ sender: Button) {
-         demoMenu!.isHidden = !demoMenu!.isHidden
+        self.inGameDelegate?.backToLevel()
      }
     
     

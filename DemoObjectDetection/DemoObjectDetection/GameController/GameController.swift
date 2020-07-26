@@ -43,6 +43,7 @@
         case collectBig
         case totalCount
     }
+    
     class GameController: NSObject, ExtraProtocols {
         struct Config {
             let ALTITUDE = 1.00
@@ -123,7 +124,7 @@
         // rxSwift
         
         public var streamEncounterWall = ReplaySubject<Bool>.create(bufferSize: 1)
-        
+        public weak var inGameDelegate: InGameDelegate?
         
         // Global settings
         let semaphore = DispatchSemaphore(value: 0)
@@ -439,9 +440,11 @@
             
             // setup overlay
             overlay = HUB(size: scnView.bounds.size, controller: self)
+            overlay?.inGameDelegate = self
             scnView.overlaySKScene = overlay
             
             //load the main scene
+            //TODO: Load game level by name
             self.scene = SCNScene(named: "Art.scnassets/level_scene.scn")
             //setup physics
             //        setupPhysics()
@@ -693,7 +696,15 @@
     
     // MARK: - GameController
     
-    
+    extension GameController: InGameDelegate {
+        func backToLevel() {
+            self.inGameDelegate?.backToLevel()
+        }
+        
+        func backToMenu() {
+            self.inGameDelegate?.backToMenu()
+        }
+    }
     
     
     
