@@ -232,62 +232,62 @@
         
         
         func handleCamera() {
-//            let camera = self.scene?.rootNode.childNode(withName: "cameraStart_node", recursively: true)
-//            let cameraStart = camera?.childNode(withName: "camLookAt_cameraStart", recursively: true)
-//            
-//            
-////            let camera = self.scene?.rootNode.childNode(withName: "")
-//            let action = SCNAction.moveBy(x: -5.4, y: 7.7, z: -11.018, duration: 4)
-//            let actionRotate = SCNAction.rotateBy(x: convertToDegrees(angle: -120), y:  convertToDegrees(angle: -0.7), z:  convertToDegrees(angle: 37), duration: 4)
-//            let actionGroup = SCNAction.group([actionRotate, action])
-//            cameraStart?.runAction(actionGroup)
-//            _cameraXHandle = SCNNode()
-//            _cameraYHandle = SCNNode()
-//            _cameraYHandle?.addChildNode(_cameraXHandle!)
-//
-//            scene?.rootNode.addChildNode(_cameraYHandle!)
-//
-//            _cameraXHandle?.position = SCNVector3Make(0, 1.0,0);
-//
-//            let pov = self.sceneRenderer!.pointOfView;
-//
-//
-//            pov!.eulerAngles = SCNVector3Make(0, 0, 0);
-//            pov!.position = SCNVector3Make(0,0,10.0);
-//
-//            _cameraYHandle!.rotation = SCNVector4Make(0, 0, 0, Float(.pi/2 + M_PI_4*3));
-//            _cameraXHandle!.rotation = SCNVector4Make(0, 0, 0, Float(-M_PI_4*0.125));
-//            _cameraXHandle!.addChildNode(pov!)
-//
-//            _lockCamera = true
-//            SCNTransaction.begin()
-//            SCNTransaction.completionBlock = { [weak self]  in
-//                self?._lockCamera = false }
-//
-//            let cameraYAnimation = CABasicAnimation.init(keyPath: "rotation.w")
-//            let i = (M_PI*2) - Double(_cameraYHandle!.rotation.w)
-//            cameraYAnimation.fromValue =  i;
-//            cameraYAnimation.toValue = 0.0;
-//            cameraYAnimation.isAdditive = true;
-//            cameraYAnimation.beginTime = CACurrentMediaTime()+3; // wait a little bit before stating
-//            cameraYAnimation.fillMode = .both;
-//            cameraYAnimation.duration = 5.0;
-//            cameraYAnimation.timingFunction = CAMediaTimingFunction.init(name: .easeInEaseOut)
-//            _cameraYHandle?.addAnimation(cameraYAnimation, forKey: nil)
-//
-//            let cameraXAnimation = CABasicAnimation.init(keyPath: "rotation.w")
-//            let x = (-M_PI*2) - Double(_cameraYHandle!.rotation.w)
-//            cameraYAnimation.fromValue =  x;
-//            cameraYAnimation.toValue = 0.0;
-//            cameraYAnimation.isAdditive = true;
-//            cameraYAnimation.beginTime = CACurrentMediaTime()+3; // wait a little bit before stating
-//            cameraYAnimation.fillMode = .both;
-//            cameraYAnimation.duration = 5.0;
-//            cameraYAnimation.timingFunction = CAMediaTimingFunction.init(name: .easeInEaseOut)
-//            _cameraXHandle?.addAnimation(cameraXAnimation, forKey: nil)
-//            SCNTransaction.commit()
+            //            let camera = self.scene?.rootNode.childNode(withName: "cameraStart_node", recursively: true)
+            //            let cameraStart = camera?.childNode(withName: "camLookAt_cameraStart", recursively: true)
+            //
+            //
+            ////            let camera = self.scene?.rootNode.childNode(withName: "")
+            //            let action = SCNAction.moveBy(x: -5.4, y: 7.7, z: -11.018, duration: 4)
+            //            let actionRotate = SCNAction.rotateBy(x: convertToDegrees(angle: -120), y:  convertToDegrees(angle: -0.7), z:  convertToDegrees(angle: 37), duration: 4)
+            //            let actionGroup = SCNAction.group([actionRotate, action])
+            //            cameraStart?.runAction(actionGroup)
+            //            _cameraXHandle = SCNNode()
+            //            _cameraYHandle = SCNNode()
+            //            _cameraYHandle?.addChildNode(_cameraXHandle!)
+            //
+            //            scene?.rootNode.addChildNode(_cameraYHandle!)
+            //
+            //            _cameraXHandle?.position = SCNVector3Make(0, 1.0,0);
+            //
+            //            let pov = self.sceneRenderer!.pointOfView;
+            //
+            //
+            //            pov!.eulerAngles = SCNVector3Make(0, 0, 0);
+            //            pov!.position = SCNVector3Make(0,0,10.0);
+            //
+            //            _cameraYHandle!.rotation = SCNVector4Make(0, 0, 0, Float(.pi/2 + M_PI_4*3));
+            //            _cameraXHandle!.rotation = SCNVector4Make(0, 0, 0, Float(-M_PI_4*0.125));
+            //            _cameraXHandle!.addChildNode(pov!)
+            //
+            //            _lockCamera = true
+            //            SCNTransaction.begin()
+            //            SCNTransaction.completionBlock = { [weak self]  in
+            //                self?._lockCamera = false }
+            //
+            //            let cameraYAnimation = CABasicAnimation.init(keyPath: "rotation.w")
+            //            let i = (M_PI*2) - Double(_cameraYHandle!.rotation.w)
+            //            cameraYAnimation.fromValue =  i;
+            //            cameraYAnimation.toValue = 0.0;
+            //            cameraYAnimation.isAdditive = true;
+            //            cameraYAnimation.beginTime = CACurrentMediaTime()+3; // wait a little bit before stating
+            //            cameraYAnimation.fillMode = .both;
+            //            cameraYAnimation.duration = 5.0;
+            //            cameraYAnimation.timingFunction = CAMediaTimingFunction.init(name: .easeInEaseOut)
+            //            _cameraYHandle?.addAnimation(cameraYAnimation, forKey: nil)
+            //
+            //            let cameraXAnimation = CABasicAnimation.init(keyPath: "rotation.w")
+            //            let x = (-M_PI*2) - Double(_cameraYHandle!.rotation.w)
+            //            cameraYAnimation.fromValue =  x;
+            //            cameraYAnimation.toValue = 0.0;
+            //            cameraYAnimation.isAdditive = true;
+            //            cameraYAnimation.beginTime = CACurrentMediaTime()+3; // wait a little bit before stating
+            //            cameraYAnimation.fillMode = .both;
+            //            cameraYAnimation.duration = 5.0;
+            //            cameraYAnimation.timingFunction = CAMediaTimingFunction.init(name: .easeInEaseOut)
+            //            _cameraXHandle?.addAnimation(cameraXAnimation, forKey: nil)
+            //            SCNTransaction.commit()
             
-           
+            
             
             //        let lookAtConstraint
             
@@ -304,10 +304,10 @@
             }
             SCNTransaction.begin()
             SCNTransaction.animationDuration = 0.0
-
+            
             _cameraYHandle?.removeAllActions()
             _cameraXHandle?.removeAllActions()
-
+            
             if (_cameraYHandle!.rotation.y < 0) {
                 _cameraYHandle!.rotation = SCNVector4Make(0, 1, 0, -_cameraYHandle!.rotation.w);
             }
@@ -315,7 +315,7 @@
                 _cameraXHandle!.rotation = SCNVector4Make(1, 0, 0, -_cameraXHandle!.rotation.w);
             }
             SCNTransaction.commit()
-
+            
             // Update the camera position with some inertia.
             SCNTransaction.begin()
             SCNTransaction.animationDuration = 0.5
@@ -324,11 +324,11 @@
             let Yhandler = _cameraYHandle!.rotation.w - Float(dir.width) * Float(F)
             let Xhandler = _cameraXHandle!.rotation.w + Float(dir.height) * Float(F)
             _cameraYHandle!.rotation = SCNVector4(0, 1, 0, _cameraYHandle!.rotation.y * Yhandler)
-
+            
             _cameraXHandle!.rotation = SCNVector4(1, 0, 0, max(.pi / 2, min(0.13, Xhandler)))
-
-
-
+            
+            
+            
             SCNTransaction.commit()
             
         }
@@ -456,11 +456,11 @@
             setupRx()
             
             // setting light
-//            let light = scene!.rootNode.childNode(withName: "DirectLight", recursively: true)!.light
-//            light!.shadowCascadeCount = 3  // turn on cascade shadows
-//            light!.shadowMapSize = CGSize(width: CGFloat(512), height: CGFloat(512))
-//            light!.maximumShadowDistance = 20
-//            light!.shadowCascadeSplittingFactor = 0.5
+            //            let light = scene!.rootNode.childNode(withName: "DirectLight", recursively: true)!.light
+            //            light!.shadowCascadeCount = 3  // turn on cascade shadows
+            //            light!.shadowMapSize = CGSize(width: CGFloat(512), height: CGFloat(512))
+            //            light!.maximumShadowDistance = 20
+            //            light!.shadowCascadeSplittingFactor = 0.5
             
             
             //assign the scene to the view
@@ -533,7 +533,7 @@
                     if collectedGems == targetNumber {
                         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() +
                             Double(Int64(1.0 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: {() -> Void in
-                                self.showEndScreen()
+                                self.showEndScreen(isWin: true)
                         })
                         
                     }
@@ -588,7 +588,9 @@
         // MARK: - Update
         
         func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-            
+            if character!.getStatusGame() {
+                self.showEndScreen(isWin: false)
+            }
             // compute delta time
             if lastUpdateTime == 0 {
                 lastUpdateTime = time
@@ -680,16 +682,22 @@
         
         // MARK: - Congratulating the Player
         
-        func showEndScreen() {
+        func showEndScreen(isWin :Bool) {
+            if isWin {
+                guard let victoryMusic = SCNAudioSource(named: "audio/Music_victory.mp3") else { return }
+                victoryMusic.volume = 0.5
+                
+                self.scene?.rootNode.addAudioPlayer(SCNAudioPlayer(source: victoryMusic))
+                
+                self.overlay?.showEndScreen()
+            } else {
+                
+            }
             // Play the congrat sound.
-            guard let victoryMusic = SCNAudioSource(named: "audio/Music_victory.mp3") else { return }
-            victoryMusic.volume = 0.5
             
-            self.scene?.rootNode.addAudioPlayer(SCNAudioPlayer(source: victoryMusic))
-            
-            self.overlay?.showEndScreen()
-        }
     }
+}
+    
     
     // MARK: - GameController
     

@@ -159,9 +159,16 @@ class HUB: SKScene {
     
     // MARK: Congratulate the player
     
-    func showEndScreen() {
+    func showEndScreen(isWin : Bool) {
+        
            // Congratulation title
-           let congratulationsNode = SKSpriteNode(imageNamed: "congratulations.png")
+        let notificationNode : SKSpriteNode
+            if isWin {
+                notificationNode = SKSpriteNode(imageNamed: "congratulations.png")
+            } else {
+                notificationNode = SKSpriteNode(imageNamed: "congratulations.png")
+            }
+           
            
            // Max image
            let characterNode = SKSpriteNode(imageNamed: "congratulations_pandaMax.png")
@@ -170,7 +177,7 @@ class HUB: SKScene {
            
            congratulationsGroupNode = SKNode()
            congratulationsGroupNode!.addChild(characterNode)
-           congratulationsGroupNode!.addChild(congratulationsNode)
+           congratulationsGroupNode!.addChild(notificationNode)
            addChild(congratulationsGroupNode!)
         
             let btnEndImg = SKSpriteNode(imageNamed: "MaxIcon.png")
@@ -187,10 +194,10 @@ class HUB: SKScene {
            layout2DOverlay()
            
            // Animate
-           congratulationsNode.alpha = 0.0
-           congratulationsNode.xScale = 0.0
-           congratulationsNode.yScale = 0.0
-           congratulationsNode.run( SKAction.group([SKAction.fadeIn(withDuration: 0.25),
+           notificationNode.alpha = 0.0
+           notificationNode.xScale = 0.0
+           notificationNode.yScale = 0.0
+           notificationNode.run( SKAction.group([SKAction.fadeIn(withDuration: 0.25),
                                     SKAction.sequence([SKAction.scale(to: 1.22, duration: 0.25),
                                    SKAction.scale(to: 1.0, duration: 0.1)])]))
            
@@ -211,7 +218,7 @@ class HUB: SKScene {
     
     @objc
      func toggleLevel(_ sender: Button) {
-         demoMenu!.isHidden = !demoMenu!.isHidden
+//         demoMenu!.isHidden = !demoMenu!.isHidden
      }
     
     
