@@ -22,6 +22,12 @@
         
     }
     
+    
+    enum StateLocation {
+        case none
+        case encounter
+    }
+    
     typealias ExtraProtocols = SCNSceneRendererDelegate & SCNPhysicsContactDelegate & PadOverlayDelegate & ButtonOverlayDelegate
     
     
@@ -116,7 +122,7 @@
         
         // rxSwift
         
-        public var streamEncounterWall = BehaviorSubject<Bool>.init(value: false)
+        public var streamEncounterWall = ReplaySubject<Bool>.create(bufferSize: 1)
         
         
         // Global settings
@@ -136,6 +142,7 @@
         public var character: Character?
         
         
+        internal var stateCharacter : StateLocation = .none
         //triggers
         private var lastTrigger: SCNNode?
         private var firstTriggerDone: Bool = false
@@ -656,7 +663,9 @@
         func setupRx() {
             streamEncounterWall.subscribe(onNext: { bool in
                 if bool {
-                    print("dung tuong roi be oi")
+                    self.stateCharacter = .encounter
+                } else {
+                    self.stateCharacter = .none
                 }
             }).disposed(by: disposeBag)
         }

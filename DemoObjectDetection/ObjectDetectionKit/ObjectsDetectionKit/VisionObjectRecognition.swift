@@ -400,12 +400,18 @@ extension VisionObjectRecognition {
                     results.append(conditionalArray[i])
                 }
             }
+            if !isPreviousObjectsSame(currentObjects: results) || !isPreviousObjectsSame(currentObjects: elseStep) {
+                previousObjects = results
+                previousElseObjects = elseStep
+                self.delegate?.actionSequenceDidChange(actions: results, elseActions: elseStep)
+            }
+        } else {
+            if !isPreviousObjectsSame(currentObjects: tempResults) {
+                previousObjects = tempResults
+                self.delegate?.actionSequenceDidChange(actions: tempResults, elseActions: elseStep)
+            }
         }
         
-        if !isPreviousObjectsSame(currentObjects: results) && !isPreviousObjectsSame(currentObjects: elseStep) {
-            previousObjects = tempResults
-            previousElseObjects = elseStep
-            self.delegate?.actionSequenceDidChange(actions: results, elseActions: elseStep)
-        }
+        
     }
 }
