@@ -435,7 +435,7 @@
             scnView.overlaySKScene = overlay
             
             //load the main scene
-            self.scene = SCNScene(named: "game.scnassets/level_scene.scn")
+            self.scene = SCNScene(named: "Art.scnassets/level2.scn")
             //setup physics
             //        setupPhysics()
             
@@ -449,11 +449,11 @@
             setupRx()
             
             // setting light
-            let light = scene!.rootNode.childNode(withName: "DirectLight", recursively: true)!.light
-            light!.shadowCascadeCount = 3  // turn on cascade shadows
-            light!.shadowMapSize = CGSize(width: CGFloat(512), height: CGFloat(512))
-            light!.maximumShadowDistance = 20
-            light!.shadowCascadeSplittingFactor = 0.5
+//            let light = scene!.rootNode.childNode(withName: "DirectLight", recursively: true)!.light
+//            light!.shadowCascadeCount = 3  // turn on cascade shadows
+//            light!.shadowMapSize = CGSize(width: CGFloat(512), height: CGFloat(512))
+//            light!.maximumShadowDistance = 20
+//            light!.shadowCascadeSplittingFactor = 0.5
             
             
             //assign the scene to the view
