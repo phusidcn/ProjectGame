@@ -443,8 +443,6 @@
             overlay = HUB(size: scnView.bounds.size, controller: self)
             overlay?.inGameDelegate = self
             scnView.overlaySKScene = overlay
-            
-            //load the main scene
 
             self.scene = SCNScene(named: "Art.scnassets/level\(level).scn")
 
@@ -657,10 +655,10 @@
             
             // collectables
             if contact.nodeA.physicsBody!.categoryBitMask == Bitmask.collectable.rawValue {
-                //                collect(contact.nodeA)
+                                collect(contact.nodeA)
             }
             if contact.nodeB.physicsBody!.categoryBitMask == Bitmask.collectable.rawValue {
-                //                collect(contact.nodeB)
+                                collect(contact.nodeB)
             }
             
             
