@@ -443,7 +443,7 @@
             scnView.overlaySKScene = overlay
             
             //load the main scene
-            self.scene = SCNScene(named: "Art.scnassets/level2.scn")
+            self.scene = SCNScene(named: "Art.scnassets/level1.scn")
             //setup physics
             //        setupPhysics()
             
@@ -653,10 +653,10 @@
             
             // collectables
             if contact.nodeA.physicsBody!.categoryBitMask == Bitmask.collectable.rawValue {
-                //                collect(contact.nodeA)
+                                collect(contact.nodeA)
             }
             if contact.nodeB.physicsBody!.categoryBitMask == Bitmask.collectable.rawValue {
-                //                collect(contact.nodeB)
+                                collect(contact.nodeB)
             }
             
             
