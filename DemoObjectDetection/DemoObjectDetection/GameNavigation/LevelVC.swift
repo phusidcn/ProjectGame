@@ -18,6 +18,19 @@ class LevelVC: UIViewController {
     @IBOutlet var levelButtons: [UIButton]!
     override func viewDidLoad() {
         super.viewDidLoad()
+        let result = GameStorage.loadGame()
+        if result {
+            for i in 0 ..< GameStorage.points.count {
+                if GameStorage.points[i] > 0 {
+                    for button in self.levelButtons {
+                        if button.tag == i + 1 {
+                            button.setBackgroundImage(UIImage(named: "Level\(i)_played"), for: .normal)
+                            break
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @IBAction func tapToLevelButton(_ sender: UIButton) {

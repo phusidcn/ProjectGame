@@ -14,28 +14,34 @@ public class GameStorage {
         return GameStorage(fileName: "SaveGame.aob")
     }
     
-    var fileName: String = "SaveGame.aob"
+    static var fileName: String = "SaveGame.aob"
     static var numberOfLevel: Int = 8
     static var currentLevel: Int = 0
-    static var points: [Int] = []
-    static var starsNumber: [Int] = []
+    static var points = [Int](repeating: 0, count: GameStorage.numberOfLevel)
+    static var starsNumber = [Int](repeating: 0, count: GameStorage.numberOfLevel)
     
     
     init(fileName: String) {
-        self.fileName = fileName
+        GameStorage.fileName = fileName
         GameStorage.currentLevel = 0
-        GameStorage.points = [Int](repeating: 0, count: GameStorage.numberOfLevel)
-        GameStorage.starsNumber = [Int](repeating: 0, count: GameStorage.numberOfLevel)
     }
     
-    public func loadGame() -> Bool {
+    public static func storePoint(point: Int) {
+        GameStorage.points[GameStorage.currentLevel - 1] = point
+        print(GameStorage.points)
+    }
+    
+    public static func loadGame() -> Bool {
         let fileManager = FileManager.default
         let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).last
-        let path = url?.appendingPathComponent(fileName)
+        let path = url?.appendingPathComponent(GameStorage.fileName)
         do {
             guard let path = path else { return false}
+//            if fileManager.fileExists(atPath: path.absoluteString) == false {
+//                return false
+//            }
             let fileHandle = try FileHandle(forReadingFrom: path)
-            let savedData = try String(data: fileHandle.readToEnd() ?? Data(), encoding: .utf8)
+            let savedData = try String(data: fileHandle.readDataToEndOfFile(), encoding: .utf8)
             let savedContent = savedData?.components(separatedBy: "\n")
             for i in 0 ..< ((savedContent?.count ?? 1) - 1) {
                 let levelInfo = savedContent?[i].components(separatedBy: " ")
@@ -50,7 +56,7 @@ public class GameStorage {
         return true
     }
     
-    public func saveGame() {
+    public static func saveGame() {
         var currentStateString = ""
         for i in 0 ..< GameStorage.numberOfLevel {
             currentStateString.append("\(GameStorage.points[i]) ")
@@ -59,7 +65,7 @@ public class GameStorage {
         
         let fileManager = FileManager.default
         let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).last
-        let path = url?.appendingPathComponent(fileName)
+        let path = url?.appendingPathComponent(GameStorage.fileName)
         if let path = path, fileManager.fileExists(atPath: path.absoluteString) == false {
             //let result = fileManager.createFile(atPath: path, contents: currentStateString.data(using: .utf8), attributes: nil)
             let data = currentStateString.data(using: .utf8)
@@ -92,6 +98,19 @@ public class GameStorage {
                 print(error.localizedDescription)
             }
             
+        }
+    }
+    
+    public static func resetSaveGame() {
+        let fileManager = FileManager.default
+        let url = fileManager.urls(for: .documentDirectory, in: .userDomainMask).last
+        let path = url?.appendingPathComponent(GameStorage.fileName)
+        if let path = path {
+            do {
+                try fileManager.removeItem(at: path)
+            } catch let error {
+                print(error.localizedDescription)
+            }
         }
     }
 }

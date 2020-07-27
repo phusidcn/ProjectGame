@@ -20,8 +20,12 @@ class GameTests: XCTestCase {
     }
 
     func testSaveGame() throws {
-        GameStorage.sharedInstance.saveGame()
-        GameStorage.sharedInstance.loadGame()
+        GameStorage.saveGame()
+        GameStorage.loadGame()
+    }
+    
+    func testRemoveGame() throws {
+        GameStorage.resetSaveGame()
     }
 
     func testPerformanceExample() throws {

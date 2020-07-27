@@ -144,6 +144,8 @@ extension GameController: ObjectsRecognitionDelegate {
             return userstep.action == .Pressed
         })
         if needToExecute {
+            self.streak = false
+            self.streakIndicator = 0
             var stepIndex = 0
             while stepIndex < actions.count {
                 switch actions[stepIndex].action {

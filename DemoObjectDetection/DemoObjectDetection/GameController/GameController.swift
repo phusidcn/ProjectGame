@@ -115,9 +115,6 @@
                 controllerJump(false)
             } else {
                 characterDirection = [0, 0]
-                
-                
-                
             }
         }
         
@@ -143,6 +140,7 @@
         public var character: Character?
         
         
+        
         internal var stateCharacter : StateLocation = .none
         //triggers
         private var lastTrigger: SCNNode?
@@ -160,6 +158,11 @@
         
         
         //collected objects
+        public var currentLevel: Int = 1
+        public var streak: Bool = false
+        private var streakMultiplier = [1,2,5,10]
+        public var streakIndicator = 0
+        private var point: Int = 0
         private var collectedKeys: Int = 0
         private var collectedGems: Int = 0
         private var keyIsVisible: Bool = false
@@ -443,7 +446,9 @@
             overlay = HUB(size: scnView.bounds.size, controller: self)
             overlay?.inGameDelegate = self
             scnView.overlaySKScene = overlay
-
+            if let currentLevel = Int(level) {
+                self.currentLevel = currentLevel
+            }
             self.scene = SCNScene(named: "Art.scnassets/level\(level).scn")
 
             //setup physics
@@ -522,6 +527,12 @@
                     
                     //the gems
                 else if collectable.name == "appleItem" {
+                    //TODO: handle earn point
+                    
+                    if !streak { streak = true }
+                    point += streakMultiplier[streakIndicator]
+                    if streakIndicator < streakMultiplier.count - 1 { streakIndicator += 1 }
+                    
                     self.collectedGems += 1
                     
                     // play sound
@@ -534,6 +545,10 @@
                         scenView.allowsCameraControl = false
                     }
                     if collectedGems == targetNumber {
+                        //TODO : handle win game
+                        GameStorage.currentLevel = self.currentLevel
+                        GameStorage.storePoint(point: self.point)
+                        GameStorage.saveGame()
                         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() +
                             Double(Int64(1.0 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: {() -> Void in
                                 self.showEndScreen(isWin: true)
@@ -592,6 +607,7 @@
         
         func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
             if character!.getStatusGame() {
+                // TODO: handle lose game
                 self.showEndScreen(isWin: false)
             }
             // compute delta time
