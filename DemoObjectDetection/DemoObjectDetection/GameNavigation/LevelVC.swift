@@ -16,6 +16,7 @@ class LevelVC: UIViewController {
     }
 
     @IBOutlet var levelButtons: [UIButton]!
+    @IBOutlet weak var settingButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         //GameStorage.resetSaveGame()

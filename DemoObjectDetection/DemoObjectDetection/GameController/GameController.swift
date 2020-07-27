@@ -447,6 +447,7 @@
             // setup overlay
             overlay = HUB(size: scnView.bounds.size, controller: self)
             scnView.overlaySKScene = overlay
+            overlay?.inGameDelegate = self
             
             if let currentLevel = Int(level) {
                 self.currentLevel = currentLevel
@@ -720,6 +721,15 @@
     }
 }
     
+    extension GameController: InGameDelegate {
+        func backToMenu() {
+            self.inGameDelegate?.backToMenu()
+        }
+        
+        func backToLevel() {
+            self.inGameDelegate?.backToLevel()
+        }
+    }
     
     // MARK: - GameController
     

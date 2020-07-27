@@ -9,6 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LevelVC" customModule="AdventureOfBamboo" customModuleProvider="target">
             <connections>
+                <outlet property="settingButton" destination="TxT-8O-QvG" id="hSb-nh-d9l"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outletCollection property="levelButtons" destination="Yvq-ur-lzc" collectionClass="NSMutableArray" id="G0v-eF-i1g"/>
             </connections>
@@ -102,6 +103,13 @@
                         <action selector="tapToLevelButton:" destination="-1" eventType="touchUpInside" id="XXK-wq-nPP"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TxT-8O-QvG">
+                    <rect key="frame" x="646" y="20" width="110" height="110"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="SettingButton" backgroundImage="SettingButton">
+                        <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                </button>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
@@ -118,5 +126,6 @@
         <image name="Level7" width="85" height="82"/>
         <image name="Level8" width="85" height="82"/>
         <image name="LevelSelectBackground" width="509" height="729"/>
+        <image name="SettingButton" width="74" height="82"/>
     </resources>
 </document>
