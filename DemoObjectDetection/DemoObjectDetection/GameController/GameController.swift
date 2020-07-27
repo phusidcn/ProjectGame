@@ -43,7 +43,6 @@
         case collectBig
         case totalCount
     }
-    
     class GameController: NSObject, ExtraProtocols {
         struct Config {
             let ALTITUDE = 1.00
@@ -115,13 +114,16 @@
                 controllerJump(false)
             } else {
                 characterDirection = [0, 0]
+                
+                
+                
             }
         }
         
         // rxSwift
         
         public var streamEncounterWall = ReplaySubject<Bool>.create(bufferSize: 1)
-        public weak var inGameDelegate: InGameDelegate?
+        
         
         // Global settings
         let semaphore = DispatchSemaphore(value: 0)
@@ -138,7 +140,6 @@
         private let controllerQueue: DispatchQueue = DispatchQueue(label: "com.controller.sync")
         // Character
         public var character: Character?
-        
         
         
         internal var stateCharacter : StateLocation = .none
@@ -158,11 +159,6 @@
         
         
         //collected objects
-        public var currentLevel: Int = 1
-        public var streak: Bool = false
-        private var streakMultiplier = [1,2,5,10]
-        public var streakIndicator = 0
-        private var point: Int = 0
         private var collectedKeys: Int = 0
         private var collectedGems: Int = 0
         private var keyIsVisible: Bool = false
@@ -444,13 +440,10 @@
             
             // setup overlay
             overlay = HUB(size: scnView.bounds.size, controller: self)
-            overlay?.inGameDelegate = self
             scnView.overlaySKScene = overlay
-            if let currentLevel = Int(level) {
-                self.currentLevel = currentLevel
-            }
-            self.scene = SCNScene(named: "Art.scnassets/level\(level).scn")
-
+            
+            //load the main scene
+            self.scene = SCNScene(named: "Art.scnassets/level3.scn")
             //setup physics
             //        setupPhysics()
             
@@ -527,12 +520,6 @@
                     
                     //the gems
                 else if collectable.name == "appleItem" {
-                    //TODO: handle earn point
-                    
-                    if !streak { streak = true }
-                    point += streakMultiplier[streakIndicator]
-                    if streakIndicator < streakMultiplier.count - 1 { streakIndicator += 1 }
-                    
                     self.collectedGems += 1
                     
                     // play sound
@@ -544,11 +531,7 @@
                     if let scenView = self.sceneRenderer as? SCNView {
                         scenView.allowsCameraControl = false
                     }
-                    if collectedGems == targetNumber {
-                        //TODO : handle win game
-                        GameStorage.currentLevel = self.currentLevel
-                        GameStorage.storePoint(point: self.point)
-                        GameStorage.saveGame()
+                    if collectedGems == 1 {
                         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() +
                             Double(Int64(1.0 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: {() -> Void in
                                 self.showEndScreen(isWin: true)
@@ -607,7 +590,6 @@
         
         func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
             if character!.getStatusGame() {
-                // TODO: handle lose game
                 self.showEndScreen(isWin: false)
             }
             // compute delta time
@@ -720,15 +702,7 @@
     
     // MARK: - GameController
     
-    extension GameController: InGameDelegate {
-        func backToLevel() {
-            self.inGameDelegate?.backToLevel()
-        }
-        
-        func backToMenu() {
-            self.inGameDelegate?.backToMenu()
-        }
-    }
+    
     
     
     
