@@ -97,6 +97,7 @@
 		362B6E0824C5A7C30049D5F6 /* game.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = game.scnassets; sourceTree = "<group>"; };
 		363222FF24C41DB4004E2C1A /* Ultils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ultils.swift; sourceTree = "<group>"; };
 		363CD02724C4BAC600A3E319 /* HandleCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleCamera.swift; sourceTree = "<group>"; };
+		3646576F24CD9B0700E1A80F /* AdventureOfBamboo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AdventureOfBamboo.entitlements; sourceTree = "<group>"; };
 		3646618724C422F200B7D68D /* Charecter+Behavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Charecter+Behavior.swift"; sourceTree = "<group>"; };
 		36488A3B24C43FA100BF16BD /* ViewPadOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPadOverlay.swift; sourceTree = "<group>"; };
 		36488A3C24C43FA100BF16BD /* ControlOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlOverlay.swift; sourceTree = "<group>"; };
@@ -274,6 +275,7 @@
 		5398E21B244BE50A0059E48B = {
 			isa = PBXGroup;
 			children = (
+				3646576F24CD9B0700E1A80F /* AdventureOfBamboo.entitlements */,
 				5398E226244BE50A0059E48B /* DemoObjectDetection */,
 				53E0072024C7D9DE00F4D0B3 /* GameTests */,
 				5398E225244BE50A0059E48B /* Products */,
@@ -725,6 +727,7 @@
 			baseConfigurationReference = 0FFC65B88391F07AC1C85417 /* Pods-AdventureOfBamboo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AdventureOfBamboo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3NLA5R24DG;
@@ -737,6 +740,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = VNG.Zalo.Game;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
@@ -747,6 +751,7 @@
 			baseConfigurationReference = 2D55720D17D48D57B4828F19 /* Pods-AdventureOfBamboo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AdventureOfBamboo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3NLA5R24DG;
@@ -759,6 +764,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = VNG.Zalo.Game;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 2;
 			};

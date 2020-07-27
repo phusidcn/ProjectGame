@@ -12,8 +12,34 @@ protocol SmartDelegate: class {
     func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
 }
 
+public enum TargetPerLevel: Int {
+    case Level1 = 1
+    case Level2 = 2
+    case Level3 = 3
+    case Level4 = 4
+    case Level5 = 5
+    case Level6 = 6
+    case Level7 = 7
+    case Level8 = 8
+}
+
 class GameViewController: UIViewController {
+    
     public weak var delegate: SmartDelegate?
+    public var levelNumber: Int = 1 {
+        didSet {
+            if levelNumber == 1 { numberOfApple = .Level1}
+            if levelNumber == 2 { numberOfApple = .Level2}
+            if levelNumber == 3 { numberOfApple = .Level3}
+            if levelNumber == 4 { numberOfApple = .Level4}
+            if levelNumber == 5 { numberOfApple = .Level5}
+            if levelNumber == 6 { numberOfApple = .Level6}
+            if levelNumber == 7 { numberOfApple = .Level7}
+            if levelNumber == 8 { numberOfApple = .Level8}
+        }
+    }
+    private var numberOfApple: TargetPerLevel = .Level1
+    
     var gameView: GameView {
         return self.view as! GameView
     }
@@ -38,7 +64,7 @@ class GameViewController: UIViewController {
         }
         self.gameView.controller = self
         self.gameView.allowsCameraControl = true
-        gameController = GameController(scnView: gameView, viewController: self)
+        gameController = GameController(scnView: gameView, viewController: self, targetNumber: self.numberOfApple.rawValue, level: "\(levelNumber)")
         gameController?.inGameDelegate = self
         self.delegate = gameController
 

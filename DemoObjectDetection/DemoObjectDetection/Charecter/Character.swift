@@ -14,6 +14,8 @@ func planeIntersect(planeNormal: float3, planeDist: Float, rayOrigin: float3, ra
     return (planeDist - simd_dot(planeNormal, rayOrigin)) / simd_dot(planeNormal, rayDirection)
 }
 
+
+
 enum DirectionRotate {
     case forward
     case backward
@@ -30,6 +32,10 @@ class Character: NSObject {
     
     static private let initialPosition = float3(0.0, 2.0, 0.0)
     
+    
+    // count turn
+    private let numberChance = 3
+    private var numberCurrent = 0
     // some constants
     static private let gravity = Float(0.004)
     static private let jumpImpulse = Float(0.1)
@@ -122,6 +128,10 @@ class Character: NSObject {
         //        loadParticles()
         loadSounds()
         loadAnimations()
+    }
+    
+    func getStatusGame() ->  Bool {
+        return numberCurrent == numberChance
     }
     
     func getCurrentDirection(direction : DirectionRotate, handler: (DirectionRotate) -> ()) {
@@ -414,14 +424,20 @@ class Character: NSObject {
                 touchesTheGround = true
                 
                 //touching lava?
-                isDying = groundNode?.name == "COLL_lava"
+                isDying = groundNode?.name == "COLL_WATER"
+                numberCurrent += 1
             }
         } else {
             if wPosition.y < Character.minAltitude {
                 wPosition.y = Character.minAltitude
                 //reset
+                numberCurrent += 1
                 queueResetCharacterPosition()
             }
+        }
+        
+        if numberCurrent == numberChance {
+            return
         }
         
         groundNodeLastPosition = (groundNode != nil) ? groundNode!.simdWorldPosition: float3.zero

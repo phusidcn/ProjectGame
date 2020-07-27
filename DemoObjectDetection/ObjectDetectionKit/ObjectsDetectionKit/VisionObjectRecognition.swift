@@ -203,10 +203,6 @@ extension VisionObjectRecognition {
                 suitedObject = object
                 break
             }
-//            if distance < min {
-//                min = distance
-//                suitedObject = object
-//            }
         }
         return suitedObject
     }
