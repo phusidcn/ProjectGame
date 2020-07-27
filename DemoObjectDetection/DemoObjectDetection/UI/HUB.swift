@@ -38,11 +38,11 @@ class HUB: SKScene {
         addChild(overlayNode)
         overlayNode.position = CGPoint(x: 0.0, y: h)
     
-        countItemLabel = SKLabelNode()
+        countItemLabel = SKLabelNode(fontNamed: "Chalkduster")
         countItemLabel.xScale = 2
         countItemLabel.yScale = 2
         countItemLabel.text = "x0"
-        countItemLabel!.position = CGPoint(x:150, y:-50)
+        countItemLabel!.position = CGPoint(x:180, y:-70)
         overlayNode.addChild(countItemLabel)
 
         // The Max icon.
