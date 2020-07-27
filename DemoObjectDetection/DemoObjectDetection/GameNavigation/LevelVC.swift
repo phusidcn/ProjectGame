@@ -18,6 +18,7 @@ class LevelVC: UIViewController {
     @IBOutlet var levelButtons: [UIButton]!
     override func viewDidLoad() {
         super.viewDidLoad()
+        //GameStorage.resetSaveGame()
         let result = GameStorage.loadGame()
         if result {
             for i in 0 ..< GameStorage.points.count {
