@@ -51,7 +51,7 @@ class HUB: SKScene {
         menuButton.position = CGPoint(x: 50, y: -50)
         menuButton.xScale = 0.5
         menuButton.yScale = 0.5
-        overlayNode.addChild(menuButton)
+//        overlayNode.addChild(menuButton)
         menuButton.setClickedTarget(self, action: #selector(self.toggleMenu))
         
         // The Gems
