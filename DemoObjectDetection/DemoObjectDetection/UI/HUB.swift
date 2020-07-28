@@ -177,7 +177,7 @@ class HUB: SKScene {
            
            
            // Max image
-           let characterNode = SKSpriteNode(imageNamed: "returnButton.png")
+           let characterNode = SKSpriteNode(imageNamed: "pandaWin")
            characterNode.position = CGPoint(x: CGFloat(0.0), y: CGFloat(-220.0))
            characterNode.anchorPoint = CGPoint(x: CGFloat(0.5), y: CGFloat(0.0))
            
@@ -186,7 +186,7 @@ class HUB: SKScene {
            congratulationsGroupNode!.addChild(notificationNode)
            addChild(congratulationsGroupNode!)
         
-            let btnEndImg = SKSpriteNode(imageNamed: "MaxIcon.png")
+            let btnEndImg = SKSpriteNode(imageNamed: "returnButton")
 
                       let btnEnd = Button(skNode: btnEndImg)
                        btnEnd.position = CGPoint(x: 0, y: 0)
