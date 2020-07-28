@@ -46,11 +46,11 @@ class HUB: SKScene {
         overlayNode.addChild(countItemLabel)
 
         // The Max icon.
-        let characterNode = SKSpriteNode(imageNamed: "MenuGame")
+        let characterNode = SKSpriteNode(imageNamed: "menuButton")
         let menuButton = Button(skNode: characterNode)
         menuButton.position = CGPoint(x: 50, y: -50)
-        menuButton.xScale = 0.5
-        menuButton.yScale = 0.5
+        menuButton.xScale = 0.2
+        menuButton.yScale = 0.2
         overlayNode.addChild(menuButton)
         menuButton.setClickedTarget(self, action: #selector(self.toggleMenu))
         
@@ -60,7 +60,7 @@ class HUB: SKScene {
             gemNode.position = CGPoint(x: 125 + i * 80, y: -50)
             gemNode.xScale = 0.25
             gemNode.yScale = 0.25
-            overlayNode.addChild(gemNode)
+//            overlayNode.addChild(gemNode)
             collectedGemsSprites.append(gemNode)
         }
             
@@ -177,7 +177,7 @@ class HUB: SKScene {
            
            
            // Max image
-           let characterNode = SKSpriteNode(imageNamed: "congratulations_pandaMax.png")
+           let characterNode = SKSpriteNode(imageNamed: "returnButton.png")
            characterNode.position = CGPoint(x: CGFloat(0.0), y: CGFloat(-220.0))
            characterNode.anchorPoint = CGPoint(x: CGFloat(0.5), y: CGFloat(0.0))
            
