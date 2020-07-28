@@ -12,6 +12,13 @@
                 <outlet property="settingButton" destination="TxT-8O-QvG" id="hSb-nh-d9l"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outletCollection property="levelButtons" destination="Yvq-ur-lzc" collectionClass="NSMutableArray" id="G0v-eF-i1g"/>
+                <outletCollection property="levelButtons" destination="a6o-rJ-jOy" collectionClass="NSMutableArray" id="NF7-Wf-RiT"/>
+                <outletCollection property="levelButtons" destination="2BF-Qp-5wq" collectionClass="NSMutableArray" id="7JZ-kR-pri"/>
+                <outletCollection property="levelButtons" destination="Jkr-9a-aZ1" collectionClass="NSMutableArray" id="VRd-cw-LuI"/>
+                <outletCollection property="levelButtons" destination="nWK-1N-qv4" collectionClass="NSMutableArray" id="eJU-CH-DXH"/>
+                <outletCollection property="levelButtons" destination="Xue-CU-4j6" collectionClass="NSMutableArray" id="OoL-SG-lzB"/>
+                <outletCollection property="levelButtons" destination="d0K-yx-s4g" collectionClass="NSMutableArray" id="fDg-BZ-Dp1"/>
+                <outletCollection property="levelButtons" destination="3CL-Zo-zcH" collectionClass="NSMutableArray" id="OK1-Ny-TDh"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

@@ -12,6 +12,7 @@ class LevelVC: UIViewController {
     static var sharedInstance: LevelVC {
         let vc = LevelVC()
         vc.modalPresentationStyle = .fullScreen
+        vc.modalTransitionStyle = .flipHorizontal
         return vc
     }
 
@@ -19,28 +20,41 @@ class LevelVC: UIViewController {
     @IBOutlet weak var settingButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
+        levelButtons.forEach() { button in
+            button.isEnabled = false
+        }
         //GameStorage.resetSaveGame()
+        levelButtons[0].isEnabled = true
         let result = GameStorage.loadGame()
         if result {
             for i in 0 ..< GameStorage.points.count {
                 if GameStorage.points[i] > 0 {
-                    for button in self.levelButtons {
-                        if button.tag == i + 1 {
-                            button.setBackgroundImage(UIImage(named: "Level\(i)_played"), for: .normal)
-                            break
-                        }
+                    levelButtons[i].setBackgroundImage(UIImage(named: "Level\(i)_played"), for: .normal)
+                    levelButtons[i].isEnabled = true
+                    if i + 1 < GameStorage.numberOfLevel {
+                        levelButtons[i + 1].isEnabled = true
                     }
                 }
+//                if GameStorage.points[i] > 0 {
+//                    for button in self.levelButtons {
+//                        if button.tag == i + 1 {
+//                            button.setBackgroundImage(UIImage(named: "Level\(i)_played"), for: .normal)
+//                            button.isEnabled = true
+//                            break
+//                        }
+//                    }
+//                }
             }
         }
+        
     }
 
     @IBAction func tapToLevelButton(_ sender: UIButton) {
-        //print("tap \(sender.tag) level")
         let gameVC = GameViewController()
         gameVC.levelNumber = sender.tag
         gameVC.modalPresentationStyle = .fullScreen
-        self.present(gameVC, animated: false, completion: nil)
+        gameVC.modalTransitionStyle = .crossDissolve
+        self.present(gameVC, animated: true, completion: nil)
     }
 
 }

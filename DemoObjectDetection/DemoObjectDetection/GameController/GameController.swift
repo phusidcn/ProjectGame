@@ -543,12 +543,13 @@
                     playSound(AudioSourceKind.collect)
                     
                     // update the overlay
-                    self.overlay?.collectedGemsCount = self.collectedGems
-                    startCinematic()
+                    self.overlay?.pointEarned = self.point
+
                     if let scenView = self.sceneRenderer as? SCNView {
                         scenView.allowsCameraControl = false
                     }
-                    if collectedGems == 1 {
+                    if collectedGems == self.targetNumber {
+                        startCinematic()
                         //TODO : handle win game
                         GameStorage.currentLevel = self.currentLevel
                         GameStorage.storePoint(point: self.point)
