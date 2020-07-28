@@ -26,7 +26,7 @@ class MainMenuVC: UIViewController {
     
     @IBAction func tapToPlayButton(_ sender: UIButton!) {
         //LevelVC.sharedInstance.modalPresentationStyle = .fullScreen
-        self.present(LevelVC.sharedInstance, animated: true, completion: nil)
+        self.present(LevelVC.sharedInstance, animated: false, completion: nil)
     }
     
     @IBAction func tapToSetting(_ sender: UIButton!) {

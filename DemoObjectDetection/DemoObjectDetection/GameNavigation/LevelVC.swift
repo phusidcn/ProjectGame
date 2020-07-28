@@ -40,7 +40,7 @@ class LevelVC: UIViewController {
         let gameVC = GameViewController()
         gameVC.levelNumber = sender.tag
         gameVC.modalPresentationStyle = .fullScreen
-        self.present(gameVC, animated: true, completion: nil)
+        self.present(gameVC, animated: false, completion: nil)
     }
 
 }
