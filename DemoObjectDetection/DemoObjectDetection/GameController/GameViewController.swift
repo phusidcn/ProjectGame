@@ -13,14 +13,14 @@ protocol SmartDelegate: class {
 }
 
 public enum TargetPerLevel: Int {
-    case Level1 = 1
-    case Level2 = 2
-    case Level3 = 3
-    case Level4 = 4
-    case Level5 = 5
-    case Level6 = 6
-    case Level7 = 7
-    case Level8 = 8
+    case Level1 = 3
+    case Level2 = 4
+    case Level3 = 5
+    case Level4 = 6
+    case Level5 = 7
+    case Level6 = 8
+    case Level7 = 9
+    case Level8 = 10
 }
 
 class GameViewController: UIViewController {

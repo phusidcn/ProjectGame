@@ -80,7 +80,7 @@ class HUB: SKScene {
             controlOverlay!.rightPad.delegate = controller
             controlOverlay!.buttonA.delegate = controller
             controlOverlay!.buttonB.delegate = controller
-            addChild(controlOverlay!)
+            //addChild(controlOverlay!)
         
      
         // the demo UI
@@ -133,9 +133,9 @@ class HUB: SKScene {
         congratulationsGroupNode.yScale = scale
     }
     
-    var collectedGemsCount: Int = 0 {
+    var pointEarned: Int = 0 {
         didSet {
-            countItemLabel.text = "x" + String(collectedGemsCount)
+            countItemLabel.text = "x" + String(pointEarned)
             countItemLabel.run(SKAction.sequence([
                 SKAction.wait(forDuration: 0.5),
                                SKAction.scale(by: 1.5, duration: 0.2),

@@ -7,7 +7,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainMenuVC" customModule="DemoObjectDetection" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainMenuVC" customModule="AdventureOfBamboo" customModuleProvider="target">
             <connections>
                 <outlet property="playButton" destination="y3W-dl-dIe" id="cd7-Sj-gi9"/>
                 <outlet property="settingButton" destination="0NL-4G-0BD" id="WWU-au-hXP"/>
@@ -23,14 +23,6 @@
                     <rect key="frame" x="-1" y="0.0" width="768" height="1024"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0NL-4G-0BD">
-                    <rect key="frame" x="701" y="20" width="49" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Setting"/>
-                    <connections>
-                        <action selector="tapToSetting:" destination="-1" eventType="touchUpInside" id="v5N-aJ-WnZ"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="y3W-dl-dIe">
                     <rect key="frame" x="321" y="284" width="125" height="125"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -39,6 +31,16 @@
                     </state>
                     <connections>
                         <action selector="tapToPlayButton:" destination="-1" eventType="touchUpInside" id="d77-qQ-Ty6"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0NL-4G-0BD">
+                    <rect key="frame" x="681" y="20" width="74" height="82"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="Setting" backgroundImage="SettingButton">
+                        <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="tapToSetting:" destination="-1" eventType="touchUpInside" id="v5N-aJ-WnZ"/>
                     </connections>
                 </button>
             </subviews>
@@ -50,5 +52,6 @@
     <resources>
         <image name="MainMenuBackground" width="6376" height="8534"/>
         <image name="Play" width="86" height="78"/>
+        <image name="SettingButton" width="74" height="82"/>
     </resources>
 </document>

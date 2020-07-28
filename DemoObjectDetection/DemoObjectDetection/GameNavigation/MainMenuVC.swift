@@ -13,6 +13,7 @@ class MainMenuVC: UIViewController {
     static var sharedInstance: MainMenuVC {
         let vc = MainMenuVC()
         vc.modalPresentationStyle = .fullScreen
+        vc.modalTransitionStyle = .partialCurl
         return vc
     }
 
@@ -25,7 +26,6 @@ class MainMenuVC: UIViewController {
     }
     
     @IBAction func tapToPlayButton(_ sender: UIButton!) {
-        //LevelVC.sharedInstance.modalPresentationStyle = .fullScreen
         self.present(LevelVC.sharedInstance, animated: true, completion: nil)
     }
     
