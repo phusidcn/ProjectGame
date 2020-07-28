@@ -18,7 +18,6 @@
 		36488A8324C4492700BF16BD /* key_empty.png in Resources */ = {isa = PBXBuildFile; fileRef = 36488A7B24C4492700BF16BD /* key_empty.png */; };
 		36488A8424C4492700BF16BD /* collectableBIG_empty.png in Resources */ = {isa = PBXBuildFile; fileRef = 36488A7C24C4492700BF16BD /* collectableBIG_empty.png */; };
 		36488A8524C4492700BF16BD /* congratulations.png in Resources */ = {isa = PBXBuildFile; fileRef = 36488A7D24C4492700BF16BD /* congratulations.png */; };
-		3670A9EB24D0572C00780BA1 /* audio in Resources */ = {isa = PBXBuildFile; fileRef = 3670A9EA24D0572C00780BA1 /* audio */; };
 		3685568F24C9C21F00AC6FDB /* StreamScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3685568E24C9C21F00AC6FDB /* StreamScore.swift */; };
 		36FA601A24C426B500478133 /* HUB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FA601924C426B500478133 /* HUB.swift */; };
 		36FA601D24C427D000478133 /* HandlerBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FA601C24C427D000478133 /* HandlerBlock.swift */; };
@@ -37,6 +36,7 @@
 		539CE37324C84B0000E32ED1 /* LevelVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539CE37124C84B0000E32ED1 /* LevelVC.swift */; };
 		539CE37424C84B0000E32ED1 /* LevelVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 539CE37224C84B0000E32ED1 /* LevelVC.xib */; };
 		539CE37624C85F4800E32ED1 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 539CE37524C85F4800E32ED1 /* GameViewController.swift */; };
+		53B7A4E224D05D1600B53C77 /* audio in Resources */ = {isa = PBXBuildFile; fileRef = 53B7A4E124D05D1600B53C77 /* audio */; };
 		53CFF60F24C6C8F8001D2266 /* HandleUserGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CFF60E24C6C8F8001D2266 /* HandleUserGesture.swift */; };
 		53E0071A24C7C2CB00F4D0B3 /* GameStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E0071924C7C2CB00F4D0B3 /* GameStorage.swift */; };
 		53F5E9CD24CC0A9700BB68EE /* GameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E0072124C7D9DE00F4D0B3 /* GameTests.swift */; };
@@ -96,7 +96,6 @@
 		36488A7B24C4492700BF16BD /* key_empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = key_empty.png; sourceTree = "<group>"; };
 		36488A7C24C4492700BF16BD /* collectableBIG_empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = collectableBIG_empty.png; sourceTree = "<group>"; };
 		36488A7D24C4492700BF16BD /* congratulations.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = congratulations.png; sourceTree = "<group>"; };
-		3670A9EA24D0572C00780BA1 /* audio */ = {isa = PBXFileReference; lastKnownFileType = folder; name = audio; path = "../../../../Downloads/Fox-2-SceneKit-WWDC-2017-sample-code-master/Assets/audio"; sourceTree = "<group>"; };
 		3685568E24C9C21F00AC6FDB /* StreamScore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamScore.swift; sourceTree = "<group>"; };
 		36FA601924C426B500478133 /* HUB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUB.swift; sourceTree = "<group>"; };
 		36FA601C24C427D000478133 /* HandlerBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerBlock.swift; sourceTree = "<group>"; };
@@ -116,6 +115,7 @@
 		539CE37124C84B0000E32ED1 /* LevelVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelVC.swift; sourceTree = "<group>"; };
 		539CE37224C84B0000E32ED1 /* LevelVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LevelVC.xib; sourceTree = "<group>"; };
 		539CE37524C85F4800E32ED1 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		53B7A4E124D05D1600B53C77 /* audio */ = {isa = PBXFileReference; lastKnownFileType = folder; name = audio; path = ../../../../../../Documents/audio; sourceTree = "<group>"; };
 		53CFF60E24C6C8F8001D2266 /* HandleUserGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandleUserGesture.swift; sourceTree = "<group>"; };
 		53E0071924C7C2CB00F4D0B3 /* GameStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameStorage.swift; sourceTree = "<group>"; };
 		53E0071F24C7D9DE00F4D0B3 /* GameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -258,7 +258,7 @@
 		5398E226244BE50A0059E48B /* DemoObjectDetection */ = {
 			isa = PBXGroup;
 			children = (
-				3670A9EA24D0572C00780BA1 /* audio */,
+				53B7A4E124D05D1600B53C77 /* audio */,
 				BF6363302463AAB100E9BBC5 /* Game */,
 				5398E227244BE50A0059E48B /* AppDelegate.swift */,
 				5398E229244BE50A0059E48B /* SceneDelegate.swift */,
@@ -423,10 +423,10 @@
 				36488A8524C4492700BF16BD /* congratulations.png in Resources */,
 				36488A8224C4492700BF16BD /* dpad.png in Resources */,
 				539CE37424C84B0000E32ED1 /* LevelVC.xib in Resources */,
+				53B7A4E224D05D1600B53C77 /* audio in Resources */,
 				36488A8424C4492700BF16BD /* collectableBIG_empty.png in Resources */,
 				5398E234244BE50C0059E48B /* Assets.xcassets in Resources */,
 				5398E22F244BE50A0059E48B /* Main.storyboard in Resources */,
-				3670A9EB24D0572C00780BA1 /* audio in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

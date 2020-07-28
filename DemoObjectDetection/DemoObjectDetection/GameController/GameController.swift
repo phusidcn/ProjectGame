@@ -545,11 +545,12 @@
                     // update the overlay
                     self.overlay?.pointEarned = self.point
 
-                    if let scenView = self.sceneRenderer as? SCNView {
-                        scenView.allowsCameraControl = false
-                    }
+                    
                     if collectedGems == self.targetNumber {
                         startCinematic()
+                        if let scenView = self.sceneRenderer as? SCNView {
+                            scenView.allowsCameraControl = false
+                        }
                         //TODO : handle win game
                         GameStorage.currentLevel = self.currentLevel
                         GameStorage.storePoint(point: self.point)
