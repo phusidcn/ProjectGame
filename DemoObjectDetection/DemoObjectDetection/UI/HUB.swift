@@ -163,10 +163,19 @@ class HUB: SKScene {
         controlOverlay!.isHidden = true
     }
     
-    // MARK: Congratulate the player
     
-    func showEndScreen(isWin : Bool) {
+    func showSetting() {
+        // create background
         
+        // add button
+        
+        
+        // silder
+    }
+    
+    // MARK: Congratulate the player
+    func showEndScreen(isWin : Bool) {
+
            // Congratulation title
         let notificationNode : SKSpriteNode
             if isWin {
