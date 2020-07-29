@@ -182,20 +182,21 @@ class HUB: SKScene {
            characterNode.anchorPoint = CGPoint(x: CGFloat(0.5), y: CGFloat(0.0))
            
            congratulationsGroupNode = SKNode()
-//           congratulationsGroupNode!.addChild(characterNode)
+           congratulationsGroupNode!.addChild(characterNode)
            congratulationsGroupNode!.addChild(notificationNode)
            addChild(congratulationsGroupNode!)
         
-            let btnEndImg = SKSpriteNode(imageNamed: "returnButton")
-
-                      let btnEnd = Button(skNode: btnEndImg)
-                       btnEnd.position = CGPoint(x: 0, y: 0)
-                       btnEnd.xScale = 0.5
-                             btnEnd.yScale = 0.5
-                     //        overlayNode.addChild(menuButton)
+            let btnEndImage = SKSpriteNode(imageNamed: "returnButton")
+                        btnEndImage.position = CGPoint(x: 0, y: -50)
+                      let btnEnd = Button(skNode: btnEndImage)
+                       btnEnd.position = CGPoint(x: 150, y: -150)
+                       btnEnd.xScale = 15.5
+                    btnEnd.yScale = 15.5
+                
+                    congratulationsGroupNode!.addChild(btnEnd)
                        btnEnd.setClickedTarget(self, action: #selector(self.toggleLevel))
            
-            congratulationsGroupNode!.addChild(btnEnd)
+//            congratulationsGroupNode!.addChild(btnEnd)
            // Layout the overlay
            layout2DOverlay()
            
@@ -205,7 +206,7 @@ class HUB: SKScene {
            notificationNode.yScale = 0.0
            notificationNode.run( SKAction.group([SKAction.fadeIn(withDuration: 0.25),
                                     SKAction.sequence([SKAction.scale(to: 1.22, duration: 0.25),
-                                   SKAction.scale(to: 1.0, duration: 0.1)])]))
+                                   SKAction.scale(to: 4.0, duration: 0.1)])]))
            
            characterNode.alpha = 0.0
            characterNode.xScale = 0.0
