@@ -19,6 +19,14 @@
                 <outletCollection property="levelButtons" destination="Xue-CU-4j6" collectionClass="NSMutableArray" id="OoL-SG-lzB"/>
                 <outletCollection property="levelButtons" destination="d0K-yx-s4g" collectionClass="NSMutableArray" id="fDg-BZ-Dp1"/>
                 <outletCollection property="levelButtons" destination="3CL-Zo-zcH" collectionClass="NSMutableArray" id="OK1-Ny-TDh"/>
+                <outletCollection property="starImage" destination="kw1-fx-1SG" collectionClass="NSMutableArray" id="5HH-69-0CH"/>
+                <outletCollection property="starImage" destination="ngu-cx-SJd" collectionClass="NSMutableArray" id="lqZ-55-u0P"/>
+                <outletCollection property="starImage" destination="XKl-wP-atB" collectionClass="NSMutableArray" id="QFO-QF-a4f"/>
+                <outletCollection property="starImage" destination="G55-w0-IMM" collectionClass="NSMutableArray" id="ClG-gc-onX"/>
+                <outletCollection property="starImage" destination="Kbh-YJ-XHp" collectionClass="NSMutableArray" id="4u6-uu-WQf"/>
+                <outletCollection property="starImage" destination="McY-gl-JN7" collectionClass="NSMutableArray" id="z6G-du-iin"/>
+                <outletCollection property="starImage" destination="tYS-pr-DPU" collectionClass="NSMutableArray" id="RRz-cV-ElZ"/>
+                <outletCollection property="starImage" destination="kWu-La-tSy" collectionClass="NSMutableArray" id="ONM-Td-qcM"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -117,6 +125,38 @@
                         <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
                 </button>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ngu-cx-SJd" userLabel="Level2Star">
+                    <rect key="frame" x="342" y="853" width="95" height="37"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="3" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XKl-wP-atB" userLabel="Level3Star">
+                    <rect key="frame" x="287" y="746" width="80" height="26"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="4" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G55-w0-IMM" userLabel="Level4Star">
+                    <rect key="frame" x="381" y="650" width="70" height="26"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="5" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kbh-YJ-XHp" userLabel="Level5Star">
+                    <rect key="frame" x="421" y="547" width="65" height="26"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="6" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="McY-gl-JN7" userLabel="Level6Star">
+                    <rect key="frame" x="322" y="502" width="60" height="25"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="7" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tYS-pr-DPU" userLabel="Level7Star">
+                    <rect key="frame" x="237" y="467" width="70" height="23"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="8" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kWu-La-tSy" userLabel="Level8Star">
+                    <rect key="frame" x="322" y="390" width="75" height="22"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kw1-fx-1SG" userLabel="Level1Star">
+                    <rect key="frame" x="421" y="956" width="115" height="39"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>

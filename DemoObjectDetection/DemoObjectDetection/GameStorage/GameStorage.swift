@@ -27,8 +27,15 @@ public class GameStorage {
     }
     
     public static func storePoint(point: Int) {
-        GameStorage.points[GameStorage.currentLevel - 1] = point
+        GameStorage.points[GameStorage.currentLevel] = point
         print(GameStorage.points)
+    }
+    
+    public static func storeStar() {
+        let point = GameStorage.points[GameStorage.currentLevel]
+        if point < twoStar[currentLevel]  { GameStorage.starsNumber[currentLevel] = 1}
+        if point >= twoStar[currentLevel] && point < threeStar[currentLevel] { GameStorage.starsNumber[currentLevel] = 2 }
+        if point >= threeStar[currentLevel] { GameStorage.starsNumber[currentLevel] = 3 }
     }
     
     public static func loadGame() -> Bool {

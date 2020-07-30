@@ -454,7 +454,7 @@
             }
 
             //load the main scene
-            self.scene = SCNScene(named: "Art.scnassets/level\(level).scn")
+            self.scene = SCNScene(named: "Art.scnassets/level\((Int(level) ?? 0) + 1).scn")
             //setup physics
             //        setupPhysics()
             
@@ -551,9 +551,10 @@
                         if let scenView = self.sceneRenderer as? SCNView {
                             scenView.allowsCameraControl = false
                         }
-                        //TODO : handle win game
+                        //TODO: handle win game
                         GameStorage.currentLevel = self.currentLevel
                         GameStorage.storePoint(point: self.point)
+                        GameStorage.storeStar()
                         GameStorage.saveGame()
                         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() +
                             Double(Int64(1.0 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: {() -> Void in

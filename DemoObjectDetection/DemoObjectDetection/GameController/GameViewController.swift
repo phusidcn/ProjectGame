@@ -12,33 +12,47 @@ protocol SmartDelegate: class {
     func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
 }
 
-public enum TargetPerLevel: Int {
-    case Level1 = 3
-    case Level2 = 4
-    case Level3 = 5
-    case Level4 = 6
-    case Level5 = 7
-    case Level6 = 8
-    case Level7 = 9
-    case Level8 = 10
-}
+public let targetPerLevel = [3, 4, 6, 10, 12, 13, 15, 16]
+public let twoStar = [3, 5, 10, 20, 25, 30, 40, 50]
+public let threeStar = [6, 15, 20, 40, 45, 60, 80, 90]
+
+//public enum TargetPerLevel: Int {
+//    case Level1 = 3
+//    case Level2 = 4
+//    case Level3 = 6
+//    case Level4 = 10
+//    case Level5 = 12
+//    case Level6 = 13
+//    case Level7 = 15
+//    case Level8 = 16
+//}
+//
+//public enum twoStar: Int {
+//    case Level1 = 3
+//    case Level2 = 5
+//    case Level3 = 10
+//    case Level4 = 20
+//    case Level5 = 25
+//    case Level6 = 30
+//    case Level7 = 40
+//    case Level8 = 50
+//}
+//
+//public enum threeStar: Int {
+//    case Level1 = 6
+//    case Level2 = 15
+//    case Level3 = 20
+//    case Level4 = 40
+//    case Level5 = 45
+//    case Level6 = 60
+//    case Level7 = 80
+//    case Level8 = 90
+//}
 
 class GameViewController: UIViewController {
     
     public weak var delegate: SmartDelegate?
-    public var levelNumber: Int = 1 {
-        didSet {
-            if levelNumber == 1 { numberOfApple = .Level1}
-            if levelNumber == 2 { numberOfApple = .Level2}
-            if levelNumber == 3 { numberOfApple = .Level3}
-            if levelNumber == 4 { numberOfApple = .Level4}
-            if levelNumber == 5 { numberOfApple = .Level5}
-            if levelNumber == 6 { numberOfApple = .Level6}
-            if levelNumber == 7 { numberOfApple = .Level7}
-            if levelNumber == 8 { numberOfApple = .Level8}
-        }
-    }
-    private var numberOfApple: TargetPerLevel = .Level1
+    public var levelNumber: Int = 0
     
     var gameView: GameView {
         return self.view as! GameView
@@ -64,7 +78,7 @@ class GameViewController: UIViewController {
         }
         self.gameView.controller = self
         self.gameView.allowsCameraControl = true
-        gameController = GameController(scnView: gameView, viewController: self, targetNumber: self.numberOfApple.rawValue, level: "\(levelNumber)")
+        gameController = GameController(scnView: gameView, viewController: self, targetNumber: targetPerLevel[levelNumber], level: "\(levelNumber)")
         gameController?.inGameDelegate = self
         self.delegate = gameController
 

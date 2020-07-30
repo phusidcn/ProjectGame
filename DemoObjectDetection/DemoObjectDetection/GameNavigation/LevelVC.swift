@@ -17,6 +17,7 @@ class LevelVC: UIViewController {
     }
 
     @IBOutlet var levelButtons: [UIButton]!
+    @IBOutlet var starImage: [UIImageView]!
     @IBOutlet weak var settingButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +30,17 @@ class LevelVC: UIViewController {
         if result {
             for i in 0 ..< GameStorage.points.count {
                 if GameStorage.points[i] > 0 {
-                    levelButtons[i].setBackgroundImage(UIImage(named: "Level\(i)_played"), for: .normal)
+                    levelButtons[i].setBackgroundImage(UIImage(named: "Level\(i + 1)_played"), for: .normal)
+                    switch GameStorage.starsNumber[i] {
+                    case 1:
+                        starImage[i].image = UIImage(named: "OneStar")
+                    case 2:
+                        starImage[i].image = UIImage(named: "TwoStar")
+                    case 3:
+                        starImage[i].image = UIImage(named: "ThreeStar")
+                    default:
+                        break
+                    }
                     levelButtons[i].isEnabled = true
                     if i + 1 < GameStorage.numberOfLevel {
                         levelButtons[i + 1].isEnabled = true
@@ -51,7 +62,7 @@ class LevelVC: UIViewController {
 
     @IBAction func tapToLevelButton(_ sender: UIButton) {
         let gameVC = GameViewController()
-        gameVC.levelNumber = sender.tag
+        gameVC.levelNumber = sender.tag - 1
         gameVC.modalPresentationStyle = .fullScreen
         gameVC.modalTransitionStyle = .crossDissolve
         self.present(gameVC, animated: true, completion: nil)
