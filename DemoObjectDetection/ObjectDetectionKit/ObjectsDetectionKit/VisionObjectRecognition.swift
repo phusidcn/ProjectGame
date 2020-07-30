@@ -52,7 +52,7 @@ public class VisionObjectRecognition: UIViewController {
     private let videoDataOutputQueue = DispatchQueue(label: "VideoDataOutput", qos: .userInitiated, attributes: [], autoreleaseFrequency: .workItem)
     
     public func setupAVCapture() {
-//        setupAVCapture(WithDeviceType: defaultDevice, position: defaultPosition)
+        setupAVCapture(WithDeviceType: defaultDevice, position: defaultPosition)
     }
     
     public func setupAVCapture(WithDeviceType type:[AVCaptureDevice.DeviceType], position: AVCaptureDevice.Position) {
