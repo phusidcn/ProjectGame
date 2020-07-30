@@ -19,6 +19,7 @@
 		36488A8424C4492700BF16BD /* collectableBIG_empty.png in Resources */ = {isa = PBXBuildFile; fileRef = 36488A7C24C4492700BF16BD /* collectableBIG_empty.png */; };
 		36488A8524C4492700BF16BD /* congratulations.png in Resources */ = {isa = PBXBuildFile; fileRef = 36488A7D24C4492700BF16BD /* congratulations.png */; };
 		3685568F24C9C21F00AC6FDB /* StreamScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3685568E24C9C21F00AC6FDB /* StreamScore.swift */; };
+		36D0ED4E24D1A40B00B339CB /* setting.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36D0ED4D24D1A40B00B339CB /* setting.xib */; };
 		36FA601A24C426B500478133 /* HUB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FA601924C426B500478133 /* HUB.swift */; };
 		36FA601D24C427D000478133 /* HandlerBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FA601C24C427D000478133 /* HandlerBlock.swift */; };
 		36FA601F24C428BF00478133 /* GameController+HandEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FA601E24C428BF00478133 /* GameController+HandEffect.swift */; };
@@ -97,6 +98,7 @@
 		36488A7C24C4492700BF16BD /* collectableBIG_empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = collectableBIG_empty.png; sourceTree = "<group>"; };
 		36488A7D24C4492700BF16BD /* congratulations.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = congratulations.png; sourceTree = "<group>"; };
 		3685568E24C9C21F00AC6FDB /* StreamScore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamScore.swift; sourceTree = "<group>"; };
+		36D0ED4D24D1A40B00B339CB /* setting.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = setting.xib; sourceTree = "<group>"; };
 		36FA601924C426B500478133 /* HUB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUB.swift; sourceTree = "<group>"; };
 		36FA601C24C427D000478133 /* HandlerBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandlerBlock.swift; sourceTree = "<group>"; };
 		36FA601E24C428BF00478133 /* GameController+HandEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameController+HandEffect.swift"; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				363CD02724C4BAC600A3E319 /* HandleCamera.swift */,
 				53CFF60E24C6C8F8001D2266 /* HandleUserGesture.swift */,
 				539CE37524C85F4800E32ED1 /* GameViewController.swift */,
+				36D0ED4D24D1A40B00B339CB /* setting.xib */,
 			);
 			path = GameController;
 			sourceTree = "<group>";
@@ -420,6 +423,7 @@
 				5398E237244BE50C0059E48B /* LaunchScreen.storyboard in Resources */,
 				BF3862712473A37C00DC1A03 /* Art.scnassets in Resources */,
 				539CE37024C8452D00E32ED1 /* MainMenuVC.xib in Resources */,
+				36D0ED4E24D1A40B00B339CB /* setting.xib in Resources */,
 				36488A8524C4492700BF16BD /* congratulations.png in Resources */,
 				36488A8224C4492700BF16BD /* dpad.png in Resources */,
 				539CE37424C84B0000E32ED1 /* LevelVC.xib in Resources */,

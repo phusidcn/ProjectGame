@@ -61,6 +61,9 @@ class GameViewController: UIViewController {
     override func loadView() {
         super.loadView()
         self.view = GameView(frame: UIScreen.main.bounds, options: nil)
+        let label = UILabel.init(frame: CGRect(x: 50, y: 50, width: 550, height: 50))
+        label.text = "test thu roi"
+        self.view.addSubview(label)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
