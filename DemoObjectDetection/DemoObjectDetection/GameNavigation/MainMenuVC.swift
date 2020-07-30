@@ -6,10 +6,14 @@
 //  Copyright © 2020 Huynh Lam Phu Si. All rights reserved.
 //
 
-import UIKit
+import Foundation
+import FileProvider
+import FileProviderUI
+import SCLAlertView
 
 class MainMenuVC: UIViewController {
-    
+    let alert = AlertSettingVolume()
+
     static var sharedInstance: MainMenuVC {
         let vc = MainMenuVC()
         vc.modalPresentationStyle = .fullScreen
@@ -19,8 +23,9 @@ class MainMenuVC: UIViewController {
 
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var settingButton: UIButton!
-    
+    var mutablevolumeStream = VolumeStreamImpl.shared
     override func viewDidLoad() {
+         var coveringWindow: UIWindow?
         super.viewDidLoad()
 
     }
@@ -30,7 +35,9 @@ class MainMenuVC: UIViewController {
     }
     
     @IBAction func tapToSetting(_ sender: UIButton!) {
-
+        alert.showSetting()
     }
+    
+ 
 
 }

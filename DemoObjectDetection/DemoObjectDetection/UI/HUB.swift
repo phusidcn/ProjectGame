@@ -3,7 +3,7 @@
 import Foundation
 import SceneKit
 import SpriteKit
-
+import SCLAlertView
 protocol InGameDelegate: AnyObject {
     func backToMenu()
     func backToLevel()
@@ -164,14 +164,7 @@ class HUB: SKScene {
     }
     
     
-    func showSetting() {
-        // create background
-        
-        // add button
-        
-        
-        // silder
-    }
+    
     
     // MARK: Congratulate the player
     func showEndScreen(isWin : Bool) {

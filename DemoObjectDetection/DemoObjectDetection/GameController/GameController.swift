@@ -418,6 +418,11 @@
             
             audioSources[AudioSourceKind.collect.rawValue].volume = 4.0
             audioSources[AudioSourceKind.collectBig.rawValue].volume = 4.0
+            
+            for audio in audioSources {
+                let volumeStream = VolumeStreamImpl.shared
+                audio.volume = volumeStream.volume.valueVolume
+            }
         }
         
         // MARK: - Init

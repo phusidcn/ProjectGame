@@ -1,2 +1,4 @@
 ${PODS_ROOT}/Target Support Files/Pods-AdventureOfBamboo/Pods-AdventureOfBamboo-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework
+${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework
+${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework

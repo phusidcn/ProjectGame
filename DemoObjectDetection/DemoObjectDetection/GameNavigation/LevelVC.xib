@@ -124,6 +124,9 @@
                     <state key="normal" title="SettingButton" backgroundImage="SettingButton">
                         <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
+                    <connections>
+                        <action selector="tapSettingBtn:" destination="-1" eventType="touchUpInside" id="XQa-I3-j7S"/>
+                    </connections>
                 </button>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ngu-cx-SJd" userLabel="Level2Star">
                     <rect key="frame" x="342" y="853" width="95" height="37"/>

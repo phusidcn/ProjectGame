@@ -8,6 +8,7 @@
 
 import UIKit
 import SceneKit
+import SCLAlertView
 protocol SmartDelegate: class {
     func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
 }
@@ -50,7 +51,8 @@ public let threeStar = [6, 15, 20, 40, 45, 60, 80, 90]
 //}
 
 class GameViewController: UIViewController {
-    
+    let alert = AlertSettingVolume()
+
     public weak var delegate: SmartDelegate?
     public var levelNumber: Int = 0
     
@@ -61,20 +63,32 @@ class GameViewController: UIViewController {
     override func loadView() {
         super.loadView()
         self.view = GameView(frame: UIScreen.main.bounds, options: nil)
-        let label = UILabel.init(frame: CGRect(x: 50, y: 50, width: 550, height: 50))
-        label.text = "test thu roi"
-        self.view.addSubview(label)
+       
+        let button = UIButton()
+        button.setImage(UIImage.init(named: "SettingButton"), for: .normal)
+        button.frame = CGRect(x: 600, y: 50, width: 100, height: 100)
+        button.addTarget(self, action: #selector(showSetting), for: .touchUpInside)
+        self.view.addSubview(button)
+        
+    }
+    
+    @objc func showSetting() {
+        alert.showSetting()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         delegate?.touchesBegan(touches, with: event)
     }
-
+    
+    @objc func sliderTouch(sender: UISlider) {
+        print("value: \(sender.value)")
+    }
+    
     var gameController: GameController?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-         //1.3x on iPads
+        //1.3x on iPads
         if UIDevice.current.userInterfaceIdiom == .pad {
             self.gameView.contentScaleFactor = min(1.3, self.gameView.contentScaleFactor)
             self.gameView.preferredFramesPerSecond = 60
@@ -84,7 +98,7 @@ class GameViewController: UIViewController {
         gameController = GameController(scnView: gameView, viewController: self, targetNumber: targetPerLevel[levelNumber], level: "\(levelNumber)")
         gameController?.inGameDelegate = self
         self.delegate = gameController
-
+        
         // Configure the view
         gameView.backgroundColor = UIColor.black
         // Do any additional setup after loading the view.
@@ -94,7 +108,7 @@ class GameViewController: UIViewController {
         super.viewDidAppear(animated)
         self.gameView.setUp()
     }
-
+    
 }
 
 extension GameViewController: InGameDelegate {

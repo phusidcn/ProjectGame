@@ -7,15 +7,17 @@
 //
 
 import UIKit
+import SCLAlertView
 
 class LevelVC: UIViewController {
+    let alert = AlertSettingVolume()
     static var sharedInstance: LevelVC {
         let vc = LevelVC()
         vc.modalPresentationStyle = .fullScreen
         vc.modalTransitionStyle = .flipHorizontal
         return vc
     }
-
+    let mutablevolumeStream = VolumeStreamImpl.shared
     @IBOutlet var levelButtons: [UIButton]!
     @IBOutlet var starImage: [UIImageView]!
     @IBOutlet weak var settingButton: UIButton!
@@ -46,20 +48,20 @@ class LevelVC: UIViewController {
                         levelButtons[i + 1].isEnabled = true
                     }
                 }
-//                if GameStorage.points[i] > 0 {
-//                    for button in self.levelButtons {
-//                        if button.tag == i + 1 {
-//                            button.setBackgroundImage(UIImage(named: "Level\(i)_played"), for: .normal)
-//                            button.isEnabled = true
-//                            break
-//                        }
-//                    }
-//                }
+                //                if GameStorage.points[i] > 0 {
+                //                    for button in self.levelButtons {
+                //                        if button.tag == i + 1 {
+                //                            button.setBackgroundImage(UIImage(named: "Level\(i)_played"), for: .normal)
+                //                            button.isEnabled = true
+                //                            break
+                //                        }
+                //                    }
+                //                }
             }
         }
         
     }
-
+    
     @IBAction func tapToLevelButton(_ sender: UIButton) {
         let gameVC = GameViewController()
         gameVC.levelNumber = sender.tag - 1
@@ -67,5 +69,68 @@ class LevelVC: UIViewController {
         gameVC.modalTransitionStyle = .crossDissolve
         self.present(gameVC, animated: true, completion: nil)
     }
+    
+    @IBAction func tapSettingBtn(_ sender: Any) {
+        alert.showSetting()
+    }
+    
+    
+}
 
+class AlertSettingVolume {
+    let mutablevolumeStream = VolumeStreamImpl.shared
+     func showSetting() {
+        let appearance = SCLAlertView.SCLAppearance(
+            kWindowWidth: 600, kWindowHeight: 100,
+            kTitleFont: UIFont(name: "HelveticaNeue", size: 20)!,
+            kTextFont: UIFont(name: "HelveticaNeue", size: 14)!,
+            kButtonFont: UIFont(name: "HelveticaNeue-Bold", size: 14)!,
+            showCloseButton: false
+        )
+        
+        // Initialize SCLAlertView using custom Appearance
+        let alert = SCLAlertView(appearance: appearance)
+        
+        // Creat the subview
+        let subview = UIView(frame: CGRect(x: 0, y: 0, width: 600, height: 70  ))
+        let x = (subview.frame.width - 300) / 2
+        
+        // Add textfield 1
+        let slider = UISlider()
+        slider.frame = CGRect(x: x, y: 10, width: 300, height: 20)
+        
+        subview.addSubview(slider)
+        slider.addTarget(self, action: #selector(sliderValueDidChange(sender:)), for: .valueChanged)
+        //        subview.addSubview(textfield1)
+        
+        
+        slider.value = mutablevolumeStream.volume.valueVolume
+        // Add the subview to the alert's UI property
+        alert.customSubview = subview
+        alert.addButton("Reset level") { [weak self] in
+           
+            print("Reset level")
+        }
+        
+        // Add Button with Duration Status and custom Colors
+        alert.addButton("apply", backgroundColor: UIColor.brown, textColor: UIColor.blue) { [weak self] in
+             self?.mutablevolumeStream.updateVolume(value: slider.value)
+        }
+        
+        alert.showInfo("Setting", subTitle: "")
+        
+        
+        // Initialize SCLAlertView using custom Appearance
+        
+        // create background
+        
+        // add button
+        
+        
+        // silder
+    }
+    
+    @objc func sliderValueDidChange(sender : UISlider)  {
+        mutablevolumeStream.updateVolume(value: sender.value)
+    }
 }
