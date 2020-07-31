@@ -130,7 +130,7 @@
         static let DefaultCameraTransitionDuration = 1.0
         static let NumberOfFiends = 100
         static let CameraOrientationSensitivity: Float = 0.05
-        
+        private lazy var disposeBag = DisposeBag()
         public var scene: SCNScene?
         private weak var sceneRenderer: SCNSceneRenderer?
         private var objectRecognition: VisionObjectRecognition?
@@ -199,7 +199,6 @@
         private var lastUpdateTime = TimeInterval()
         private var _lockCamera : Bool = false
         private var isEncounterWall: Bool = false
-        private lazy var disposeBag = DisposeBag()
         private var playingCinematic: Bool = false
         
         // MARK: -
@@ -418,11 +417,20 @@
             
             audioSources[AudioSourceKind.collect.rawValue].volume = 4.0
             audioSources[AudioSourceKind.collectBig.rawValue].volume = 4.0
+            VolumeStreamImpl.shared.volumeObservable.asObservable().subscribe(onNext: { [weak self] volume in
+                if let wSelf = self {
+                    for audio in wSelf.audioSources {
+                        if audio == wSelf.audioSources[AudioSourceKind.collect.rawValue] ||
+                            audio == wSelf.audioSources[AudioSourceKind.collectBig.rawValue] {
+                                audio.volume = volume.valueVolume * 5
+                                break;
+                            }
+                        audio.volume = volume.valueVolume
+                    }
+                }
+                
+                }).disposed(by: disposeBag)
             
-            for audio in audioSources {
-                let volumeStream = VolumeStreamImpl.shared
-                audio.volume = volumeStream.volume.valueVolume
-            }
         }
         
         // MARK: - Init
@@ -457,7 +465,7 @@
             if let currentLevel = Int(level) {
                 self.currentLevel = currentLevel
             }
-
+            
             //load the main scene
             self.scene = SCNScene(named: "Art.scnassets/level\((Int(level) ?? 0) + 1).scn")
             //setup physics
@@ -542,14 +550,14 @@
                     point += streakMultiplier[streakIndicator]
                     if streakIndicator < streakMultiplier.count - 1 { streakIndicator += 1 }
                     
-
+                    
                     
                     // play sound
                     playSound(AudioSourceKind.collect)
                     
                     // update the overlay
                     self.overlay?.pointEarned = self.point
-
+                    
                     
                     if collectedGems == self.targetNumber {
                         startCinematic()
@@ -683,10 +691,10 @@
             
             // collectables
             if contact.nodeA.physicsBody!.categoryBitMask == Bitmask.collectable.rawValue {
-                                collect(contact.nodeA)
+                collect(contact.nodeA)
             }
             if contact.nodeB.physicsBody!.categoryBitMask == Bitmask.collectable.rawValue {
-                                collect(contact.nodeB)
+                collect(contact.nodeB)
             }
             
             
@@ -726,8 +734,8 @@
             }
             // Play the congrat sound.
             
+        }
     }
-}
     
     extension GameController: InGameDelegate {
         func backToMenu() {
