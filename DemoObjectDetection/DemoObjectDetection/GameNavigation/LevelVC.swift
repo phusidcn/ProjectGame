@@ -27,31 +27,31 @@ class LevelVC: UIViewController {
     }
     
     func reloadProgress() {
-        if levelButtons == nil || starImage == nil {
+        if LevelVC.sharedInstance.levelButtons == nil || LevelVC.sharedInstance.starImage == nil {
             return
         }
-        levelButtons?.forEach() { button in
+        LevelVC.sharedInstance.levelButtons?.forEach() { button in
             button.isEnabled = false
         }
-        levelButtons?[0].isEnabled = true
+        LevelVC.sharedInstance.levelButtons?[0].isEnabled = true
         let result = GameStorage.loadGame()
         if result {
             for i in 0 ..< GameStorage.points.count {
                 if GameStorage.points[i] > 0 {
-                    levelButtons?[i].setBackgroundImage(UIImage(named: "Level\(i + 1)_played"), for: .normal)
+                    LevelVC.sharedInstance.levelButtons?[i].setBackgroundImage(UIImage(named: "Level\(i + 1)_played"), for: .normal)
                     switch GameStorage.starsNumber[i] {
                     case 1:
-                        starImage?[i].image = UIImage(named: "OneStar")
+                        LevelVC.sharedInstance.starImage?[i].image = UIImage(named: "OneStar")
                     case 2:
-                        starImage?[i].image = UIImage(named: "TwoStar")
+                        LevelVC.sharedInstance.starImage?[i].image = UIImage(named: "TwoStar")
                     case 3:
-                        starImage?[i].image = UIImage(named: "ThreeStar")
+                        LevelVC.sharedInstance.starImage?[i].image = UIImage(named: "ThreeStar")
                     default:
                         break
                     }
-                    levelButtons?[i].isEnabled = true
+                    LevelVC.sharedInstance.levelButtons?[i].isEnabled = true
                     if i + 1 < GameStorage.numberOfLevel {
-                        levelButtons?[i + 1].isEnabled = true
+                        LevelVC.sharedInstance.levelButtons?[i + 1].isEnabled = true
                     }
                 }
             }
