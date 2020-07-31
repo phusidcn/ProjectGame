@@ -21,42 +21,47 @@ class LevelVC: UIViewController {
     @IBOutlet var levelButtons: [UIButton]?
     @IBOutlet var starImage: [UIImageView]?
     @IBOutlet weak var settingButton: UIButton!
+    @IBOutlet weak var returnButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         reloadProgress()
     }
     
     func reloadProgress() {
-        if LevelVC.sharedInstance.levelButtons == nil || LevelVC.sharedInstance.starImage == nil {
+        if levelButtons == nil || starImage == nil {
             return
         }
-        LevelVC.sharedInstance.levelButtons?.forEach() { button in
+        levelButtons?.forEach() { button in
             button.isEnabled = false
         }
-        LevelVC.sharedInstance.levelButtons?[0].isEnabled = true
+        levelButtons?[0].isEnabled = true
         let result = GameStorage.loadGame()
         if result {
             for i in 0 ..< GameStorage.points.count {
                 if GameStorage.points[i] > 0 {
-                    LevelVC.sharedInstance.levelButtons?[i].setBackgroundImage(UIImage(named: "Level\(i + 1)_played"), for: .normal)
+                    levelButtons?[i].setBackgroundImage(UIImage(named: "Level\(i + 1)_played"), for: .normal)
                     switch GameStorage.starsNumber[i] {
                     case 1:
-                        LevelVC.sharedInstance.starImage?[i].image = UIImage(named: "OneStar")
+                        starImage?[i].image = UIImage(named: "OneStar")
                     case 2:
-                        LevelVC.sharedInstance.starImage?[i].image = UIImage(named: "TwoStar")
+                        starImage?[i].image = UIImage(named: "TwoStar")
                     case 3:
-                        LevelVC.sharedInstance.starImage?[i].image = UIImage(named: "ThreeStar")
+                        starImage?[i].image = UIImage(named: "ThreeStar")
                     default:
                         break
                     }
-                    LevelVC.sharedInstance.levelButtons?[i].isEnabled = true
+                    levelButtons?[i].isEnabled = true
                     if i + 1 < GameStorage.numberOfLevel {
-                        LevelVC.sharedInstance.levelButtons?[i + 1].isEnabled = true
+                        levelButtons?[i + 1].isEnabled = true
                     }
                 }
             }
         }
     }
+    @IBAction func tapToReturnButton(_ sender: UIButton) {
+        self.present(MainMenuVC.sharedInstance, animated: true, completion: nil)
+    }
+    
     
     @IBAction func tapToLevelButton(_ sender: UIButton) {
         let gameVC = GameViewController()
