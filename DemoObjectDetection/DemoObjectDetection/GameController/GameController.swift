@@ -428,7 +428,6 @@
                         audio.volume = volume.valueVolume
                     }
                 }
-                
                 }).disposed(by: disposeBag)
             
         }
