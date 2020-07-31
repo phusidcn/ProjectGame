@@ -80,7 +80,7 @@ class HUB: SKScene {
             controlOverlay!.rightPad.delegate = controller
             controlOverlay!.buttonA.delegate = controller
             controlOverlay!.buttonB.delegate = controller
-            //addChild(controlOverlay!)
+            addChild(controlOverlay!)
         
      
         // the demo UI
