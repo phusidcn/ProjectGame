@@ -143,7 +143,29 @@ extension GameController: ObjectsRecognitionDelegate {
         needToExecute = actions.contains(where: {userstep in
             return userstep.action == .Pressed
         })
-        if needToExecute {
+        for action in actions {
+            print(action.position)
+        }
+        var isAcceptToMove = true
+        if actions.count > 1 {
+            var move1: UserStep
+            var move2: UserStep
+            for i in 0 ..< actions.count {
+                move1 = actions[i]
+                if i + 1 == actions.count {
+                    break
+                }
+                move2 = actions[i + 1]
+                if move2.action == .Pressed || move2.action == .UnPress {
+                    break
+                }
+                if abs(move1.position.origin.y - move1.position.height - move2.position.origin.y) > 40 {
+                    isAcceptToMove = false
+                    break
+                }
+            }
+        }
+        if needToExecute && isAcceptToMove {
             self.streak = false
             self.streakIndicator = 0
             var stepIndex = 0

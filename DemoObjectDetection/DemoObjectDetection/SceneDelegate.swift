@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                // Assign window to SceneDelegate window property
                self.window = window
                // Set initial view controller from Main storyboard as root view controller of UIWindow
-               self.window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+        self.window?.rootViewController = MainMenuVC.sharedInstance
                // Present window to screen
                self.window?.makeKeyAndVisible()
     }
