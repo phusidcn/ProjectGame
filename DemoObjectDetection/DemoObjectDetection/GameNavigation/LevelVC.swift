@@ -32,7 +32,7 @@ class LevelVC: UIViewController {
             return
         }
         levelButtons?.forEach() { button in
-            button.isEnabled = false
+            button.isEnabled = true
         }
         levelButtons?[0].isEnabled = true
         let result = GameStorage.loadGame()

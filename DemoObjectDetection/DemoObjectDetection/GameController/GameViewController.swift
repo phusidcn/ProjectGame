@@ -13,7 +13,7 @@ protocol SmartDelegate: class {
     func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
 }
 
-public let targetPerLevel = [3, 4, 6, 10, 12, 13, 15, 16]
+public let targetPerLevel = [3, 4, 6, 10, 12, 13, 13, 16]
 public let twoStar = [3, 5, 10, 20, 25, 30, 40, 50]
 public let threeStar = [6, 15, 20, 40, 45, 60, 80, 90]
 

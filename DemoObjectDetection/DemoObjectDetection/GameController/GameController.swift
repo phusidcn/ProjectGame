@@ -399,7 +399,7 @@
             var audioSourceNe = SCNAudioSource()
             if let audioSource = SCNAudioSource(named: "audio/music.m4a") {
                 audioSource.loops = true
-                audioSource.volume = 0.5
+                audioSource.volume = 0.0
                 audioSource.isPositional = false
                 audioSource.shouldStream = true
                 node.addAudioPlayer(SCNAudioPlayer(source: audioSource))
