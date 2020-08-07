@@ -138,24 +138,17 @@ extension GameController: ObjectsRecognitionDelegate {
         }
     }
     
-    func actionSequenceDidChange(actions: [UserStep], elseActions: [UserStep]) {
-        var needToExecute = false
-        needToExecute = actions.contains(where: {userstep in
-            return userstep.action == .Pressed
-        })
-        for action in actions {
-            print(action.position)
-        }
+    func acceptToMove(steps: [UserStep]) -> Bool {
         var isAcceptToMove = true
-        if actions.count > 1 {
+        if steps.count > 1 {
             var move1: UserStep
             var move2: UserStep
-            for i in 0 ..< actions.count {
-                move1 = actions[i]
-                if i + 1 == actions.count {
+            for i in 0 ..< steps.count {
+                move1 = steps[i]
+                if i + 1 == steps.count {
                     break
                 }
-                move2 = actions[i + 1]
+                move2 = steps[i + 1]
                 if move2.action == .Pressed || move2.action == .UnPress {
                     break
                 }
@@ -165,7 +158,19 @@ extension GameController: ObjectsRecognitionDelegate {
                 }
             }
         }
-        if needToExecute && isAcceptToMove {
+        return isAcceptToMove
+    }
+    
+    func actionSequenceDidChange(actions: [UserStep], elseActions: [UserStep]) {
+        var needToExecute = false
+        needToExecute = actions.contains(where: {userstep in
+            return userstep.action == .Pressed
+        })
+        for action in actions {
+            print(action.position)
+        }
+        
+        if needToExecute && acceptToMove(steps: actions) && acceptToMove(steps: elseActions) {
             self.streak = false
             self.streakIndicator = 0
             var stepIndex = 0

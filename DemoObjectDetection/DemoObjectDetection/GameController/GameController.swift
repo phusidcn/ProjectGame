@@ -396,20 +396,31 @@
             let node = scene!.rootNode
             
             // ambience
-            if let audioSource = SCNAudioSource(named: "audio/ambience.mp3") {
+            var audioSourceNe = SCNAudioSource()
+            if let audioSource = SCNAudioSource(named: "audio/music.m4a") {
                 audioSource.loops = true
-                audioSource.volume = 0.8
+                audioSource.volume = 0.5
                 audioSource.isPositional = false
                 audioSource.shouldStream = true
                 node.addAudioPlayer(SCNAudioPlayer(source: audioSource))
+                audioSourceNe = audioSource
             }
             // volcano
             
+            VolumeStreamImpl.shared.volumeObservable.asObservable().subscribe(onNext: { [weak self] volume in
+                           if let wSelf = self {
+                               audioSourceNe.volume = volume.valueVolume
+                           }
+                           }).disposed(by: disposeBag)
+                       
+
+            
             
             // other sounds
+          
             audioSources[AudioSourceKind.collect.rawValue] = SCNAudioSource(named: "audio/collect.mp3")!
             audioSources[AudioSourceKind.collectBig.rawValue] = SCNAudioSource(named: "audio/collectBig.mp3")!
-            
+//            audioSources.append(audioSourceNe)
             
             // adjust volumes
             audioSources[AudioSourceKind.collect.rawValue].isPositional = false
@@ -467,6 +478,8 @@
             
             //load the main scene
             self.scene = SCNScene(named: "Art.scnassets/level\((Int(level) ?? 0) + 1).scn")
+            
+            
             //setup physics
             //        setupPhysics()
             

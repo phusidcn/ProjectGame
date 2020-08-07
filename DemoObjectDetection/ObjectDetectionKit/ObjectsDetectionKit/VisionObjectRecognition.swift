@@ -195,11 +195,9 @@ extension VisionObjectRecognition {
     }
     
     private func findNearest(position: CGRect, in objects: [objectDetection]) -> objectDetection {
-        var minX = bufferSize.height
-        var minY = bufferSize.width
         var suitedObject: objectDetection = objectDetection(name: "", bound: .zero)
         for object in objects {
-            if abs(position.origin.x + position.width - object.bound.origin.x) <= 40 && abs(position.origin.y - object.bound.origin.y) <= 40 {
+            if abs(position.origin.x + position.width - object.bound.origin.x) <= 30 && abs(position.origin.y - object.bound.origin.y) <= 30 {
                 suitedObject = object
                 break
             }
